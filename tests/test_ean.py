@@ -15,5 +15,5 @@ def test_ean13():
 
     assert barcode.size == "mid"
     assert barcode == code
-    assert barcode == barcode2 + "1"
+    assert barcode == barcode2
     
