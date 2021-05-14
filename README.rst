@@ -16,7 +16,7 @@ This is a python package to create and read barcodes
 Installing
 -----------
 
-** Python 3.6.0 or higher is required **
+**Python 3.6.0 or higher is required**
 
 To install the library you can run the following command:
 
@@ -26,7 +26,7 @@ To install the library you can run the following command:
     python3 -m pip install --upgrade pybarcodes
 
     # Windows
-    py -m pip install --upgrade pybarcodes
+    py -3 -m pip install --upgrade pybarcodes
 
 
 Quick Example
@@ -53,6 +53,6 @@ Output Image:
 Links
 ------
 
-- `Documentation: <https://pybarcodes.readthedocs.io/en/latest/>`
+- `Documentation <https://pybarcodes.readthedocs.io/en/latest/index.html>`_
 
 

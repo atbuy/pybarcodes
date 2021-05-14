@@ -27,7 +27,7 @@ This is a python package to create and read barcodes
 Installing
 -----------
 
-** Python 3.6.0 or higher is required **
+**Python 3.6.0 or higher is required**
 
 To install the library you can run the following command:
 
@@ -37,7 +37,7 @@ To install the library you can run the following command:
     python3 -m pip install --upgrade pybarcodes
 
     # Windows
-    py -m pip install --upgrade pybarcodes
+    py -3 -m pip install --upgrade pybarcodes
 
 
 Quick Example
@@ -55,6 +55,7 @@ Quick Example
 This is all the code you need to generate a barcode.
 
 Output Image:
+
 .. image:: https://i.imgur.com/mlWpuqW.png
     :target: https://i.imgur.com/mlWpuqW.png
     :alt: Image of Barcode
@@ -63,7 +64,7 @@ Output Image:
 Links
 ------
 
-- `Documentation: <https://pybarcodes.readthedocs.io/en/latest/>`
+- `Documentation <https://pybarcodes.readthedocs.io/en/latest/index.html>`_
 
 
 """
@@ -72,14 +73,13 @@ Links
 setup(
     name="pybarcodes",
     author="Vitaman02",
-    url="https://github.com/Vitaman02/Barcodes",
+    url="https://github.com/Vitaman02/pybarcodes",
     project_urls={},
     version=__version__,
     packages=["pybarcodes"],
     license="MIT",
     description="A Python barcode generator",
     long_description=readme,
-    long_description_content_type="text/x-rst",
     include_package_data=True,
     install_requires=requirements,
     python_requires=">=3.6.0",
