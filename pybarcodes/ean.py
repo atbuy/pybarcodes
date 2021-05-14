@@ -255,9 +255,6 @@ class EAN13(Barcode):
         for i in range(6, 12):
             digit = int(code[i])
             binary_string += EANCoding.CODES["R"][digit]
-        
-        check_digit = self.calculate_checksum(self.code)
-        binary_string += EANCoding.CODES["R"][check_digit]
 
         binary_string += EANCoding.RIGHT_GUARD
         

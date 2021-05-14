@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 from pybarcodes.__init__ import __version__
 import os
 
@@ -24,7 +24,7 @@ setup(
     url="https://github.com/Vitaman02/pybarcodes",
     project_urls={},
     version=__version__,
-    packages=["pybarcodes"],
+    packages=find_packages(),
     license="MIT",
     description="A Python barcode generator",
     long_description=readme,
