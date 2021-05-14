@@ -44,6 +44,7 @@ Quick Example
 This is all the code you need to generate a barcode.
 
 Output Image:
+
 .. image:: https://i.imgur.com/mlWpuqW.png
     :target: https://i.imgur.com/mlWpuqW.png
     :alt: Image of Barcode
