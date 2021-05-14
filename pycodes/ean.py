@@ -1,10 +1,9 @@
-import os
 from io import BytesIO
 from PIL import Image, ImageFont, ImageDraw
 from collections import namedtuple
 
-from barcode import Barcode
-from exceptions import IncorrectFormat, IncorrectSizeSelection
+from pycodes.barcode import Barcode
+from pycodes.exceptions import IncorrectFormat, IncorrectSizeSelection
 
 
 class CodeNumbers:
@@ -155,7 +154,7 @@ class EAN13(Barcode):
         base.paste(img, (base_center.x - img_center.x, base_center.y - img_center.y))
 
         # Write the digits at the bottom
-        font_path = os.path.join(os.getcwd(), "fonts", "arial.ttf")
+        font_path = "../fonts/arial.ttf"
 
         draw = ImageDraw.Draw(base)
         font = ImageFont.truetype(font_path, font_size)
