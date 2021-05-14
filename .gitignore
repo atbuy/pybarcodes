@@ -11,6 +11,3 @@ __pycache__
 
 # Ignore dist folder
 ./dist/*
-
-# Ignore any .py files in root dir
-*.py

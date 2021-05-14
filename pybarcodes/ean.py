@@ -24,42 +24,12 @@
 
 from io import BytesIO
 from PIL import Image, ImageFont, ImageDraw
-from typing import Type, Union
+from typing import Union
 from collections import namedtuple
 
 from .barcode import Barcode
 from .exceptions import IncorrectFormat, IncorrectSizeSelection
-
-
-class CodeNumbers:
-    left_0 = "0001101"
-    left_1 = "0011001"
-    left_2 = "0010011"
-    left_3 = "0111101"
-    left_4 = "0100011"
-    left_5 = "0110001"
-    left_6 = "0101111"
-    left_7 = "0111011"
-    left_8 = "0110111"
-    left_9 = "0001011"
-
-    right_0 = "1110010"
-    right_1 = "1100110"
-    right_2 = "1101100"
-    right_3 = "1001110"
-    right_4 = "1011100"
-    right_5 = "1001110"
-    right_6 = "1010000"
-    right_7 = "1000100"
-    right_8 = "1001000"
-    right_9 = "1110100"
-
-    lefts = [left_0, left_1, left_2, left_3, left_4, left_5, left_6, left_7, left_8, left_9]
-    rights = [right_0, right_1, right_2, right_3, right_4, right_5, right_6, right_7, right_8, right_9]
-
-    left_guard = "101"
-    center_guard = "01010"
-    right_guard = "101"
+from .codings.ean import EAN13Coding
 
 
 class EAN13(Barcode):
@@ -76,7 +46,7 @@ class EAN13(Barcode):
         # rounded up to the nearest integer.
         # The maximum allowed size of the barcode, is 200% it's size.
         # To avoid scanning errors, the max size is defined by 180% the size of the minimum value
-        self.BARCODE_SIZE_MIN_PX = 375, 200
+        self.BARCODE_SIZE_MIN_PX = 400, 200
         self.BARCODE_SIZE_MID_PX = tuple(map(lambda x: int(x * 1.4), self.BARCODE_SIZE_MIN_PX))
         self.BARCODE_SIZE_MAX_PX = tuple(map(lambda x: int(x * 1.8), self.BARCODE_SIZE_MIN_PX))
 
@@ -91,14 +61,16 @@ class EAN13(Barcode):
 
         # Do some error checking
         if isinstance(self.code, str):
+            if not self.code.isdigit():
+                raise IncorrectFormat("Barcode can't contain non-digit characters.")
+
             if len(self.code) < self.barcode_length:
                 error = f"{self.__class__.__name__} should be at least {self.barcode_length} digits long, not {len(self.code)}."
                 raise IncorrectFormat(error)
             else:
                 self.code = self._clean_code()
 
-            if not self.code.isdigit():
-                raise IncorrectFormat("Barcode can't contain non-digit characters.")
+            
     
     def write(self) -> BytesIO:
         """
@@ -225,7 +197,8 @@ class EAN13(Barcode):
         else:
             raise TypeError(f"Can't accept type {type(barcode)}")
 
-        if len(barcode) == 12:
+        if len(barcode) >= 12:
+            barcode = barcode[:12]
             # Here there is no check digit so it's calculated
             digits = list(map(int, list(barcode)))
 
@@ -236,11 +209,13 @@ class EAN13(Barcode):
             
             # Calculate the checksum
             checksum = sum(weighted_odd) * odd_weight + sum(weighted_even) * even_weight
-
+            if checksum % 10 == 0:
+                return 0
+            
             # Find the closest multiple of 10, that is equal to
             # or higher than the checksum and return the difference
-            closest10 = checksum - (checksum % 10) + 10
-            return closest10 - checksum
+            closest10 = ((checksum // 10) * 10) + 10
+            return closest10 % checksum
 
         raise IncorrectFormat("Barcode should be at least 12 digits long.")
 
@@ -257,22 +232,34 @@ class EAN13(Barcode):
         This string is used to iterate over, to create the barcode.
         """
 
+        # First find the structure that the first group of 6 follows.
+        # This is determined by the first digit of the barcode
+        structure = EAN13Coding.STRUCTURE[self.code[0]]
+
+        code = self.code[1:]
+
         # Convert the barcode to a binary string with the CodeNumbers class
         # Add the left guard
-        binary_string = CodeNumbers.left_guard
+        binary_string = EAN13Coding.LEFT_GUARD
 
         # Add the 6 digits after the left guard
         for i in range(0, 6):
-            binary_string += CodeNumbers.lefts[int(self.code[i])]
+            digit = int(code[i])
+            coding = structure[i]
+            binary_string += EAN13Coding.CODES[coding][digit]
         
         # Add the center guard
-        binary_string += CodeNumbers.center_guard
+        binary_string += EAN13Coding.CENTER_GUARD
 
         # Add the 6 digits after the center guard
-        for i in range(6, len(self.code)):
-            binary_string += CodeNumbers.rights[int(self.code[i])]
+        for i in range(6, 12):
+            digit = int(code[i])
+            binary_string += EAN13Coding.CODES["R"][digit]
         
-        binary_string += CodeNumbers.right_guard
+        check_digit = self.calculate_checksum(self.code)
+        binary_string += EAN13Coding.CODES["R"][check_digit]
+
+        binary_string += EAN13Coding.RIGHT_GUARD
         
         return binary_string
 
@@ -307,13 +294,14 @@ class EAN13(Barcode):
             # Calculate the checksum digit
             check_digit = self.calculate_checksum(self.code)
             return self.code + str(check_digit)
-        elif len(self.code) > 13:
+        elif len(self.code) >= 13:
             # If the length is longer than 13 digits strip them
             # and calculate the check digit
             code = self.code[:12]
             check_digit = EAN13.calculate_checksum(code)
             code += str(check_digit)
             return code
+        
     
     def __eq__(self, other):
         if isinstance(other, self.__class__):
