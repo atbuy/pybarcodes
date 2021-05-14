@@ -27,9 +27,9 @@ from PIL import Image, ImageFont, ImageDraw
 from typing import Union
 from collections import namedtuple
 
-from .barcode import Barcode
-from .exceptions import IncorrectFormat, IncorrectSizeSelection
-from .codings.ean import EAN13Coding
+from pybarcodes.barcode import Barcode
+from pybarcodes.exceptions import IncorrectFormat, IncorrectSizeSelection
+from pybarcodes.codings.ean import EAN13Coding
 
 
 class EAN13(Barcode):
