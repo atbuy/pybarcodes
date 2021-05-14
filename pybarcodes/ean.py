@@ -116,8 +116,8 @@ class EAN13(Barcode):
         """
         Tries to save the barcode to a text file
 
-        Arguments
-        ---------
+        Parameters
+        ----------
         path: str
             The path of the file
         """
@@ -131,8 +131,8 @@ class EAN13(Barcode):
         If no size is passed, then the method looks for the instansiated size.
         If there is no instansiated size, then an error is raised.
 
-        Arguments
-        ---------
+        Parameters
+        ----------
         path: str
             The path to save the image to
         size: str
@@ -244,8 +244,8 @@ class EAN13(Barcode):
         """
         Finds and returns what the width of each column should be
 
-        Arguments
-        ---------
+        Parameters
+        ----------
         size: str
             One of the 3 size options
         

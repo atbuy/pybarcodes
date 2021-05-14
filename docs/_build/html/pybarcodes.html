@@ -41,8 +41,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="setup module" href="setup.html" />
-    <link rel="prev" title="main module" href="main.html" /> 
+    <link rel="prev" title="pybarcodes" href="modules.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -89,18 +88,18 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">barcodes</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="conf.html">conf module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pybarcodes</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">pybarcodes package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#pybarcodes-barcode-module">pybarcodes.barcode module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#pybarcodes-ean-module">pybarcodes.ean module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#pybarcodes-exceptions-module">pybarcodes.exceptions module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pybarcodes.barcode">pybarcodes.barcode module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pybarcodes.ean">pybarcodes.ean module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pybarcodes.exceptions">pybarcodes.exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pybarcodes">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pybarcodes">pybarcodes</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -151,7 +150,7 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="modules.html">barcodes</a> &raquo;</li>
+          <li><a href="modules.html">pybarcodes</a> &raquo;</li>
         
       <li>pybarcodes package</li>
     
@@ -177,17 +176,350 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="pybarcodes-barcode-module">
-<h2>pybarcodes.barcode module<a class="headerlink" href="#pybarcodes-barcode-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pybarcodes.barcode">
+<span id="pybarcodes-barcode-module"></span><h2>pybarcodes.barcode module<a class="headerlink" href="#module-pybarcodes.barcode" title="Permalink to this headline">¶</a></h2>
+<p>MIT License</p>
+<p>Copyright (c) 2021 Vitaman02</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the “Software”), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pybarcodes.barcode.Barcode">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pybarcodes.barcode.</span></span><span class="sig-name descname"><span class="pre">Barcode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'mid'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pybarcodes/barcode.html#Barcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.barcode.Barcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
 </div>
-<div class="section" id="pybarcodes-ean-module">
-<h2>pybarcodes.ean module<a class="headerlink" href="#pybarcodes-ean-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pybarcodes.ean">
+<span id="pybarcodes-ean-module"></span><h2>pybarcodes.ean module<a class="headerlink" href="#module-pybarcodes.ean" title="Permalink to this headline">¶</a></h2>
+<p>MIT License</p>
+<p>Copyright (c) 2021 Vitaman02</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the “Software”), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pybarcodes.ean.</span></span><span class="sig-name descname"><span class="pre">CodeNumbers</span></span><a class="reference internal" href="_modules/pybarcodes/ean.html#CodeNumbers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.ean.CodeNumbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.center_guard">
+<span class="sig-name descname"><span class="pre">center_guard</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'01010'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.center_guard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.left_0">
+<span class="sig-name descname"><span class="pre">left_0</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'0001101'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.left_0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.left_1">
+<span class="sig-name descname"><span class="pre">left_1</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'0011001'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.left_1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.left_2">
+<span class="sig-name descname"><span class="pre">left_2</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'0010011'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.left_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.left_3">
+<span class="sig-name descname"><span class="pre">left_3</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'0111101'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.left_3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.left_4">
+<span class="sig-name descname"><span class="pre">left_4</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'0100011'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.left_4" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.left_5">
+<span class="sig-name descname"><span class="pre">left_5</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'0110001'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.left_5" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.left_6">
+<span class="sig-name descname"><span class="pre">left_6</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'0101111'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.left_6" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.left_7">
+<span class="sig-name descname"><span class="pre">left_7</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'0111011'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.left_7" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.left_8">
+<span class="sig-name descname"><span class="pre">left_8</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'0110111'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.left_8" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.left_9">
+<span class="sig-name descname"><span class="pre">left_9</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'0001011'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.left_9" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.left_guard">
+<span class="sig-name descname"><span class="pre">left_guard</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'101'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.left_guard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.lefts">
+<span class="sig-name descname"><span class="pre">lefts</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['0001101',</span> <span class="pre">'0011001',</span> <span class="pre">'0010011',</span> <span class="pre">'0111101',</span> <span class="pre">'0100011',</span> <span class="pre">'0110001',</span> <span class="pre">'0101111',</span> <span class="pre">'0111011',</span> <span class="pre">'0110111',</span> <span class="pre">'0001011']</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.lefts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.right_0">
+<span class="sig-name descname"><span class="pre">right_0</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'1110010'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.right_0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.right_1">
+<span class="sig-name descname"><span class="pre">right_1</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'1100110'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.right_1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.right_2">
+<span class="sig-name descname"><span class="pre">right_2</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'1101100'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.right_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.right_3">
+<span class="sig-name descname"><span class="pre">right_3</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'1001110'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.right_3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.right_4">
+<span class="sig-name descname"><span class="pre">right_4</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'1011100'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.right_4" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.right_5">
+<span class="sig-name descname"><span class="pre">right_5</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'1001110'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.right_5" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.right_6">
+<span class="sig-name descname"><span class="pre">right_6</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'1010000'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.right_6" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.right_7">
+<span class="sig-name descname"><span class="pre">right_7</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'1000100'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.right_7" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.right_8">
+<span class="sig-name descname"><span class="pre">right_8</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'1001000'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.right_8" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.right_9">
+<span class="sig-name descname"><span class="pre">right_9</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'1110100'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.right_9" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.right_guard">
+<span class="sig-name descname"><span class="pre">right_guard</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'101'</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.right_guard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.CodeNumbers.rights">
+<span class="sig-name descname"><span class="pre">rights</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['1110010',</span> <span class="pre">'1100110',</span> <span class="pre">'1101100',</span> <span class="pre">'1001110',</span> <span class="pre">'1011100',</span> <span class="pre">'1001110',</span> <span class="pre">'1010000',</span> <span class="pre">'1000100',</span> <span class="pre">'1001000',</span> <span class="pre">'1110100']</span></em><a class="headerlink" href="#pybarcodes.ean.CodeNumbers.rights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN13">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pybarcodes.ean.</span></span><span class="sig-name descname"><span class="pre">EAN13</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'max'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pybarcodes/ean.html#EAN13"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.ean.EAN13" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pybarcodes.barcode.Barcode" title="pybarcodes.barcode.Barcode"><code class="xref py py-class docutils literal notranslate"><span class="pre">pybarcodes.barcode.Barcode</span></code></a></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN13.get_binary_string">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">get_binary_string</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#pybarcodes.ean.EAN13.get_binary_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the code to the binary string that it produces
+The binary string contains the left, center and right guards,
+and also the binary values of each digit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>The return string contains 1’s and 0’s that represent the barcode.</dt><dd></dd>
+<dt>This string is used to iterate over, to create the barcode.</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN13.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'max'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">PIL.Image.Image</span><a class="reference internal" href="_modules/pybarcodes/ean.html#EAN13.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.ean.EAN13.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a PIL Image object and save it to the path given.
+It also return that image object to the caller.
+If no size is passed, then the method looks for the instansiated size.
+If there is no instansiated size, then an error is raised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>path: str</strong></dt><dd><p>The path to save the image to</p>
+</dd>
+<dt><strong>size: str</strong></dt><dd><p>The selected size.
+A selection of the 3 available types: “min”, “mid”, “max”.
+Preffered size is “mid”</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Returns a PIL Image object to the caller</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN13.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'max'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/pybarcodes/ean.html#EAN13.show"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.ean.EAN13.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the barcode image</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN13.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">_io.BytesIO</span><a class="reference internal" href="_modules/pybarcodes/ean.html#EAN13.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.ean.EAN13.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the barcode to a BytesIO object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>Returns the BytesIO object created</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN13.write_file">
+<span class="sig-name descname"><span class="pre">write_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/pybarcodes/ean.html#EAN13.write_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.ean.EAN13.write_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tries to save the barcode to a text file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>path: str</strong></dt><dd><p>The path of the file</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="pybarcodes-exceptions-module">
-<h2>pybarcodes.exceptions module<a class="headerlink" href="#pybarcodes-exceptions-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pybarcodes.exceptions">
+<span id="pybarcodes-exceptions-module"></span><h2>pybarcodes.exceptions module<a class="headerlink" href="#module-pybarcodes.exceptions" title="Permalink to this headline">¶</a></h2>
+<p>MIT License</p>
+<p>Copyright (c) 2021 Vitaman02</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the “Software”), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="pybarcodes.exceptions.IncorrectFormat">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">pybarcodes.exceptions.</span></span><span class="sig-name descname"><span class="pre">IncorrectFormat</span></span><a class="reference internal" href="_modules/pybarcodes/exceptions.html#IncorrectFormat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.exceptions.IncorrectFormat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Raised when the user didn’t pass the correct format for the barcode they are using</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="pybarcodes.exceptions.IncorrectSizeSelection">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">pybarcodes.exceptions.</span></span><span class="sig-name descname"><span class="pre">IncorrectSizeSelection</span></span><a class="reference internal" href="_modules/pybarcodes/exceptions.html#IncorrectSizeSelection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.exceptions.IncorrectSizeSelection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Raised when the user didn’t pass a correct barcode size option</p>
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pybarcodes">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pybarcodes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pybarcodes">
+<h3>pybarcodes<a class="headerlink" href="#pybarcodes" title="Permalink to this headline">¶</a></h3>
+<p>A Python barcode generator</p>
+<dl class="field-list simple">
+<dt class="field-odd">copyright</dt>
+<dd class="field-odd"><ol class="loweralpha simple" start="3">
+<li><p>2021-present Vitaman02</p></li>
+</ol>
+</dd>
+<dt class="field-even">license</dt>
+<dd class="field-even"><p>MIT, see LICENSE for more details.</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="pybarcodes.VersionInfo">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pybarcodes.</span></span><span class="sig-name descname"><span class="pre">VersionInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">major</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">micro</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">releaselevel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serial</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pybarcodes.VersionInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pybarcodes.VersionInfo.major">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">major</span></span><a class="headerlink" href="#pybarcodes.VersionInfo.major" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pybarcodes.VersionInfo.micro">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">micro</span></span><a class="headerlink" href="#pybarcodes.VersionInfo.micro" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pybarcodes.VersionInfo.minor">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">minor</span></span><a class="headerlink" href="#pybarcodes.VersionInfo.minor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pybarcodes.VersionInfo.releaselevel">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">releaselevel</span></span><a class="headerlink" href="#pybarcodes.VersionInfo.releaselevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pybarcodes.VersionInfo.serial">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">serial</span></span><a class="headerlink" href="#pybarcodes.VersionInfo.serial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 </div>
 </div>
 
@@ -197,8 +529,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="setup.html" class="btn btn-neutral float-right" title="setup module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="main.html" class="btn btn-neutral float-left" title="main module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules.html" class="btn btn-neutral float-left" title="pybarcodes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
