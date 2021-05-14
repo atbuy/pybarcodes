@@ -2,8 +2,9 @@ from io import BytesIO
 from PIL import Image, ImageFont, ImageDraw
 from collections import namedtuple
 
-from pycodes.barcode import Barcode
-from pycodes.exceptions import IncorrectFormat, IncorrectSizeSelection
+from .barcode import Barcode
+from .exceptions import IncorrectFormat, IncorrectSizeSelection
+from pycodes import barcode
 
 
 class CodeNumbers:
@@ -42,6 +43,9 @@ class EAN13(Barcode):
         super().__init__(barcode, size)
 
         # The digit length of the EAN13 barcode
+        # The length of the actual barcode is 12 digits,
+        # but this library doesn't create the check digit,
+        # unless the length of the barcode is 12 digits.
         self.barcode_length = 12
 
         # This is the minimum size of the barcode allowed,
@@ -63,8 +67,8 @@ class EAN13(Barcode):
 
         # Do some error checking
         if isinstance(self.code, str):
-            if len(self.code) != self.barcode_length:
-                error = f"{self.__class__.__name__} should be {self.barcode_length} digits long, not {len(self.code)}."
+            if len(self.code) < self.barcode_length:
+                error = f"{self.__class__.__name__} should be at least {self.barcode_length} digits long, not {len(self.code)}."
                 raise IncorrectFormat(error)
 
             if not self.code.isdigit():
@@ -96,7 +100,7 @@ class EAN13(Barcode):
         with open(path, "w") as file:
             file.write(self.code)
 
-    def write_image(self, path: str, size: str = "mid") -> Image.Image:
+    def save(self, path: str, size: str = "mid") -> Image.Image:
         """
         Create a PIL Image object and save it to the path given.
         It also return that image object to the caller.
@@ -121,6 +125,20 @@ class EAN13(Barcode):
         if not (size in self.size_options):
             raise IncorrectSizeSelection(f"Didn't find size option '{size}'. Available size options are '{self.size_options}'")
         
+        img = self._get_barcode_image(size)
+        img.save(path)
+    
+    def show(self, size: str = "mid") -> None:
+        """Shows the barcode image"""
+
+        # Check if the size given is one of the options
+        if not (size in self.size_options):
+            raise IncorrectSizeSelection(f"Didn't find size option '{size}'. Available size options are '{self.size_options}'")
+
+        img = self._get_barcode_image(size)
+        img.show()
+
+    def _get_barcode_image(self, size: str) -> Image.Image:
         # Get the final image's width and height
         selected_size, font_size = self.size_options[size]
 
@@ -163,7 +181,7 @@ class EAN13(Barcode):
         x = base_center.x - text_width // 2
         y = base.height - (base.height - img.height) // 2
         draw.text((x, y), self.code, (0, 0, 0), font=font)
-        base.save(path)
+        return base
 
     @property
     def get_binary_string(self) -> str:
@@ -221,15 +239,3 @@ class EAN13(Barcode):
 
     def __repr__(self):
         return self.__str__()
-
-
-
-if __name__ == "__main__":
-    code = "012345678905"
-    barcode = EAN13(code)
-    print(barcode)
-
-    img_path = "C:/Users/filip/Desktop/image.png"
-    barcode.write_image(img_path, "max")
-
-    

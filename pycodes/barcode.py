@@ -11,8 +11,3 @@ class Barcode:
 
     def __repr__(self):
         return self.__str__()
-
-
-if __name__ == "__main__":
-    barcode = Barcode(123454)
-    print(barcode)
