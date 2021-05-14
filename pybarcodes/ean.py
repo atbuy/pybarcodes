@@ -4,7 +4,6 @@ from collections import namedtuple
 
 from .barcode import Barcode
 from .exceptions import IncorrectFormat, IncorrectSizeSelection
-from pycodes import barcode
 
 
 class CodeNumbers:
@@ -233,6 +232,12 @@ class EAN13(Barcode):
 
         return size[0] // 95
 
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.code == other.code
+        elif isinstance(other, str):
+            return self.code == other
+        return False
 
     def __str__(self) -> str:
         return f"<{self.__class__.__name__}: code={self.code}>"

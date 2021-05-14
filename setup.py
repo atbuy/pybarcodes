@@ -1,5 +1,5 @@
 from setuptools import setup
-from pycodes.__init__ import __version__
+from pybarcodes.__init__ import __version__
 
 
 requirements = []
@@ -8,17 +8,17 @@ with open("requirements.txt") as file:
 
 
 readme = ""
-with open("README.md") as file:
+with open("README.rst") as file:
     readme = file.read()
 
 
 setup(
-    name="pycodes",
+    name="pybarcodes",
     author="Vitaman02",
     url="https://github.com/Vitaman02/Barcodes",
-    project_urls=[],
+    project_urls={},
     version=__version__,
-    packages=["pycodes"],
+    packages=["pybarcodes"],
     license="MIT",
     description="A Python barcode generator",
     long_description=readme,
