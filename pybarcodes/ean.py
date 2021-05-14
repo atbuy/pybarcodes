@@ -24,6 +24,7 @@
 
 from io import BytesIO
 from PIL import Image, ImageFont, ImageDraw
+from typing import Type, Union
 from collections import namedtuple
 
 from .barcode import Barcode
@@ -79,9 +80,9 @@ class EAN13(Barcode):
         self.BARCODE_SIZE_MID_PX = tuple(map(lambda x: int(x * 1.4), self.BARCODE_SIZE_MIN_PX))
         self.BARCODE_SIZE_MAX_PX = tuple(map(lambda x: int(x * 1.8), self.BARCODE_SIZE_MIN_PX))
 
-        self.BARCODE_FONT_SIZE_MIN = 22
-        self.BARCODE_FONT_SIZE_MID = 26
-        self.BARCODE_FONT_SIZE_MAX = 30
+        self.BARCODE_FONT_SIZE_MIN = 26
+        self.BARCODE_FONT_SIZE_MID = 30
+        self.BARCODE_FONT_SIZE_MAX = 34
         self.size_options = {
             "min": (self.BARCODE_SIZE_MIN_PX, self.BARCODE_FONT_SIZE_MIN),
             "mid": (self.BARCODE_SIZE_MID_PX, self.BARCODE_FONT_SIZE_MID),
@@ -93,6 +94,8 @@ class EAN13(Barcode):
             if len(self.code) < self.barcode_length:
                 error = f"{self.__class__.__name__} should be at least {self.barcode_length} digits long, not {len(self.code)}."
                 raise IncorrectFormat(error)
+            else:
+                self.code = self._clean_code()
 
             if not self.code.isdigit():
                 raise IncorrectFormat("Barcode can't contain non-digit characters.")
@@ -206,6 +209,41 @@ class EAN13(Barcode):
         draw.text((x, y), self.code, (0, 0, 0), font=font)
         return base
 
+    @classmethod
+    def calculate_checksum(cls, barcode: Union[str, "EAN13"]) -> int:
+        """
+        Calculate the checksum from the barcode given
+
+        Returns
+        -------
+        A single digit integer that helps determine if the barcode is correct
+        """
+        if isinstance(barcode, cls):
+            barcode = barcode.code
+        elif isinstance(barcode, str):
+            pass
+        else:
+            raise TypeError(f"Can't accept type {type(barcode)}")
+
+        if len(barcode) == 12:
+            # Here there is no check digit so it's calculated
+            digits = list(map(int, list(barcode)))
+
+            # Get even and odd indeces of the digits
+            odd_weight, even_weight = (3, 1)
+            weighted_even = digits[::2]
+            weighted_odd = digits[1::2]
+            
+            # Calculate the checksum
+            checksum = sum(weighted_odd) * odd_weight + sum(weighted_even) * even_weight
+
+            # Find the closest multiple of 10, that is equal to
+            # or higher than the checksum and return the difference
+            closest10 = checksum - (checksum % 10) + 10
+            return closest10 - checksum
+
+        raise IncorrectFormat("Barcode should be at least 12 digits long.")
+
     @property
     def get_binary_string(self) -> str:
         """
@@ -256,6 +294,27 @@ class EAN13(Barcode):
 
         return size[0] // 95
 
+    def _clean_code(self) -> str:
+        """
+        Tries to correct the barcode given
+
+        Returns
+        -------
+        A new barcode is returned that has the correct length
+        and the check digit is calculated if not given
+        """
+        if len(self.code) == 12:
+            # Calculate the checksum digit
+            check_digit = self.calculate_checksum(self.code)
+            return self.code + str(check_digit)
+        elif len(self.code) > 13:
+            # If the length is longer than 13 digits strip them
+            # and calculate the check digit
+            code = self.code[:12]
+            check_digit = EAN13.calculate_checksum(code)
+            code += str(check_digit)
+            return code
+    
     def __eq__(self, other):
         if isinstance(other, self.__class__):
             return self.code == other.code
@@ -264,7 +323,7 @@ class EAN13(Barcode):
         return False
 
     def __str__(self) -> str:
-        return f"<{self.__class__.__name__}: code={self.code}>"
+        return f"<{self.__class__.__name__}: code={self.code} size={self.size}>"
 
     def __repr__(self):
         return self.__str__()

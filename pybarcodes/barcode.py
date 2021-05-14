@@ -31,7 +31,7 @@ class Barcode:
         self.size = size
 
     def __str__(self) -> str:
-        return f"<{self.__class__.__name__}: code={self.code}>"
+        return f"<{self.__class__.__name__}: code={self.code}> size={self.size}"
 
     def __repr__(self):
         return self.__str__()
