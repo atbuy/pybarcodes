@@ -1,5 +1,6 @@
 pybarcodes
 ==========
+
 .. image:: https://readthedocs.org/projects/pybarcodes/badge/?version=latest
     :target: https://pybarcodes.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status

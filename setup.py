@@ -11,6 +11,7 @@ requirements = [
 readme = """
 pybarcodes
 ==========
+
 .. image:: https://readthedocs.org/projects/pybarcodes/badge/?version=latest
     :target: https://pybarcodes.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
@@ -67,6 +68,7 @@ Links
 - `Documentation <https://pybarcodes.readthedocs.io/en/latest/index.html>`_
 
 
+
 """
 
 
@@ -80,6 +82,7 @@ setup(
     license="MIT",
     description="A Python barcode generator",
     long_description=readme,
+    long_description_content_type="text/x-rst",
     include_package_data=True,
     install_requires=requirements,
     python_requires=">=3.6.0",
