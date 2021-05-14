@@ -59,7 +59,8 @@ class EAN13(Barcode):
         self.size_options = {
             "min": (self.BARCODE_SIZE_MIN_PX, self.BARCODE_FONT_SIZE_MIN),
             "mid": (self.BARCODE_SIZE_MID_PX, self.BARCODE_FONT_SIZE_MID),
-            "max": (self.BARCODE_SIZE_MAX_PX, self.BARCODE_FONT_SIZE_MAX)}
+            "max": (self.BARCODE_SIZE_MAX_PX, self.BARCODE_FONT_SIZE_MAX)
+        }
 
         # Do some error checking
         if isinstance(self.code, str):
@@ -137,7 +138,7 @@ class EAN13(Barcode):
         img = Image.new("RGB", selected_size, (255, 255, 255))
         
         # Get the binary string representation of the barcode digits
-        binary_string = self.get_binary_string()
+        binary_string = self.get_binary_string
 
         index = 0
         for digit in binary_string:
@@ -164,9 +165,18 @@ class EAN13(Barcode):
         y = base.height - (base.height - img.height) // 2
         draw.text((x, y), self.code, (0, 0, 0), font=font)
         base.save(path)
-    
+
+    @property
     def get_binary_string(self) -> str:
         """
+        Converts the code to the binary string that it produces
+        The binary string contains the left, center and right guards,
+        and also the binary values of each digit.
+
+        Returns
+        -------
+        The return string contains 1's and 0's that represent the barcode.
+        This string is used to iterate over, to create the barcode.
         """
 
         # Convert the barcode to a binary string with the CodeNumbers class
@@ -216,7 +226,7 @@ class EAN13(Barcode):
 
 
 if __name__ == "__main__":
-    code = "051000012517"
+    code = "012345678905"
     barcode = EAN13(code)
     print(barcode)
 
