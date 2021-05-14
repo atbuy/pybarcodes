@@ -8,3 +8,6 @@ __pycache__
 
 # Ignore .vscode files
 .vscode
+
+# Ignore dist folder
+./dist/*
