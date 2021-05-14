@@ -2,14 +2,13 @@ from setuptools import setup
 from pybarcodes.__init__ import __version__
 
 
-requirements = []
-with open("requirements.txt") as file:
-    requirements = file.readlines()
+requirements = [
+    "Pillow>=8.0.1"
+]
 
 
-readme = ""
-with open("README.rst") as file:
-    readme = file.read()
+readme = """
+"""
 
 
 setup(

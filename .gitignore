@@ -5,3 +5,6 @@ __pycache__
 
 # Ignore egg-info folders
 *.egg-info
+
+# Ignore .vscode files
+.vscode
