@@ -12,12 +12,12 @@ __title__ = "pybarcodes"
 __author__ = "Vitaman02"
 __license__ = "MIT"
 __copyright__ = "Copyright 2021-present Vitaman02"
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 
 from collections import namedtuple
 
 
-VersionInfo = namedtuple("VersionInfo", "major minor micro")
+VersionInfo = namedtuple("VersionInfo", "major minor patch")
 
 version_info = VersionInfo(major=2, minor=0, patch=0)
