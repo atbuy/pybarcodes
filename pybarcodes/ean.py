@@ -29,7 +29,7 @@ from collections import namedtuple
 
 from pybarcodes.barcode import Barcode
 from pybarcodes.exceptions import IncorrectFormat, IncorrectSizeSelection
-from pybarcodes.codings.ean import EAN13Coding
+from pybarcodes.codings import ean as EANCoding
 
 
 class EAN13(Barcode):
@@ -170,7 +170,7 @@ class EAN13(Barcode):
         base.paste(img, (base_center.x - img_center.x, base_center.y - img_center.y))
 
         # Write the digits at the bottom
-        font_path = "../fonts/arial.ttf"
+        font_path = "./fonts/arial.ttf"
 
         draw = ImageDraw.Draw(base)
         font = ImageFont.truetype(font_path, font_size)
@@ -234,32 +234,32 @@ class EAN13(Barcode):
 
         # First find the structure that the first group of 6 follows.
         # This is determined by the first digit of the barcode
-        structure = EAN13Coding.STRUCTURE[self.code[0]]
+        structure = EANCoding.STRUCTURE[self.code[0]]
 
         code = self.code[1:]
 
         # Convert the barcode to a binary string with the CodeNumbers class
         # Add the left guard
-        binary_string = EAN13Coding.LEFT_GUARD
+        binary_string = EANCoding.LEFT_GUARD
 
         # Add the 6 digits after the left guard
         for i in range(0, 6):
             digit = int(code[i])
             coding = structure[i]
-            binary_string += EAN13Coding.CODES[coding][digit]
+            binary_string += EANCoding.CODES[coding][digit]
         
         # Add the center guard
-        binary_string += EAN13Coding.CENTER_GUARD
+        binary_string += EANCoding.CENTER_GUARD
 
         # Add the 6 digits after the center guard
         for i in range(6, 12):
             digit = int(code[i])
-            binary_string += EAN13Coding.CODES["R"][digit]
+            binary_string += EANCoding.CODES["R"][digit]
         
         check_digit = self.calculate_checksum(self.code)
-        binary_string += EAN13Coding.CODES["R"][check_digit]
+        binary_string += EANCoding.CODES["R"][check_digit]
 
-        binary_string += EAN13Coding.RIGHT_GUARD
+        binary_string += EANCoding.RIGHT_GUARD
         
         return binary_string
 
