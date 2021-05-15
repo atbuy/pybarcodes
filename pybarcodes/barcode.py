@@ -90,9 +90,13 @@ class Barcode:
             file.write(self.code)
     
     def _get_barcode_image(self) -> Image.Image:
+        """
+        Creates a PIL Image from the binary string of the barcode
 
-        # Find how much width the barcode requires
-        selected_size, font_size = self.BARCODE_SIZE, self.BARCODE_FONT_SIZE
+        Returns
+        -------
+        A PIL Image with the barcode is returned to the caller.
+        """
 
         Size = namedtuple("Size", "width height")
         padding = Size(100, 200)
@@ -121,7 +125,8 @@ class Barcode:
             img.paste(column, (index, 0))
             index += column_size
         
-        print(f"LAST INDEX: {index-column_size}  BARCODE WIDTH: {img.width}")
+        # Crop redundant whitespace after barcode
+        img = img.crop((0, 0, index, img.height))
         
         # Paste the barcode on the center of the padded base
         Point = namedtuple("Point", "x y")

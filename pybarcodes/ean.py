@@ -138,11 +138,11 @@ class EAN8(Barcode):
         self.BARCODE_LENGTH = 7
 
         # The barcode's size and not the output image's size
-        self.BARCODE_SIZE = 480, 380
-        self.BARCODE_FONT_SIZE = 46
+        self.BARCODE_SIZE = 720, 240
+        self.BARCODE_FONT_SIZE = 40
 
         # This declares how many columns this type of barcode has
-        self.BARCODE_COLUMN_NUMBER = 53
+        self.BARCODE_COLUMN_NUMBER = 112
 
         # Do some error checking
         if isinstance(self.code, str):
