@@ -1,6 +1,5 @@
 import os
 from setuptools import setup, find_packages
-from pybarcodes.__init__ import __version__
 
 
 this_dir = os.path.abspath(os.path.dirname(__file__))
@@ -21,7 +20,7 @@ setup(
     author="Vitaman02",
     url="https://github.com/Vitaman02/pybarcodes",
     project_urls={},
-    version=__version__,
+    version="0.4.5",
     packages=find_packages(),
     license="MIT",
     description="A Python barcode generator",
