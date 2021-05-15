@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pybarcodes.ean &mdash; pybarcodes 0.4.0 documentation</title>
+  <title>pybarcodes.ean &mdash; pybarcodes 0.4.8 documentation</title>
   
 
   
@@ -180,10 +180,14 @@
 
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 
 <span class="kn">from</span> <span class="nn">pybarcodes.barcode</span> <span class="kn">import</span> <span class="n">Barcode</span>
 <span class="kn">from</span> <span class="nn">pybarcodes.exceptions</span> <span class="kn">import</span> <span class="n">IncorrectFormat</span>
 <span class="kn">from</span> <span class="nn">pybarcodes.codings</span> <span class="kn">import</span> <span class="n">ean</span> <span class="k">as</span> <span class="n">EANCoding</span>
+
+
+<span class="n">Size</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span> <span class="s2">&quot;width height&quot;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="EAN13"><a class="viewcode-back" href="../../pybarcodes.html#pybarcodes.ean.EAN13">[docs]</a><span class="k">class</span> <span class="nc">EAN13</span><span class="p">(</span><span class="n">Barcode</span><span class="p">):</span>
@@ -199,6 +203,9 @@
 
         <span class="c1"># This declares how many columns this type of barcode has</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_COLUMN_NUMBER</span> <span class="o">=</span> <span class="mi">95</span>
+
+        <span class="c1"># The padding around the barcode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_PADDING</span> <span class="o">=</span> <span class="n">Size</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 
         <span class="c1"># Do some error checking</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -296,11 +303,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span> <span class="o">=</span> <span class="mi">7</span>
 
         <span class="c1"># The barcode&#39;s size and not the output image&#39;s size</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_SIZE</span> <span class="o">=</span> <span class="mi">480</span><span class="p">,</span> <span class="mi">380</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_FONT_SIZE</span> <span class="o">=</span> <span class="mi">46</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_SIZE</span> <span class="o">=</span> <span class="mi">480</span><span class="p">,</span> <span class="mi">240</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_FONT_SIZE</span> <span class="o">=</span> <span class="mi">40</span>
 
         <span class="c1"># This declares how many columns this type of barcode has</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_COLUMN_NUMBER</span> <span class="o">=</span> <span class="mi">53</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_COLUMN_NUMBER</span> <span class="o">=</span> <span class="mi">75</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_PADDING</span> <span class="o">=</span> <span class="n">Size</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 
         <span class="c1"># Do some error checking</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>

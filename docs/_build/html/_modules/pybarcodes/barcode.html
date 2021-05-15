@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pybarcodes.barcode &mdash; pybarcodes 0.4.0 documentation</title>
+  <title>pybarcodes.barcode &mdash; pybarcodes 0.4.8 documentation</title>
   
 
   
@@ -248,12 +248,17 @@
             <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)</span></div>
     
     <span class="k">def</span> <span class="nf">_get_barcode_image</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Image</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a PIL Image from the binary string of the barcode</span>
 
-        <span class="c1"># Find how much width the barcode requires</span>
-        <span class="n">selected_size</span><span class="p">,</span> <span class="n">font_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_SIZE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_FONT_SIZE</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        A PIL Image with the barcode is returned to the caller.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">Size</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span> <span class="s2">&quot;width height&quot;</span><span class="p">)</span>
-        <span class="n">padding</span> <span class="o">=</span> <span class="n">Size</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+        <span class="c1"># Get the padding around the barcode</span>
+        <span class="n">padding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_PADDING</span>
+
         <span class="c1"># Get the final image&#39;s width and height</span>
         <span class="n">selected_size</span><span class="p">,</span> <span class="n">font_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_SIZE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_FONT_SIZE</span>
 
@@ -279,7 +284,8 @@
             <span class="n">img</span><span class="o">.</span><span class="n">paste</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
             <span class="n">index</span> <span class="o">+=</span> <span class="n">column_size</span>
         
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;LAST INDEX: </span><span class="si">{</span><span class="n">index</span><span class="o">-</span><span class="n">column_size</span><span class="si">}</span><span class="s2">  BARCODE WIDTH: </span><span class="si">{</span><span class="n">img</span><span class="o">.</span><span class="n">width</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># Crop redundant whitespace after barcode</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">height</span><span class="p">))</span>
         
         <span class="c1"># Paste the barcode on the center of the padded base</span>
         <span class="n">Point</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;Point&quot;</span><span class="p">,</span> <span class="s2">&quot;x y&quot;</span><span class="p">)</span>
