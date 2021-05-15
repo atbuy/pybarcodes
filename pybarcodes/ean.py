@@ -22,10 +22,14 @@
 
 
 from typing import Union
+from collections import namedtuple
 
 from pybarcodes.barcode import Barcode
 from pybarcodes.exceptions import IncorrectFormat
 from pybarcodes.codings import ean as EANCoding
+
+
+Size = namedtuple("Size", "width height")
 
 
 class EAN13(Barcode):
@@ -41,6 +45,9 @@ class EAN13(Barcode):
 
         # This declares how many columns this type of barcode has
         self.BARCODE_COLUMN_NUMBER = 95
+
+        # The padding around the barcode
+        self.BARCODE_PADDING = Size(100, 200)
 
         # Do some error checking
         if isinstance(self.code, str):
@@ -138,11 +145,13 @@ class EAN8(Barcode):
         self.BARCODE_LENGTH = 7
 
         # The barcode's size and not the output image's size
-        self.BARCODE_SIZE = 720, 240
+        self.BARCODE_SIZE = 480, 240
         self.BARCODE_FONT_SIZE = 40
 
         # This declares how many columns this type of barcode has
-        self.BARCODE_COLUMN_NUMBER = 112
+        self.BARCODE_COLUMN_NUMBER = 75
+
+        self.BARCODE_PADDING = Size(0, 200)
 
         # Do some error checking
         if isinstance(self.code, str):

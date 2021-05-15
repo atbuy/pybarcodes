@@ -12,7 +12,7 @@ __title__ = "pybarcodes"
 __author__ = "Vitaman02"
 __license__ = "MIT"
 __copyright__ = "Copyright 2021-present Vitaman02"
-__version__ = "0.4.7"
+__version__ = "0.4.8"
 
 
 from collections import namedtuple

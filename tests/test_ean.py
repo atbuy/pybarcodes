@@ -20,6 +20,7 @@ def test_ean13():
     assert barcode.BARCODE_SIZE
     assert barcode.BARCODE_FONT_SIZE
     assert barcode.BARCODE_COLUMN_NUMBER
+    assert barcode.BARCODE_PADDING
 
     assert barcode == code + "1"
     assert barcode == barcode2
@@ -60,6 +61,7 @@ def test_ean8():
     assert barcode.BARCODE_SIZE
     assert barcode.BARCODE_FONT_SIZE
     assert barcode.BARCODE_COLUMN_NUMBER
+    assert barcode.BARCODE_PADDING
 
     # Check digit for this barcode should be `5`
     assert EAN8.calculate_checksum(code) == 5

@@ -98,8 +98,9 @@ class Barcode:
         A PIL Image with the barcode is returned to the caller.
         """
 
-        Size = namedtuple("Size", "width height")
-        padding = Size(100, 200)
+        # Get the padding around the barcode
+        padding = self.BARCODE_PADDING
+
         # Get the final image's width and height
         selected_size, font_size = self.BARCODE_SIZE, self.BARCODE_FONT_SIZE
 
