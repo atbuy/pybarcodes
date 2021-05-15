@@ -20,7 +20,7 @@ setup(
     author="Vitaman02",
     url="https://github.com/Vitaman02/pybarcodes",
     project_urls={},
-    version="0.4.5",
+    version="0.4.6",
     packages=find_packages(),
     license="MIT",
     description="A Python barcode generator",
