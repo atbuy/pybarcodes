@@ -22,8 +22,8 @@ Image generation is fast so it can be used to create images in bulk.
 Supported Barcode Types
 ------------------------
 
-- EAN13 ✓
-- EAN8 ✓
+- EAN13
+- EAN8
 
 More types will soon be supported.
 PRs are welcome :)
@@ -53,7 +53,7 @@ You can see what barcodes are supported
 .. code:: py
 
     >>> import pybarcodes
-    >>> pybarcodes.SUPPORTED_BARCODES)
+    >>> pybarcodes.SUPPORTED_BARCODES
     ["EAN13", "EAN8"]
 
 

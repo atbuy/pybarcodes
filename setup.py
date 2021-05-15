@@ -1,17 +1,20 @@
 import os
 from setuptools import setup, find_packages
-from pybarcodes.__init__ import __version__
+from pybarcodes import __version__
 
 
 this_dir = os.path.abspath(os.path.dirname(__file__))
+
 
 requirements = []
 with open(os.path.join(this_dir, "requirements.txt")) as file:
     requirements = file.read().splitlines()
 
+
 readme = ""
 with open(os.path.join(this_dir, "README.rst")) as file:
     readme = file.read()
+
 
 setup(
     name="pybarcodes",
@@ -43,5 +46,4 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Utilities"
     ]
-
 )
