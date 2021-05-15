@@ -13,7 +13,20 @@ pybarcodes
     :target: https://pypi.python.org/pypi/pybarcodes
     :alt: PyPI supported Python versions
 
+
 This is a python package to create and read barcodes
+You can create file-like objects, text files and images from just a barcode number.
+Image generation is fast so it can be used to create images in bulk.
+
+
+Supported Barcode Types
+------------------------
+
+- EAN13 ✓
+- EAN8 ✓
+
+More types will soon be supported.
+PRs are welcome :)
 
 
 Installing
@@ -35,21 +48,33 @@ To install the library you can run the following command:
 Quick Example
 --------------
 
+You can see what barcodes are supported
+
 .. code:: py
 
-    from pybarcodes.ean import EAN13
+    >>> import pybarcodes
+    >>> pybarcodes.SUPPORTED_BARCODES)
+    ["EAN13", "EAN8"]
+
+
+
+And you can use this to view the barcode that was generated:
+
+.. code:: py
+
+    from pybarcodes import EAN13
 
     CODE = "012345678905"
     barcode = EAN13(CODE)
     barcode.show()
 
 
-This is all the code you need to generate a barcode.
+This is pretty much all the code you need to generate a barcode.
 
 Output Image:
 
-.. image:: https://i.imgur.com/mlWpuqW.png
-    :target: https://i.imgur.com/mlWpuqW.png
+.. image:: https://i.imgur.com/wd7jyIx.png
+    :target: https://i.imgur.com/wd7jyIx.png
     :alt: Image of Barcode
 
 
@@ -57,5 +82,4 @@ Links
 ------
 
 - `Documentation <https://pybarcodes.readthedocs.io/en/latest/index.html>`_
-
 
