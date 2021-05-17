@@ -227,4 +227,35 @@ class EAN8(EAN):
     def __init__(self, barcode: Union[str, int]):
         super().__init__(barcode)
 
-      
+
+class JAN(EAN):
+    """The class to represent an EAN13 barcode
+
+    Attributes
+    ----------
+    BARCODE_LENGTH: int
+        The number of digits in an EAN13 barcode
+    BARCODE_SIZE: Tuple[int, int]
+        The barcode's size and not the output image's size
+    BARCODE_FONT_SIZE: int
+        The size of the font under the barcode  
+    BARCODE_COLUMN_NUMBER: int
+        How many binary columns the barcode consists of
+    BARCODE_PADDING: Tuple[int, int]
+        The padding around the actual barcode
+    """
+
+    BARCODE_LENGTH = 12
+    BARCODE_SIZE = 720, 360
+    BARCODE_FONT_SIZE = 46
+    BARCODE_COLUMN_NUMBER = 95
+    BARCODE_PADDING = Size(100, 200)
+    FIRST_SECTION = (0, 6)
+    SECOND_SECTION = (6, BARCODE_LENGTH)
+    WEIGHTS = Weights(3, 1)
+
+    def __init__(self, barcode: Union[str, int]):
+        super().__init__(barcode)
+
+        if not (self.code[:2] in ("45", "49")):
+            raise IncorrectFormat("JAN type barcodes need to start with country code 45 or 49")

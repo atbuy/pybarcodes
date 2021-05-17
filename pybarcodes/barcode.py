@@ -31,6 +31,7 @@ from .exceptions import IncorrectFormat
 
 class Barcode:
     """A base class for all barcode types"""
+
     def __init__(self, barcode: Union[str, int]):
         self.code = str(barcode)
         if not self.code.isdigit():
