@@ -54,7 +54,7 @@ class Barcode:
         img = self._get_barcode_image()
 
         if size != None:
-            img.thumbnail(self.BARCODE_SIZE)
+            img = img.resize(size)
         img.save(path)
 
     def show(self) -> None:
