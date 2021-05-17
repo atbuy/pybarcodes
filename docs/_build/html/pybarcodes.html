@@ -243,9 +243,62 @@ It also return that image object to the caller.</p>
 <section id="module-pybarcodes.ean">
 <span id="pybarcodes-ean-module"></span><h2>pybarcodes.ean module<a class="headerlink" href="#module-pybarcodes.ean" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="pybarcodes.ean.EAN13">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pybarcodes.ean.</span></span><span class="sig-name descname"><span class="pre">EAN13</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pybarcodes/ean.html#EAN13"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.ean.EAN13" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pybarcodes.ean.</span></span><span class="sig-name descname"><span class="pre">EAN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pybarcodes/ean.html#EAN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.ean.EAN" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pybarcodes.barcode.Barcode" title="pybarcodes.barcode.Barcode"><code class="xref py py-class docutils literal notranslate"><span class="pre">pybarcodes.barcode.Barcode</span></code></a></p>
+<p>Base class for EAN type barcodes</p>
+<p>Shouldn’t be used directly and it’s subclasses are preferred</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN.calculate_checksum">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">calculate_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><a class="reference internal" href="#pybarcodes.ean.EAN13" title="pybarcodes.ean.EAN13"><span class="pre">pybarcodes.ean.EAN13</span></a><span class="p"><span class="pre">,</span> </span><a class="reference internal" href="#pybarcodes.ean.EAN8" title="pybarcodes.ean.EAN8"><span class="pre">pybarcodes.ean.EAN8</span></a><span class="p"><span class="pre">,</span> </span><a class="reference internal" href="#pybarcodes.ean.EAN14" title="pybarcodes.ean.EAN14"><span class="pre">pybarcodes.ean.EAN14</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/pybarcodes/ean.html#EAN.calculate_checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.ean.EAN.calculate_checksum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the checksum from the barcode given</p>
+<p>This is a class method because it can only be used just to calculate any barcode
+of the same type, not only the instance’s checksum</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>barcode: Union[str, “EAN13”]</strong></dt><dd><p>The barcode to calculate the check digit of.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>A single digit integer that helps determine if the barcode is correct</dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>TypeError</dt><dd><p>Raised when the barcode is not an acceptable type</p>
+</dd>
+<dt>IncorrectFormat</dt><dd><p>Raised when the barcode is not in the format expected</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN.get_binary_string">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">get_binary_string</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#pybarcodes.ean.EAN.get_binary_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the code to the binary string that it produces
+The binary string contains the left, center and right guards,
+and also the binary values of each digit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>The return string contains 1’s and 0’s that represent the barcode.</dt><dd></dd>
+<dt>This string is used to iterate over, to create the barcode.</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN13">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pybarcodes.ean.</span></span><span class="sig-name descname"><span class="pre">EAN13</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pybarcodes/ean.html#EAN13"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.ean.EAN13" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pybarcodes.ean.EAN" title="pybarcodes.ean.EAN"><code class="xref py py-class docutils literal notranslate"><span class="pre">pybarcodes.ean.EAN</span></code></a></p>
 <p>The class to represent an EAN13 barcode</p>
 <dl class="field-list simple">
 <dt class="field-odd">Attributes</dt>
@@ -288,58 +341,27 @@ It also return that image object to the caller.</p>
 <span class="sig-name descname"><span class="pre">BARCODE_SIZE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(720,</span> <span class="pre">360)</span></em><a class="headerlink" href="#pybarcodes.ean.EAN13.BARCODE_SIZE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="pybarcodes.ean.EAN13.calculate_checksum">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">calculate_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><a class="reference internal" href="#pybarcodes.ean.EAN13" title="pybarcodes.ean.EAN13"><span class="pre">pybarcodes.ean.EAN13</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/pybarcodes/ean.html#EAN13.calculate_checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.ean.EAN13.calculate_checksum" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the checksum from the barcode given</p>
-<p>This is a class method because it can only be used just to calculate any barcode
-of the same type, not only the instance’s checksum</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>barcode: Union[str, “EAN13”]</strong></dt><dd><p>The barcode to calculate the check digit of.</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl class="simple">
-<dt>A single digit integer that helps determine if the barcode is correct</dt><dd></dd>
-</dl>
-</dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><dl class="simple">
-<dt>TypeError</dt><dd><p>Raised when the barcode is not an acceptable type</p>
-</dd>
-<dt>IncorrectFormat</dt><dd><p>Raised when the barcode is not in the format expected</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN13.FIRST_SECTION">
+<span class="sig-name descname"><span class="pre">FIRST_SECTION</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(0,</span> <span class="pre">6)</span></em><a class="headerlink" href="#pybarcodes.ean.EAN13.FIRST_SECTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="pybarcodes.ean.EAN13.get_binary_string">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">get_binary_string</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#pybarcodes.ean.EAN13.get_binary_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts the code to the binary string that it produces
-The binary string contains the left, center and right guards,
-and also the binary values of each digit.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><dl class="simple">
-<dt>str</dt><dd><p>The return string contains 1’s and 0’s that represent the barcode.
-This string is used to iterate over, to create the barcode.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN13.SECOND_SECTION">
+<span class="sig-name descname"><span class="pre">SECOND_SECTION</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(6,</span> <span class="pre">12)</span></em><a class="headerlink" href="#pybarcodes.ean.EAN13.SECOND_SECTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN13.WEIGHTS">
+<span class="sig-name descname"><span class="pre">WEIGHTS</span></span><em class="property"> <span class="pre">=</span> <span class="pre">Weights(ODD=3,</span> <span class="pre">EVEN=1)</span></em><a class="headerlink" href="#pybarcodes.ean.EAN13.WEIGHTS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pybarcodes.ean.EAN14">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pybarcodes.ean.</span></span><span class="sig-name descname"><span class="pre">EAN14</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pybarcodes/ean.html#EAN14"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.ean.EAN14" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pybarcodes.barcode.Barcode" title="pybarcodes.barcode.Barcode"><code class="xref py py-class docutils literal notranslate"><span class="pre">pybarcodes.barcode.Barcode</span></code></a></p>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pybarcodes.ean.</span></span><span class="sig-name descname"><span class="pre">EAN14</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pybarcodes/ean.html#EAN14"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.ean.EAN14" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pybarcodes.ean.EAN" title="pybarcodes.ean.EAN"><code class="xref py py-class docutils literal notranslate"><span class="pre">pybarcodes.ean.EAN</span></code></a></p>
 <p>The class to represent an EAN14 barcode</p>
 <dl class="field-list simple">
 <dt class="field-odd">Attributes</dt>
@@ -359,7 +381,7 @@ This string is used to iterate over, to create the barcode.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pybarcodes.ean.EAN14.BARCODE_COLUMN_NUMBER">
-<span class="sig-name descname"><span class="pre">BARCODE_COLUMN_NUMBER</span></span><em class="property"> <span class="pre">=</span> <span class="pre">102</span></em><a class="headerlink" href="#pybarcodes.ean.EAN14.BARCODE_COLUMN_NUMBER" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">BARCODE_COLUMN_NUMBER</span></span><em class="property"> <span class="pre">=</span> <span class="pre">108</span></em><a class="headerlink" href="#pybarcodes.ean.EAN14.BARCODE_COLUMN_NUMBER" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -382,57 +404,27 @@ This string is used to iterate over, to create the barcode.</p>
 <span class="sig-name descname"><span class="pre">BARCODE_SIZE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(720,</span> <span class="pre">360)</span></em><a class="headerlink" href="#pybarcodes.ean.EAN14.BARCODE_SIZE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="pybarcodes.ean.EAN14.calculate_checksum">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">calculate_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><a class="reference internal" href="#pybarcodes.ean.EAN14" title="pybarcodes.ean.EAN14"><span class="pre">pybarcodes.ean.EAN14</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/pybarcodes/ean.html#EAN14.calculate_checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.ean.EAN14.calculate_checksum" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the checksum from the barcode given</p>
-<p>This is a class method because it can only be used just to calculate any barcode
-of the same type, not only the instance’s checksum</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>barcode: Union[str, “EAN14”]</strong></dt><dd><p>The barcode to calculate the check digit of.</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl class="simple">
-<dt>A single digit integer that helps determine if the barcode is correct</dt><dd></dd>
-</dl>
-</dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><dl class="simple">
-<dt>TypeError</dt><dd><p>Raised when the barcode is not an acceptable type</p>
-</dd>
-<dt>IncorrectFormat</dt><dd><p>Raised when the barcode is not in the format expected</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN14.FIRST_SECTION">
+<span class="sig-name descname"><span class="pre">FIRST_SECTION</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(0,</span> <span class="pre">7)</span></em><a class="headerlink" href="#pybarcodes.ean.EAN14.FIRST_SECTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="pybarcodes.ean.EAN14.get_binary_string">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">get_binary_string</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#pybarcodes.ean.EAN14.get_binary_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts the code to the binary string that it produces
-The binary string contains the left, center and right guards,
-and also the binary values of each digit.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><dl class="simple">
-<dt>The return string contains 1’s and 0’s that represent the barcode.</dt><dd></dd>
-<dt>This string is used to iterate over, to create the barcode.</dt><dd></dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN14.SECOND_SECTION">
+<span class="sig-name descname"><span class="pre">SECOND_SECTION</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(7,</span> <span class="pre">14)</span></em><a class="headerlink" href="#pybarcodes.ean.EAN14.SECOND_SECTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN14.WEIGHTS">
+<span class="sig-name descname"><span class="pre">WEIGHTS</span></span><em class="property"> <span class="pre">=</span> <span class="pre">Weights(ODD=1,</span> <span class="pre">EVEN=3)</span></em><a class="headerlink" href="#pybarcodes.ean.EAN14.WEIGHTS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pybarcodes.ean.EAN8">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pybarcodes.ean.</span></span><span class="sig-name descname"><span class="pre">EAN8</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pybarcodes/ean.html#EAN8"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.ean.EAN8" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pybarcodes.barcode.Barcode" title="pybarcodes.barcode.Barcode"><code class="xref py py-class docutils literal notranslate"><span class="pre">pybarcodes.barcode.Barcode</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pybarcodes.ean.EAN" title="pybarcodes.ean.EAN"><code class="xref py py-class docutils literal notranslate"><span class="pre">pybarcodes.ean.EAN</span></code></a></p>
 <p>The class to represent an EAN8 barcode</p>
 <dl class="field-list simple">
 <dt class="field-odd">Attributes</dt>
@@ -475,50 +467,20 @@ and also the binary values of each digit.</p>
 <span class="sig-name descname"><span class="pre">BARCODE_SIZE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(480,</span> <span class="pre">240)</span></em><a class="headerlink" href="#pybarcodes.ean.EAN8.BARCODE_SIZE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="pybarcodes.ean.EAN8.calculate_checksum">
-<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">calculate_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><a class="reference internal" href="#pybarcodes.ean.EAN8" title="pybarcodes.ean.EAN8"><span class="pre">pybarcodes.ean.EAN8</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/pybarcodes/ean.html#EAN8.calculate_checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.ean.EAN8.calculate_checksum" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the checksum from the barcode given</p>
-<p>This is a class method because it can only be used just to calculate any barcode
-of the same type, not only the instance’s checksum</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>barcode: Union[str, “EAN8”]</strong></dt><dd><p>The barcode to calculate the check digit of.</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl class="simple">
-<dt>A single digit integer that helps determine if the barcode is correct</dt><dd></dd>
-</dl>
-</dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><dl class="simple">
-<dt>TypeError</dt><dd><p>Raised when the barcode is not an acceptable type</p>
-</dd>
-<dt>IncorrectFormat</dt><dd><p>Raised when the barcode is not in the format expected</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN8.FIRST_SECTION">
+<span class="sig-name descname"><span class="pre">FIRST_SECTION</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(0,</span> <span class="pre">4)</span></em><a class="headerlink" href="#pybarcodes.ean.EAN8.FIRST_SECTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="pybarcodes.ean.EAN8.get_binary_string">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">get_binary_string</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#pybarcodes.ean.EAN8.get_binary_string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts the code to the binary string that it produces
-The binary string contains the left, center and right guards,
-and also the binary values of each digit.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><dl class="simple">
-<dt>The return string contains 1’s and 0’s that represent the barcode.</dt><dd></dd>
-<dt>This string is used to iterate over, to create the barcode.</dt><dd></dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN8.SECOND_SECTION">
+<span class="sig-name descname"><span class="pre">SECOND_SECTION</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(4,</span> <span class="pre">8)</span></em><a class="headerlink" href="#pybarcodes.ean.EAN8.SECOND_SECTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.EAN8.WEIGHTS">
+<span class="sig-name descname"><span class="pre">WEIGHTS</span></span><em class="property"> <span class="pre">=</span> <span class="pre">Weights(ODD=1,</span> <span class="pre">EVEN=3)</span></em><a class="headerlink" href="#pybarcodes.ean.EAN8.WEIGHTS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -535,6 +497,24 @@ and also the binary values of each digit.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="pybarcodes.ean.Size.width">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#pybarcodes.ean.Size.width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pybarcodes.ean.Weights">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pybarcodes.ean.</span></span><span class="sig-name descname"><span class="pre">Weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ODD</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EVEN</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pybarcodes.ean.Weights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pybarcodes.ean.Weights.EVEN">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">EVEN</span></span><a class="headerlink" href="#pybarcodes.ean.Weights.EVEN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pybarcodes.ean.Weights.ODD">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">ODD</span></span><a class="headerlink" href="#pybarcodes.ean.Weights.ODD" title="Permalink to this definition">¶</a></dt>
 <dd><p>Alias for field number 0</p>
 </dd></dl>
 
