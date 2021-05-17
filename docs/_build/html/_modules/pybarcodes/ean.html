@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pybarcodes.ean &mdash; pybarcodes 0.5.2 documentation</title>
+  <title>pybarcodes.ean &mdash; pybarcodes 0.6.1 documentation</title>
   
 
   
@@ -385,7 +385,38 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span></div>
 
-      
+
+<div class="viewcode-block" id="JAN"><a class="viewcode-back" href="../../pybarcodes.html#pybarcodes.ean.JAN">[docs]</a><span class="k">class</span> <span class="nc">JAN</span><span class="p">(</span><span class="n">EAN</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The class to represent an EAN13 barcode</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    BARCODE_LENGTH: int</span>
+<span class="sd">        The number of digits in an EAN13 barcode</span>
+<span class="sd">    BARCODE_SIZE: Tuple[int, int]</span>
+<span class="sd">        The barcode&#39;s size and not the output image&#39;s size</span>
+<span class="sd">    BARCODE_FONT_SIZE: int</span>
+<span class="sd">        The size of the font under the barcode  </span>
+<span class="sd">    BARCODE_COLUMN_NUMBER: int</span>
+<span class="sd">        How many binary columns the barcode consists of</span>
+<span class="sd">    BARCODE_PADDING: Tuple[int, int]</span>
+<span class="sd">        The padding around the actual barcode</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">BARCODE_LENGTH</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">BARCODE_SIZE</span> <span class="o">=</span> <span class="mi">720</span><span class="p">,</span> <span class="mi">360</span>
+    <span class="n">BARCODE_FONT_SIZE</span> <span class="o">=</span> <span class="mi">46</span>
+    <span class="n">BARCODE_COLUMN_NUMBER</span> <span class="o">=</span> <span class="mi">95</span>
+    <span class="n">BARCODE_PADDING</span> <span class="o">=</span> <span class="n">Size</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+    <span class="n">FIRST_SECTION</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+    <span class="n">SECOND_SECTION</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">BARCODE_LENGTH</span><span class="p">)</span>
+    <span class="n">WEIGHTS</span> <span class="o">=</span> <span class="n">Weights</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;45&quot;</span><span class="p">,</span> <span class="s2">&quot;49&quot;</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="n">IncorrectFormat</span><span class="p">(</span><span class="s2">&quot;JAN type barcodes need to start with country code 45 or 49&quot;</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pybarcodes package &mdash; pybarcodes 0.5.2 documentation</title>
+  <title>pybarcodes package &mdash; pybarcodes 0.6.1 documentation</title>
   
 
   
@@ -480,6 +480,69 @@ and also the binary values of each digit.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pybarcodes.ean.EAN8.WEIGHTS">
 <span class="sig-name descname"><span class="pre">WEIGHTS</span></span><em class="property"> <span class="pre">=</span> <span class="pre">Weights(ODD=1,</span> <span class="pre">EVEN=3)</span></em><a class="headerlink" href="#pybarcodes.ean.EAN8.WEIGHTS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pybarcodes.ean.JAN">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pybarcodes.ean.</span></span><span class="sig-name descname"><span class="pre">JAN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pybarcodes/ean.html#JAN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.ean.JAN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pybarcodes.ean.EAN" title="pybarcodes.ean.EAN"><code class="xref py py-class docutils literal notranslate"><span class="pre">pybarcodes.ean.EAN</span></code></a></p>
+<p>The class to represent an EAN13 barcode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>BARCODE_LENGTH: int</strong></dt><dd><p>The number of digits in an EAN13 barcode</p>
+</dd>
+<dt><strong>BARCODE_SIZE: Tuple[int, int]</strong></dt><dd><p>The barcode’s size and not the output image’s size</p>
+</dd>
+<dt><strong>BARCODE_FONT_SIZE: int</strong></dt><dd><p>The size of the font under the barcode</p>
+</dd>
+<dt><strong>BARCODE_COLUMN_NUMBER: int</strong></dt><dd><p>How many binary columns the barcode consists of</p>
+</dd>
+<dt><strong>BARCODE_PADDING: Tuple[int, int]</strong></dt><dd><p>The padding around the actual barcode</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.JAN.BARCODE_COLUMN_NUMBER">
+<span class="sig-name descname"><span class="pre">BARCODE_COLUMN_NUMBER</span></span><em class="property"> <span class="pre">=</span> <span class="pre">95</span></em><a class="headerlink" href="#pybarcodes.ean.JAN.BARCODE_COLUMN_NUMBER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.JAN.BARCODE_FONT_SIZE">
+<span class="sig-name descname"><span class="pre">BARCODE_FONT_SIZE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">46</span></em><a class="headerlink" href="#pybarcodes.ean.JAN.BARCODE_FONT_SIZE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.JAN.BARCODE_LENGTH">
+<span class="sig-name descname"><span class="pre">BARCODE_LENGTH</span></span><em class="property"> <span class="pre">=</span> <span class="pre">12</span></em><a class="headerlink" href="#pybarcodes.ean.JAN.BARCODE_LENGTH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.JAN.BARCODE_PADDING">
+<span class="sig-name descname"><span class="pre">BARCODE_PADDING</span></span><em class="property"> <span class="pre">=</span> <span class="pre">Size(width=100,</span> <span class="pre">height=200)</span></em><a class="headerlink" href="#pybarcodes.ean.JAN.BARCODE_PADDING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.JAN.BARCODE_SIZE">
+<span class="sig-name descname"><span class="pre">BARCODE_SIZE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(720,</span> <span class="pre">360)</span></em><a class="headerlink" href="#pybarcodes.ean.JAN.BARCODE_SIZE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.JAN.FIRST_SECTION">
+<span class="sig-name descname"><span class="pre">FIRST_SECTION</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(0,</span> <span class="pre">6)</span></em><a class="headerlink" href="#pybarcodes.ean.JAN.FIRST_SECTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.JAN.SECOND_SECTION">
+<span class="sig-name descname"><span class="pre">SECOND_SECTION</span></span><em class="property"> <span class="pre">=</span> <span class="pre">(6,</span> <span class="pre">12)</span></em><a class="headerlink" href="#pybarcodes.ean.JAN.SECOND_SECTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pybarcodes.ean.JAN.WEIGHTS">
+<span class="sig-name descname"><span class="pre">WEIGHTS</span></span><em class="property"> <span class="pre">=</span> <span class="pre">Weights(ODD=3,</span> <span class="pre">EVEN=1)</span></em><a class="headerlink" href="#pybarcodes.ean.JAN.WEIGHTS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
