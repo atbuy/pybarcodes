@@ -22,6 +22,6 @@ VersionInfo = namedtuple("VersionInfo", "major minor patch")
 
 version_info = VersionInfo(major=0, minor=6, patch=2)
 
-SUPPORTED_BARCODES = ["EAN13", "EAN8", "EAN14"]
+SUPPORTED_BARCODES = ["EAN13", "EAN8", "EAN14", "JAN"]
 
 from .ean import *
