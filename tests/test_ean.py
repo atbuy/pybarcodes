@@ -124,7 +124,7 @@ def test_ean14():
     binary_string = barcode.get_binary_string
     left_guard = binary_string[:3]
     right_guard = binary_string[-3:]
-    center_guard = binary_string[45:50]
+    center_guard = binary_string[52:57]
     assert left_guard == "101"
     assert right_guard == "101"
     assert center_guard == "01010"
