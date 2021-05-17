@@ -119,5 +119,3 @@ def test_ean14():
     assert left_guard == "101"
     assert right_guard == "101"
     assert center_guard == "01010"
-
-test_ean14()

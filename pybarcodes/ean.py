@@ -52,7 +52,7 @@ class EAN14(Barcode):
     BARCODE_LENGTH = 13
     BARCODE_SIZE = 720, 360
     BARCODE_FONT_SIZE = 46
-    BARCODE_COLUMN_NUMBER = 95
+    BARCODE_COLUMN_NUMBER = 102
     BARCODE_PADDING = Size(100, 200)
 
     def __init__(self, barcode):
@@ -152,9 +152,12 @@ class EAN14(Barcode):
         binary_string += EANCoding.CENTER_GUARD
 
         # Add the 6 digits after the center guard
-        for i in range(6, 12):
+        for i in range(6, self.BARCODE_LENGTH):
             digit = int(code[i])
             binary_string += EANCoding.CODES["R"][digit]
+
+        # Add the check digit before the guard
+
 
         binary_string += EANCoding.RIGHT_GUARD
 

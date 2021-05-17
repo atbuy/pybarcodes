@@ -11,3 +11,6 @@ __pycache__
 
 # Ignore dist folder
 ./dist/*
+
+test.py
+/png
