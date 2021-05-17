@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pybarcodes.ean &mdash; pybarcodes 0.4.8 documentation</title>
+  <title>pybarcodes.ean &mdash; pybarcodes 0.5.1 documentation</title>
   
 
   
@@ -190,22 +190,31 @@
 <span class="n">Size</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;Size&quot;</span><span class="p">,</span> <span class="s2">&quot;width height&quot;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="EAN13"><a class="viewcode-back" href="../../pybarcodes.html#pybarcodes.ean.EAN13">[docs]</a><span class="k">class</span> <span class="nc">EAN13</span><span class="p">(</span><span class="n">Barcode</span><span class="p">):</span>
+<div class="viewcode-block" id="EAN14"><a class="viewcode-back" href="../../pybarcodes.html#pybarcodes.ean.EAN14">[docs]</a><span class="k">class</span> <span class="nc">EAN14</span><span class="p">(</span><span class="n">Barcode</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The class to represent an EAN14 barcode</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    BARCODE_LENGTH: int</span>
+<span class="sd">        The number of digits in an EAN14 barcode</span>
+<span class="sd">    BARCODE_SIZE: Tuple[int, int]</span>
+<span class="sd">        The barcode&#39;s size and not the output image&#39;s size</span>
+<span class="sd">    BARCODE_FONT_SIZE: int</span>
+<span class="sd">        The size of the font under the barcode  </span>
+<span class="sd">    BARCODE_COLUMN_NUMBER: int</span>
+<span class="sd">        How many binary columns the barcode consists of</span>
+<span class="sd">    BARCODE_PADDING: Tuple[int, int]</span>
+<span class="sd">        The padding around the actual barcode</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">BARCODE_LENGTH</span> <span class="o">=</span> <span class="mi">13</span>
+    <span class="n">BARCODE_SIZE</span> <span class="o">=</span> <span class="mi">720</span><span class="p">,</span> <span class="mi">360</span>
+    <span class="n">BARCODE_FONT_SIZE</span> <span class="o">=</span> <span class="mi">46</span>
+    <span class="n">BARCODE_COLUMN_NUMBER</span> <span class="o">=</span> <span class="mi">95</span>
+    <span class="n">BARCODE_PADDING</span> <span class="o">=</span> <span class="n">Size</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span>
-
-        <span class="c1"># The number of digits in an EAN13 barcode</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span> <span class="o">=</span> <span class="mi">12</span>
-
-        <span class="c1"># The barcode&#39;s size and not the output image&#39;s size</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_SIZE</span> <span class="o">=</span> <span class="mi">720</span><span class="p">,</span> <span class="mi">360</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_FONT_SIZE</span> <span class="o">=</span> <span class="mi">46</span>
-
-        <span class="c1"># This declares how many columns this type of barcode has</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_COLUMN_NUMBER</span> <span class="o">=</span> <span class="mi">95</span>
-
-        <span class="c1"># The padding around the barcode</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_PADDING</span> <span class="o">=</span> <span class="n">Size</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 
         <span class="c1"># Do some error checking</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -215,14 +224,29 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clean_code</span><span class="p">()</span>
 
-<div class="viewcode-block" id="EAN13.calculate_checksum"><a class="viewcode-back" href="../../pybarcodes.html#pybarcodes.ean.EAN13.calculate_checksum">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">calculate_checksum</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">barcode</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;EAN13&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<div class="viewcode-block" id="EAN14.calculate_checksum"><a class="viewcode-back" href="../../pybarcodes.html#pybarcodes.ean.EAN14.calculate_checksum">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">calculate_checksum</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">barcode</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;EAN14&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the checksum from the barcode given</span>
+
+<span class="sd">        This is a class method because it can only be used just to calculate any barcode</span>
+<span class="sd">        of the same type, not only the instance&#39;s checksum</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        barcode: Union[str, &quot;EAN14&quot;]</span>
+<span class="sd">            The barcode to calculate the check digit of.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        A single digit integer that helps determine if the barcode is correct</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            Raised when the barcode is not an acceptable type</span>
+<span class="sd">        IncorrectFormat</span>
+<span class="sd">            Raised when the barcode is not in the format expected</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">barcode</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
             <span class="n">barcode</span> <span class="o">=</span> <span class="n">barcode</span><span class="o">.</span><span class="n">code</span>
@@ -231,8 +255,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Can&#39;t accept type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">12</span><span class="p">:</span>
-            <span class="n">barcode</span> <span class="o">=</span> <span class="n">barcode</span><span class="p">[:</span><span class="mi">12</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span><span class="p">:</span>
+            <span class="n">barcode</span> <span class="o">=</span> <span class="n">barcode</span><span class="p">[:</span><span class="bp">cls</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span><span class="p">]</span>
             <span class="c1"># Here there is no check digit so it&#39;s calculated</span>
             <span class="n">digits</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">barcode</span><span class="p">)))</span>
 
@@ -251,7 +275,7 @@
             <span class="n">closest10</span> <span class="o">=</span> <span class="p">((</span><span class="n">checksum</span> <span class="o">//</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="mi">10</span>
             <span class="k">return</span> <span class="n">closest10</span> <span class="o">%</span> <span class="n">checksum</span>
 
-        <span class="k">raise</span> <span class="n">IncorrectFormat</span><span class="p">(</span><span class="s2">&quot;Barcode should be at least 12 digits long.&quot;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="n">IncorrectFormat</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Barcode should be at least </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span><span class="si">}</span><span class="s2"> digits long.&quot;</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">get_binary_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -295,21 +319,162 @@
         <span class="k">return</span> <span class="n">binary_string</span></div>
 
 
-<div class="viewcode-block" id="EAN8"><a class="viewcode-back" href="../../pybarcodes.html#pybarcodes.ean.EAN8">[docs]</a><span class="k">class</span> <span class="nc">EAN8</span><span class="p">(</span><span class="n">Barcode</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
+<div class="viewcode-block" id="EAN13"><a class="viewcode-back" href="../../pybarcodes.html#pybarcodes.ean.EAN13">[docs]</a><span class="k">class</span> <span class="nc">EAN13</span><span class="p">(</span><span class="n">Barcode</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The class to represent an EAN13 barcode</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    BARCODE_LENGTH: int</span>
+<span class="sd">        The number of digits in an EAN13 barcode</span>
+<span class="sd">    BARCODE_SIZE: Tuple[int, int]</span>
+<span class="sd">        The barcode&#39;s size and not the output image&#39;s size</span>
+<span class="sd">    BARCODE_FONT_SIZE: int</span>
+<span class="sd">        The size of the font under the barcode  </span>
+<span class="sd">    BARCODE_COLUMN_NUMBER: int</span>
+<span class="sd">        How many binary columns the barcode consists of</span>
+<span class="sd">    BARCODE_PADDING: Tuple[int, int]</span>
+<span class="sd">        The padding around the actual barcode</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">BARCODE_LENGTH</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">BARCODE_SIZE</span> <span class="o">=</span> <span class="mi">720</span><span class="p">,</span> <span class="mi">360</span>
+    <span class="n">BARCODE_FONT_SIZE</span> <span class="o">=</span> <span class="mi">46</span>
+    <span class="n">BARCODE_COLUMN_NUMBER</span> <span class="o">=</span> <span class="mi">95</span>
+    <span class="n">BARCODE_PADDING</span> <span class="o">=</span> <span class="n">Size</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span>
 
-        <span class="c1"># The number of digits in an EAN8 barcode</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span> <span class="o">=</span> <span class="mi">7</span>
+        <span class="c1"># Do some error checking</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span><span class="p">:</span>
+                <span class="n">error</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> should be at least </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span><span class="si">}</span><span class="s2"> digits long, not </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="k">raise</span> <span class="n">IncorrectFormat</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clean_code</span><span class="p">()</span>
 
-        <span class="c1"># The barcode&#39;s size and not the output image&#39;s size</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_SIZE</span> <span class="o">=</span> <span class="mi">480</span><span class="p">,</span> <span class="mi">240</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_FONT_SIZE</span> <span class="o">=</span> <span class="mi">40</span>
+<div class="viewcode-block" id="EAN13.calculate_checksum"><a class="viewcode-back" href="../../pybarcodes.html#pybarcodes.ean.EAN13.calculate_checksum">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">calculate_checksum</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">barcode</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;EAN13&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the checksum from the barcode given</span>
 
-        <span class="c1"># This declares how many columns this type of barcode has</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_COLUMN_NUMBER</span> <span class="o">=</span> <span class="mi">75</span>
+<span class="sd">        This is a class method because it can only be used just to calculate any barcode</span>
+<span class="sd">        of the same type, not only the instance&#39;s checksum</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_PADDING</span> <span class="o">=</span> <span class="n">Size</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        barcode: Union[str, &quot;EAN13&quot;]</span>
+<span class="sd">            The barcode to calculate the check digit of.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        A single digit integer that helps determine if the barcode is correct</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            Raised when the barcode is not an acceptable type</span>
+<span class="sd">        IncorrectFormat</span>
+<span class="sd">            Raised when the barcode is not in the format expected</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">barcode</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
+            <span class="n">barcode</span> <span class="o">=</span> <span class="n">barcode</span><span class="o">.</span><span class="n">code</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">barcode</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Can&#39;t accept type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span><span class="p">:</span>
+            <span class="n">barcode</span> <span class="o">=</span> <span class="n">barcode</span><span class="p">[:</span><span class="bp">cls</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span><span class="p">]</span>
+            <span class="c1"># Here there is no check digit so it&#39;s calculated</span>
+            <span class="n">digits</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">barcode</span><span class="p">)))</span>
+
+            <span class="c1"># Get even and odd indeces of the digits</span>
+            <span class="n">odd_weight</span><span class="p">,</span> <span class="n">even_weight</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">weighted_odd</span> <span class="o">=</span> <span class="n">digits</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">weighted_even</span> <span class="o">=</span> <span class="n">digits</span><span class="p">[::</span><span class="mi">2</span><span class="p">]</span>
+
+            <span class="c1"># Calculate the checksum</span>
+            <span class="n">checksum</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">weighted_odd</span><span class="p">)</span> <span class="o">*</span> <span class="n">odd_weight</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">weighted_even</span><span class="p">)</span> <span class="o">*</span> <span class="n">even_weight</span>
+            <span class="k">if</span> <span class="n">checksum</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">0</span>
+
+            <span class="c1"># Find the closest multiple of 10, that is equal to</span>
+            <span class="c1"># or higher than the checksum and return the difference</span>
+            <span class="n">closest10</span> <span class="o">=</span> <span class="p">((</span><span class="n">checksum</span> <span class="o">//</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="mi">10</span>
+            <span class="k">return</span> <span class="n">closest10</span> <span class="o">%</span> <span class="n">checksum</span>
+
+        <span class="k">raise</span> <span class="n">IncorrectFormat</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Barcode should be at least </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span><span class="si">}</span><span class="s2"> digits long.&quot;</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">get_binary_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts the code to the binary string that it produces</span>
+<span class="sd">        The binary string contains the left, center and right guards,</span>
+<span class="sd">        and also the binary values of each digit.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            The return string contains 1&#39;s and 0&#39;s that represent the barcode.</span>
+<span class="sd">            This string is used to iterate over, to create the barcode.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># First find the structure that the first group of 6 follows.</span>
+        <span class="c1"># This is determined by the first digit of the barcode</span>
+        <span class="n">structure</span> <span class="o">=</span> <span class="n">EANCoding</span><span class="o">.</span><span class="n">STRUCTURE</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+        <span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+        <span class="c1"># Convert the barcode to a binary string with the CodeNumbers class</span>
+        <span class="c1"># Add the left guard</span>
+        <span class="n">binary_string</span> <span class="o">=</span> <span class="n">EANCoding</span><span class="o">.</span><span class="n">LEFT_GUARD</span>
+
+        <span class="c1"># Add the 6 digits after the left guard</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+            <span class="n">digit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">code</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">coding</span> <span class="o">=</span> <span class="n">structure</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">binary_string</span> <span class="o">+=</span> <span class="n">EANCoding</span><span class="o">.</span><span class="n">CODES</span><span class="p">[</span><span class="n">coding</span><span class="p">][</span><span class="n">digit</span><span class="p">]</span>
+
+        <span class="c1"># Add the center guard</span>
+        <span class="n">binary_string</span> <span class="o">+=</span> <span class="n">EANCoding</span><span class="o">.</span><span class="n">CENTER_GUARD</span>
+
+        <span class="c1"># Add the 6 digits after the center guard</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">12</span><span class="p">):</span>
+            <span class="n">digit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">code</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">binary_string</span> <span class="o">+=</span> <span class="n">EANCoding</span><span class="o">.</span><span class="n">CODES</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">][</span><span class="n">digit</span><span class="p">]</span>
+
+        <span class="n">binary_string</span> <span class="o">+=</span> <span class="n">EANCoding</span><span class="o">.</span><span class="n">RIGHT_GUARD</span>
+
+        <span class="k">return</span> <span class="n">binary_string</span></div>
+
+
+<div class="viewcode-block" id="EAN8"><a class="viewcode-back" href="../../pybarcodes.html#pybarcodes.ean.EAN8">[docs]</a><span class="k">class</span> <span class="nc">EAN8</span><span class="p">(</span><span class="n">Barcode</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The class to represent an EAN8 barcode</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    BARCODE_LENGTH: int</span>
+<span class="sd">        The number of digits of the barcode</span>
+<span class="sd">    BARCODE_SIZE: Tuple[int, int]</span>
+<span class="sd">        The barcode&#39;s size and not the output image&#39;s size</span>
+<span class="sd">    BARCODE_FONT_SIZE: int</span>
+<span class="sd">        The size of the font under the barcode  </span>
+<span class="sd">    BARCODE_COLUMN_NUMBER: int</span>
+<span class="sd">        How many binary columns the barcode consists of</span>
+<span class="sd">    BARCODE_PADDING: Tuple[int, int]</span>
+<span class="sd">        The padding around the actual barcode</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">BARCODE_LENGTH</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">BARCODE_SIZE</span> <span class="o">=</span> <span class="mi">480</span><span class="p">,</span> <span class="mi">240</span>
+    <span class="n">BARCODE_FONT_SIZE</span> <span class="o">=</span> <span class="mi">40</span>
+    <span class="n">BARCODE_COLUMN_NUMBER</span> <span class="o">=</span> <span class="mi">75</span>
+    <span class="n">BARCODE_PADDING</span> <span class="o">=</span> <span class="n">Size</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span>
 
         <span class="c1"># Do some error checking</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -324,9 +489,24 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the checksum from the barcode given</span>
 
+<span class="sd">        This is a class method because it can only be used just to calculate any barcode</span>
+<span class="sd">        of the same type, not only the instance&#39;s checksum</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        barcode: Union[str, &quot;EAN8&quot;]</span>
+<span class="sd">            The barcode to calculate the check digit of.</span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        A single digit integer that helps determine if the barcode is correct</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        TypeError</span>
+<span class="sd">            Raised when the barcode is not an acceptable type</span>
+<span class="sd">        IncorrectFormat</span>
+<span class="sd">            Raised when the barcode is not in the format expected</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">barcode</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
             <span class="n">barcode</span> <span class="o">=</span> <span class="n">barcode</span><span class="o">.</span><span class="n">code</span>
@@ -335,8 +515,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Can&#39;t accept type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">7</span><span class="p">:</span>
-            <span class="n">barcode</span> <span class="o">=</span> <span class="n">barcode</span><span class="p">[:</span><span class="mi">7</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span><span class="p">:</span>
+            <span class="n">barcode</span> <span class="o">=</span> <span class="n">barcode</span><span class="p">[:</span><span class="bp">cls</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span><span class="p">]</span>
 
             <span class="c1"># Here there is no check digit so it&#39;s calculated</span>
             <span class="n">digits</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">barcode</span><span class="p">)))</span>
@@ -354,8 +534,9 @@
             <span class="c1"># Find the closest multiple of 10, that is equal to</span>
             <span class="c1"># or higher than the checksum and return the difference</span>
             <span class="n">closest10</span> <span class="o">=</span> <span class="p">((</span><span class="n">checksum</span> <span class="o">//</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="mi">10</span>
-            <span class="k">return</span> <span class="n">closest10</span> <span class="o">%</span> <span class="n">checksum</span></div>
-
+            <span class="k">return</span> <span class="n">closest10</span> <span class="o">%</span> <span class="n">checksum</span>
+        
+        <span class="k">raise</span> <span class="n">IncorrectFormat</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Barcode should be at least </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span><span class="si">}</span><span class="s2"> digits long.&quot;</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">get_binary_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>

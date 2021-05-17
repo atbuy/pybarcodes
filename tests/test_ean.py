@@ -6,7 +6,7 @@ root = Path(__file__).parent.parent
 root = os.path.join(root)
 sys.path.append(root)
 
-from pybarcodes.ean import EAN13, EAN8
+from pybarcodes.ean import EAN13, EAN8, EAN14
 from pybarcodes.exceptions import IncorrectFormat
 
 
@@ -86,3 +86,38 @@ def test_ean8():
     assert left_guard == "101"
     assert right_guard == "101"
     assert center_guard == "01010"
+
+
+def test_ean14():
+    code = "4070071967072013242346"
+    barcode = EAN14(code)
+
+    # Check if the required attributes exist
+    assert barcode.BARCODE_LENGTH
+    assert barcode.BARCODE_SIZE
+    assert barcode.BARCODE_FONT_SIZE
+    assert barcode.BARCODE_COLUMN_NUMBER
+    assert barcode.BARCODE_PADDING
+
+    # Check digit for this barcode should be `0`
+    assert EAN14.calculate_checksum(code) == 0
+
+    # The check digit is calculated when instansiating
+    assert barcode == "40700719670720"
+
+    try:
+        code = "1"
+        barcode = EAN14(code)
+    except IncorrectFormat:
+        pass
+
+    # Check if guards in correct positions
+    binary_string = barcode.get_binary_string
+    left_guard = binary_string[:3]
+    right_guard = binary_string[-3:]
+    center_guard = binary_string[45:50]
+    assert left_guard == "101"
+    assert right_guard == "101"
+    assert center_guard == "01010"
+
+test_ean14()

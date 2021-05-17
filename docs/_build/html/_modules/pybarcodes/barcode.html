@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pybarcodes.barcode &mdash; pybarcodes 0.4.8 documentation</title>
+  <title>pybarcodes.barcode &mdash; pybarcodes 0.5.1 documentation</title>
   
 
   
@@ -212,7 +212,7 @@
         <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_barcode_image</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">size</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">img</span><span class="o">.</span><span class="n">thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_SIZE</span><span class="p">)</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
         <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Barcode.show"><a class="viewcode-back" href="../../pybarcodes.html#pybarcodes.barcode.Barcode.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>

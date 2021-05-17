@@ -24,6 +24,7 @@ Supported Barcode Types
 
 - EAN13
 - EAN8
+- EAN14
 
 More types will soon be supported.
 PRs are welcome :)
@@ -54,7 +55,7 @@ You can see what barcodes are supported
 
     >>> import pybarcodes
     >>> pybarcodes.SUPPORTED_BARCODES
-    ["EAN13", "EAN8"]
+    ['EAN13', 'EAN8', 'EAN14']
 
 
 
@@ -68,10 +69,27 @@ And you can use this to view the barcode that was generated:
     barcode = EAN13(CODE)
     barcode.show()
 
-
 This is pretty much all the code you need to generate a barcode.
 
-Output Image:
+
+Saving an image of the barcode is pretty straightforward.
+
+.. code:: py
+
+    from pybarcodes import EAN14
+
+    barcode = EAN14("40700719670720")
+
+    # Saves the image in PNG format
+    barcode.save("myimage.png")
+
+    # You can also resize it.
+    barcode.save("myimage2.png", size=(100000, 1000000))
+
+
+
+
+EAN13 output from example 2:
 
 .. image:: https://i.imgur.com/wd7jyIx.png
     :target: https://i.imgur.com/wd7jyIx.png

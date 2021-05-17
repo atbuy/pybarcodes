@@ -12,7 +12,7 @@ __title__ = "pybarcodes"
 __author__ = "Vitaman02"
 __license__ = "MIT"
 __copyright__ = "Copyright 2021-present Vitaman02"
-__version__ = "0.4.8"
+__version__ = "0.5.1"
 
 
 from collections import namedtuple
@@ -20,8 +20,8 @@ from collections import namedtuple
 
 VersionInfo = namedtuple("VersionInfo", "major minor patch")
 
-version_info = VersionInfo(major=2, minor=0, patch=0)
+version_info = VersionInfo(major=0, minor=5, patch=1)
 
-SUPPORTED_BARCODES = ["EAN13", "EAN8"]
+SUPPORTED_BARCODES = ["EAN13", "EAN8", "EAN14"]
 
 from .ean import *
