@@ -5,9 +5,11 @@ pybarcodes
     :target: https://pybarcodes.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
+
 .. image:: https://img.shields.io/pypi/v/pybarcodes.svg
     :target: https://pypi.python.org/pypi/pybarcodes
     :alt: PyPI version info
+
 
 .. image:: https://img.shields.io/pypi/pyversions/pybarcodes.svg
     :target: https://pypi.python.org/pypi/pybarcodes

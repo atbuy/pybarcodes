@@ -62,6 +62,23 @@ class EAN(Barcode):
         The return string contains 1's and 0's that represent the barcode.
         This string is used to iterate over, to create the barcode.
         """
+        
+        # Find the structure of the first section
+        # This is determined by the first digit
+        if self.HAS_STRUCTURE:
+            # We find the structure of the first section using the first digit
+            structure = EANCoding.STRUCTURE[self.code[0]]
+
+            # The first digit is removed
+            code = self.code[1:]
+        else:
+            # If there is no structure then all digits should be in `L` coding
+            structure = "L" * (self.FIRST_SECTION[1])
+
+            # In EAN8 barcodes the first digit is accounted for
+            code = self.code
+
+        
 
         # Convert the barcode to a binary string with the CodeNumbers class
         # Add the left guard
@@ -69,15 +86,16 @@ class EAN(Barcode):
 
         # Add the 6 digits after the left guard
         for i in range(*self.FIRST_SECTION):
-            digit = int(self.code[i])
-            binary_string += EANCoding.CODES["L"][digit]
+            digit = int(code[i])
+            coding = structure[i]
+            binary_string += EANCoding.CODES[coding][digit]
 
         # Add the center guard
         binary_string += EANCoding.CENTER_GUARD
 
         # Add the 6 digits after the center guard
         for i in range(*self.SECOND_SECTION):
-            digit = int(self.code[i])
+            digit = int(code[i])
             binary_string += EANCoding.CODES["R"][digit]
 
         binary_string += EANCoding.RIGHT_GUARD
@@ -160,9 +178,10 @@ class EAN14(EAN):
     BARCODE_FONT_SIZE = 46
     BARCODE_COLUMN_NUMBER = 108
     BARCODE_PADDING = Size(100, 200)
-    FIRST_SECTION = (0, 7)
-    SECOND_SECTION = (7, BARCODE_LENGTH+1)
+    FIRST_SECTION = (0, 6)
+    SECOND_SECTION = (6, BARCODE_LENGTH)
     WEIGHTS = Weights(1, 3)
+    HAS_STRUCTURE = True
 
     def __init__(self, barcode: Union[str, int]):
         super().__init__(barcode)
@@ -188,11 +207,12 @@ class EAN13(EAN):
     BARCODE_LENGTH = 12
     BARCODE_SIZE = 720, 360
     BARCODE_FONT_SIZE = 46
-    BARCODE_COLUMN_NUMBER = 95
+    BARCODE_COLUMN_NUMBER = 110
     BARCODE_PADDING = Size(100, 200)
     FIRST_SECTION = (0, 6)
     SECOND_SECTION = (6, BARCODE_LENGTH)
     WEIGHTS = Weights(3, 1)
+    HAS_STRUCTURE = True
 
     def __init__(self, barcode: Union[str, int]):
         super().__init__(barcode)
@@ -223,12 +243,13 @@ class EAN8(EAN):
     FIRST_SECTION = (0, 4)
     SECOND_SECTION = (4, BARCODE_LENGTH+1)
     WEIGHTS = Weights(1, 3)
+    HAS_STRUCTURE = False
 
     def __init__(self, barcode: Union[str, int]):
         super().__init__(barcode)
 
 
-class JAN(EAN):
+class JAN(EAN13, EAN):
     """The class to represent an EAN13 barcode
 
     Attributes
@@ -244,15 +265,6 @@ class JAN(EAN):
     BARCODE_PADDING: Tuple[int, int]
         The padding around the actual barcode
     """
-
-    BARCODE_LENGTH = 12
-    BARCODE_SIZE = 720, 360
-    BARCODE_FONT_SIZE = 46
-    BARCODE_COLUMN_NUMBER = 95
-    BARCODE_PADDING = Size(100, 200)
-    FIRST_SECTION = (0, 6)
-    SECOND_SECTION = (6, BARCODE_LENGTH)
-    WEIGHTS = Weights(3, 1)
 
     def __init__(self, barcode: Union[str, int]):
         super().__init__(barcode)

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pybarcodes.ean &mdash; pybarcodes 0.6.1 documentation</title>
+  <title>pybarcodes.ean &mdash; pybarcodes 0.6.4 documentation</title>
   
 
   
@@ -220,6 +220,23 @@
 <span class="sd">        The return string contains 1&#39;s and 0&#39;s that represent the barcode.</span>
 <span class="sd">        This string is used to iterate over, to create the barcode.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="c1"># Find the structure of the first section</span>
+        <span class="c1"># This is determined by the first digit</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">HAS_STRUCTURE</span><span class="p">:</span>
+            <span class="c1"># We find the structure of the first section using the first digit</span>
+            <span class="n">structure</span> <span class="o">=</span> <span class="n">EANCoding</span><span class="o">.</span><span class="n">STRUCTURE</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+            <span class="c1"># The first digit is removed</span>
+            <span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># If there is no structure then all digits should be in `L` coding</span>
+            <span class="n">structure</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FIRST_SECTION</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+            <span class="c1"># In EAN8 barcodes the first digit is accounted for</span>
+            <span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span>
+
+        
 
         <span class="c1"># Convert the barcode to a binary string with the CodeNumbers class</span>
         <span class="c1"># Add the left guard</span>
@@ -227,15 +244,16 @@
 
         <span class="c1"># Add the 6 digits after the left guard</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">FIRST_SECTION</span><span class="p">):</span>
-            <span class="n">digit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-            <span class="n">binary_string</span> <span class="o">+=</span> <span class="n">EANCoding</span><span class="o">.</span><span class="n">CODES</span><span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">][</span><span class="n">digit</span><span class="p">]</span>
+            <span class="n">digit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">code</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">coding</span> <span class="o">=</span> <span class="n">structure</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">binary_string</span> <span class="o">+=</span> <span class="n">EANCoding</span><span class="o">.</span><span class="n">CODES</span><span class="p">[</span><span class="n">coding</span><span class="p">][</span><span class="n">digit</span><span class="p">]</span>
 
         <span class="c1"># Add the center guard</span>
         <span class="n">binary_string</span> <span class="o">+=</span> <span class="n">EANCoding</span><span class="o">.</span><span class="n">CENTER_GUARD</span>
 
         <span class="c1"># Add the 6 digits after the center guard</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">SECOND_SECTION</span><span class="p">):</span>
-            <span class="n">digit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">digit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">code</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
             <span class="n">binary_string</span> <span class="o">+=</span> <span class="n">EANCoding</span><span class="o">.</span><span class="n">CODES</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">][</span><span class="n">digit</span><span class="p">]</span>
 
         <span class="n">binary_string</span> <span class="o">+=</span> <span class="n">EANCoding</span><span class="o">.</span><span class="n">RIGHT_GUARD</span>
@@ -318,9 +336,10 @@
     <span class="n">BARCODE_FONT_SIZE</span> <span class="o">=</span> <span class="mi">46</span>
     <span class="n">BARCODE_COLUMN_NUMBER</span> <span class="o">=</span> <span class="mi">108</span>
     <span class="n">BARCODE_PADDING</span> <span class="o">=</span> <span class="n">Size</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
-    <span class="n">FIRST_SECTION</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
-    <span class="n">SECOND_SECTION</span> <span class="o">=</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">BARCODE_LENGTH</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">FIRST_SECTION</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+    <span class="n">SECOND_SECTION</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">BARCODE_LENGTH</span><span class="p">)</span>
     <span class="n">WEIGHTS</span> <span class="o">=</span> <span class="n">Weights</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">HAS_STRUCTURE</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span></div>
@@ -346,11 +365,12 @@
     <span class="n">BARCODE_LENGTH</span> <span class="o">=</span> <span class="mi">12</span>
     <span class="n">BARCODE_SIZE</span> <span class="o">=</span> <span class="mi">720</span><span class="p">,</span> <span class="mi">360</span>
     <span class="n">BARCODE_FONT_SIZE</span> <span class="o">=</span> <span class="mi">46</span>
-    <span class="n">BARCODE_COLUMN_NUMBER</span> <span class="o">=</span> <span class="mi">95</span>
+    <span class="n">BARCODE_COLUMN_NUMBER</span> <span class="o">=</span> <span class="mi">110</span>
     <span class="n">BARCODE_PADDING</span> <span class="o">=</span> <span class="n">Size</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
     <span class="n">FIRST_SECTION</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
     <span class="n">SECOND_SECTION</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">BARCODE_LENGTH</span><span class="p">)</span>
     <span class="n">WEIGHTS</span> <span class="o">=</span> <span class="n">Weights</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">HAS_STRUCTURE</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span></div>
@@ -381,12 +401,13 @@
     <span class="n">FIRST_SECTION</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
     <span class="n">SECOND_SECTION</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">BARCODE_LENGTH</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">WEIGHTS</span> <span class="o">=</span> <span class="n">Weights</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">HAS_STRUCTURE</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="JAN"><a class="viewcode-back" href="../../pybarcodes.html#pybarcodes.ean.JAN">[docs]</a><span class="k">class</span> <span class="nc">JAN</span><span class="p">(</span><span class="n">EAN</span><span class="p">):</span>
+<div class="viewcode-block" id="JAN"><a class="viewcode-back" href="../../pybarcodes.html#pybarcodes.ean.JAN">[docs]</a><span class="k">class</span> <span class="nc">JAN</span><span class="p">(</span><span class="n">EAN13</span><span class="p">,</span> <span class="n">EAN</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;The class to represent an EAN13 barcode</span>
 
 <span class="sd">    Attributes</span>
@@ -402,15 +423,6 @@
 <span class="sd">    BARCODE_PADDING: Tuple[int, int]</span>
 <span class="sd">        The padding around the actual barcode</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">BARCODE_LENGTH</span> <span class="o">=</span> <span class="mi">12</span>
-    <span class="n">BARCODE_SIZE</span> <span class="o">=</span> <span class="mi">720</span><span class="p">,</span> <span class="mi">360</span>
-    <span class="n">BARCODE_FONT_SIZE</span> <span class="o">=</span> <span class="mi">46</span>
-    <span class="n">BARCODE_COLUMN_NUMBER</span> <span class="o">=</span> <span class="mi">95</span>
-    <span class="n">BARCODE_PADDING</span> <span class="o">=</span> <span class="n">Size</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
-    <span class="n">FIRST_SECTION</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
-    <span class="n">SECOND_SECTION</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">BARCODE_LENGTH</span><span class="p">)</span>
-    <span class="n">WEIGHTS</span> <span class="o">=</span> <span class="n">Weights</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span>
