@@ -24,6 +24,7 @@ def test_ean13():
     assert barcode.FIRST_SECTION
     assert barcode.SECOND_SECTION
     assert barcode.WEIGHTS
+    assert barcode.HAS_STRUCTURE == True
 
     assert barcode == code + "1"
     assert barcode == barcode2
@@ -68,6 +69,7 @@ def test_ean8():
     assert barcode.FIRST_SECTION
     assert barcode.SECOND_SECTION
     assert barcode.WEIGHTS
+    assert barcode.HAS_STRUCTURE == False
 
     # Check digit for this barcode should be `5`
     assert EAN8.calculate_checksum(code) == 5
@@ -107,6 +109,7 @@ def test_ean14():
     assert barcode.FIRST_SECTION
     assert barcode.SECOND_SECTION
     assert barcode.WEIGHTS
+    assert barcode.HAS_STRUCTURE == True
 
     # Check digit for this barcode should be `0`
     assert EAN14.calculate_checksum(code) == 0
@@ -124,7 +127,7 @@ def test_ean14():
     binary_string = barcode.get_binary_string
     left_guard = binary_string[:3]
     right_guard = binary_string[-3:]
-    center_guard = binary_string[52:57]
+    center_guard = binary_string[45:50]
     assert left_guard == "101"
     assert right_guard == "101"
     assert center_guard == "01010"
@@ -144,6 +147,7 @@ def test_jan():
     assert barcode.FIRST_SECTION
     assert barcode.SECOND_SECTION
     assert barcode.WEIGHTS
+    assert barcode.HAS_STRUCTURE == True
 
     assert barcode == code + "6"
     assert barcode == barcode2
