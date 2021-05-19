@@ -28,6 +28,7 @@ Supported Barcode Types
 - EAN8
 - EAN14
 - JAN
+- CODE39
 
 More types will soon be supported.
 PRs are welcome :)
@@ -58,7 +59,7 @@ You can see what barcodes are supported
 
     >>> import pybarcodes
     >>> pybarcodes.SUPPORTED_BARCODES
-    ['EAN13', 'EAN8', 'EAN14', 'JAN']
+    ['EAN13', 'EAN8', 'EAN14', 'JAN', 'CODE39']
 
 
 

@@ -34,13 +34,23 @@ class Barcode:
 
     def __init__(self, barcode: Union[str, int]):
         self.code = str(barcode)
-        if not self.code.isdigit():
-            raise IncorrectFormat("Barcode can't contain non-digit characters.")
+    
+    @property
+    def image(self) -> Image.Image:
+        """Retrieves and returns the PIL.Image object with the barcode
+
+        Returns
+        -------
+        PIl.Image.Image:
+            The barcode image
+        """
+
+        return self._get_barcode_image()
     
     def save(self, path: str, size: tuple = None) -> Image.Image:
-        """
-        Create a PIL Image object and save it to the path given.
-        It also return that image object to the caller.
+        """Create a PIL Image object and save it to the path given.
+
+        It also returns that image object to the caller.
 
         Parameters
         ----------
@@ -57,6 +67,7 @@ class Barcode:
         if size != None:
             img = img.resize(size)
         img.save(path)
+    
 
     def show(self) -> None:
         """Shows the barcode image"""
@@ -91,8 +102,7 @@ class Barcode:
             file.write(self.code)
     
     def _get_barcode_image(self) -> Image.Image:
-        """
-        Creates a PIL Image from the binary string of the barcode
+        """Creates a PIL Image from the binary string of the barcode
 
         Returns
         -------
@@ -149,34 +159,6 @@ class Barcode:
         
         draw.text((x, y), self.code, (0, 0, 0), font=font)
         return base
-    
-    def _get_column_size(self) -> int:
-        """
-        Finds and returns what the width of each column should be
-        EAN13 barcodes consist of 95 columns, so the column size
-        should be determined by the barcode size
-
-        Returns
-        -------
-        Returns an integer with the width of the bar
-        """
-        return self.BARCODE_SIZE[0] // self.BARCODE_COLUMN_NUMBER
-
-    def _clean_code(self) -> str:
-        """
-        Tries to correct the barcode given
-
-        Returns
-        -------
-        A new barcode is returned that has the correct length
-        and the check digit is calculated if not given
-        """
-        if len(self.code) >= self.BARCODE_LENGTH:
-            code = self.code[:self.BARCODE_LENGTH]
-
-            # Calculate the checksum digit
-            check_digit = self.calculate_checksum(code)
-            return code + str(check_digit)
     
     def __eq__(self, other):
         if isinstance(other, self.__class__):

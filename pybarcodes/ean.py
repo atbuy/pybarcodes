@@ -24,9 +24,9 @@
 from typing import Union
 from collections import namedtuple
 
-from pybarcodes.barcode import Barcode
-from pybarcodes.exceptions import IncorrectFormat
-from pybarcodes.codings import ean as EANCoding
+from .barcode import Barcode
+from .exceptions import IncorrectFormat
+from .codings import ean as EANCoding
 
 
 Size = namedtuple("Size", "width height")
@@ -41,6 +41,9 @@ class EAN(Barcode):
 
     def __init__(self, barcode: Union[str, int]):
         super().__init__(barcode)
+
+        if not self.code.isdigit():
+            raise IncorrectFormat("Barcode can't contain non-digit characters.")
 
         # Do some error checking
         if isinstance(self.code, str):
@@ -154,6 +157,31 @@ class EAN(Barcode):
             return closest10 % checksum
 
         raise IncorrectFormat(f"Barcode should be at least {cls.BARCODE_LENGTH} digits long.")
+    
+    def _get_column_size(self) -> int:
+        """Finds and returns what the width of each column should be
+
+        Returns
+        -------
+        Returns an integer with the width of the bar
+        """
+        return self.BARCODE_SIZE[0] // self.BARCODE_COLUMN_NUMBER
+    
+    def _clean_code(self) -> str:
+        """
+        Tries to correct the barcode given
+
+        Returns
+        -------
+        A new barcode is returned that has the correct length
+        and the check digit is calculated if not given
+        """
+        if len(self.code) >= self.BARCODE_LENGTH:
+            code = self.code[:self.BARCODE_LENGTH]
+
+            # Calculate the checksum digit
+            check_digit = self.calculate_checksum(code)
+            return code + str(check_digit)
 
 
 class EAN14(EAN):
@@ -270,4 +298,4 @@ class JAN(EAN13, EAN):
         super().__init__(barcode)
 
         if not (self.code[:2] in ("45", "49")):
-            raise IncorrectFormat("JAN type barcodes need to start with country code 45 or 49")
+            raise IncorrectFormat("JAN type barcodes need to start with country code 45 or 49.")
