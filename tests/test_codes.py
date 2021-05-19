@@ -18,7 +18,7 @@ def test_code39():
     assert barcode.BARCODE_PADDING
     assert barcode.BARCODE_SIZE
     assert barcode.BARCODE_COLUMN_NUMBER
-    
+
     assert barcode == code.upper() + "/"
 
     assert barcode.calculate_checksum(code) == 40

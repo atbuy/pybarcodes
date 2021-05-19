@@ -48,10 +48,11 @@ class EAN(Barcode):
         # Do some error checking
         if isinstance(self.code, str):
             if len(self.code) < self.BARCODE_LENGTH:
-                error = f"{self.__class__.__name__} should be at least {self.BARCODE_LENGTH} digits long, not {len(self.code)}."
+                classname = self.__class__.__name__
+                error = f"{classname} should be at least {self.BARCODE_LENGTH} digits long, not {len(self.code)}."
                 raise IncorrectFormat(error)
             else:
-                self.code = self._clean_code()  
+                self.code = self._clean_code()
 
     @property
     def get_binary_string(self) -> str:
@@ -65,7 +66,7 @@ class EAN(Barcode):
         The return string contains 1's and 0's that represent the barcode.
         This string is used to iterate over, to create the barcode.
         """
-        
+
         # Find the structure of the first section
         # This is determined by the first digit
         if self.HAS_STRUCTURE:
@@ -80,8 +81,6 @@ class EAN(Barcode):
 
             # In EAN8 barcodes the first digit is accounted for
             code = self.code
-
-        
 
         # Convert the barcode to a binary string with the CodeNumbers class
         # Add the left guard
@@ -157,7 +156,7 @@ class EAN(Barcode):
             return closest10 % checksum
 
         raise IncorrectFormat(f"Barcode should be at least {cls.BARCODE_LENGTH} digits long.")
-    
+
     def _get_column_size(self) -> int:
         """Finds and returns what the width of each column should be
 
@@ -166,7 +165,7 @@ class EAN(Barcode):
         Returns an integer with the width of the bar
         """
         return self.BARCODE_SIZE[0] // self.BARCODE_COLUMN_NUMBER
-    
+
     def _clean_code(self) -> str:
         """
         Tries to correct the barcode given
@@ -194,7 +193,7 @@ class EAN14(EAN):
     BARCODE_SIZE: Tuple[int, int]
         The barcode's size and not the output image's size
     BARCODE_FONT_SIZE: int
-        The size of the font under the barcode  
+        The size of the font under the barcode
     BARCODE_COLUMN_NUMBER: int
         How many binary columns the barcode consists of
     BARCODE_PADDING: Tuple[int, int]
@@ -225,7 +224,7 @@ class EAN13(EAN):
     BARCODE_SIZE: Tuple[int, int]
         The barcode's size and not the output image's size
     BARCODE_FONT_SIZE: int
-        The size of the font under the barcode  
+        The size of the font under the barcode
     BARCODE_COLUMN_NUMBER: int
         How many binary columns the barcode consists of
     BARCODE_PADDING: Tuple[int, int]
@@ -256,7 +255,7 @@ class EAN8(EAN):
     BARCODE_SIZE: Tuple[int, int]
         The barcode's size and not the output image's size
     BARCODE_FONT_SIZE: int
-        The size of the font under the barcode  
+        The size of the font under the barcode
     BARCODE_COLUMN_NUMBER: int
         How many binary columns the barcode consists of
     BARCODE_PADDING: Tuple[int, int]
@@ -287,7 +286,7 @@ class JAN(EAN13, EAN):
     BARCODE_SIZE: Tuple[int, int]
         The barcode's size and not the output image's size
     BARCODE_FONT_SIZE: int
-        The size of the font under the barcode  
+        The size of the font under the barcode
     BARCODE_COLUMN_NUMBER: int
         How many binary columns the barcode consists of
     BARCODE_PADDING: Tuple[int, int]

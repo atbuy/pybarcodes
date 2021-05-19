@@ -26,15 +26,13 @@ from typing import Union
 from collections import namedtuple
 from PIL import Image, ImageFont, ImageDraw
 
-from .exceptions import IncorrectFormat
-
 
 class Barcode:
     """A base class for all barcode types"""
 
     def __init__(self, barcode: Union[str, int]):
         self.code = str(barcode)
-    
+
     @property
     def image(self) -> Image.Image:
         """Retrieves and returns the PIL.Image object with the barcode
@@ -46,7 +44,7 @@ class Barcode:
         """
 
         return self._get_barcode_image()
-    
+
     def save(self, path: str, size: tuple = None) -> Image.Image:
         """Create a PIL Image object and save it to the path given.
 
@@ -56,7 +54,7 @@ class Barcode:
         ----------
         path: str
             The path to save the image to
-        
+
         Returns
         -------
         Returns a PIL Image object to the caller
@@ -67,14 +65,13 @@ class Barcode:
         if size != None:
             img = img.resize(size)
         img.save(path)
-    
 
     def show(self) -> None:
         """Shows the barcode image"""
 
         img = self._get_barcode_image()
         img.show()
-    
+
     def to_bytesio(self) -> BytesIO:
         """
         Write the barcode to a BytesIO object
@@ -100,7 +97,7 @@ class Barcode:
         """
         with open(path, "w") as file:
             file.write(self.code)
-    
+
     def _get_barcode_image(self) -> Image.Image:
         """Creates a PIL Image from the binary string of the barcode
 
@@ -126,7 +123,7 @@ class Barcode:
 
         # Create the image for the barcode
         img = Image.new("RGB", (column_size*self.BARCODE_COLUMN_NUMBER, selected_size[1]), (255, 255, 255))
-        
+
         # Get the binary string representation of the barcode digits
         binary_string = self.get_binary_string
 
@@ -136,10 +133,10 @@ class Barcode:
             column = Image.new("RGB", (column_size, img.height), color)
             img.paste(column, (index, 0))
             index += column_size
-        
+
         # Crop redundant whitespace after barcode
         img = img.crop((0, 0, index, img.height))
-        
+
         # Paste the barcode on the center of the padded base
         Point = namedtuple("Point", "x y")
         base_center = Point(base.width // 2, base.height // 2)
@@ -156,10 +153,10 @@ class Barcode:
         text_width, _ = draw.textsize(self.code, font)
         x = base_center.x - text_width // 2
         y = base.height - (base.height - img.height) // 2
-        
+
         draw.text((x, y), self.code, (0, 0, 0), font=font)
         return base
-    
+
     def __eq__(self, other):
         if isinstance(other, self.__class__):
             return self.code == other.code

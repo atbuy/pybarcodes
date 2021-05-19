@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pybarcodes.ean &mdash; pybarcodes 0.6.5 documentation</title>
+  <title>pybarcodes.ean &mdash; pybarcodes 0.7.2 documentation</title>
   
 
   
@@ -206,10 +206,11 @@
         <span class="c1"># Do some error checking</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span><span class="p">:</span>
-                <span class="n">error</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> should be at least </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span><span class="si">}</span><span class="s2"> digits long, not </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="n">classname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+                <span class="n">error</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">classname</span><span class="si">}</span><span class="s2"> should be at least </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span><span class="si">}</span><span class="s2"> digits long, not </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
                 <span class="k">raise</span> <span class="n">IncorrectFormat</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clean_code</span><span class="p">()</span>  
+                <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clean_code</span><span class="p">()</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">get_binary_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -223,7 +224,7 @@
 <span class="sd">        The return string contains 1&#39;s and 0&#39;s that represent the barcode.</span>
 <span class="sd">        This string is used to iterate over, to create the barcode.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        
+
         <span class="c1"># Find the structure of the first section</span>
         <span class="c1"># This is determined by the first digit</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">HAS_STRUCTURE</span><span class="p">:</span>
@@ -238,8 +239,6 @@
 
             <span class="c1"># In EAN8 barcodes the first digit is accounted for</span>
             <span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span>
-
-        
 
         <span class="c1"># Convert the barcode to a binary string with the CodeNumbers class</span>
         <span class="c1"># Add the left guard</span>
@@ -315,7 +314,7 @@
             <span class="k">return</span> <span class="n">closest10</span> <span class="o">%</span> <span class="n">checksum</span>
 
         <span class="k">raise</span> <span class="n">IncorrectFormat</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Barcode should be at least </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span><span class="si">}</span><span class="s2"> digits long.&quot;</span><span class="p">)</span></div>
-    
+
     <span class="k">def</span> <span class="nf">_get_column_size</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Finds and returns what the width of each column should be</span>
 
@@ -324,7 +323,7 @@
 <span class="sd">        Returns an integer with the width of the bar</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_SIZE</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_COLUMN_NUMBER</span>
-    
+
     <span class="k">def</span> <span class="nf">_clean_code</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tries to correct the barcode given</span>
@@ -352,7 +351,7 @@
 <span class="sd">    BARCODE_SIZE: Tuple[int, int]</span>
 <span class="sd">        The barcode&#39;s size and not the output image&#39;s size</span>
 <span class="sd">    BARCODE_FONT_SIZE: int</span>
-<span class="sd">        The size of the font under the barcode  </span>
+<span class="sd">        The size of the font under the barcode</span>
 <span class="sd">    BARCODE_COLUMN_NUMBER: int</span>
 <span class="sd">        How many binary columns the barcode consists of</span>
 <span class="sd">    BARCODE_PADDING: Tuple[int, int]</span>
@@ -383,7 +382,7 @@
 <span class="sd">    BARCODE_SIZE: Tuple[int, int]</span>
 <span class="sd">        The barcode&#39;s size and not the output image&#39;s size</span>
 <span class="sd">    BARCODE_FONT_SIZE: int</span>
-<span class="sd">        The size of the font under the barcode  </span>
+<span class="sd">        The size of the font under the barcode</span>
 <span class="sd">    BARCODE_COLUMN_NUMBER: int</span>
 <span class="sd">        How many binary columns the barcode consists of</span>
 <span class="sd">    BARCODE_PADDING: Tuple[int, int]</span>
@@ -414,7 +413,7 @@
 <span class="sd">    BARCODE_SIZE: Tuple[int, int]</span>
 <span class="sd">        The barcode&#39;s size and not the output image&#39;s size</span>
 <span class="sd">    BARCODE_FONT_SIZE: int</span>
-<span class="sd">        The size of the font under the barcode  </span>
+<span class="sd">        The size of the font under the barcode</span>
 <span class="sd">    BARCODE_COLUMN_NUMBER: int</span>
 <span class="sd">        How many binary columns the barcode consists of</span>
 <span class="sd">    BARCODE_PADDING: Tuple[int, int]</span>
@@ -445,7 +444,7 @@
 <span class="sd">    BARCODE_SIZE: Tuple[int, int]</span>
 <span class="sd">        The barcode&#39;s size and not the output image&#39;s size</span>
 <span class="sd">    BARCODE_FONT_SIZE: int</span>
-<span class="sd">        The size of the font under the barcode  </span>
+<span class="sd">        The size of the font under the barcode</span>
 <span class="sd">    BARCODE_COLUMN_NUMBER: int</span>
 <span class="sd">        How many binary columns the barcode consists of</span>
 <span class="sd">    BARCODE_PADDING: Tuple[int, int]</span>

@@ -28,7 +28,7 @@ class Code(Barcode):
             elif char in ("1", " "):
                 column_size += 3
             column_size += 1
-            
+
         # Calculate how many character will have to be written
         self.BARCODE_COLUMN_NUMBER = column_size
 
@@ -51,7 +51,7 @@ class Code(Barcode):
 
         # Add the start character
         code = CODEXCoding.GUARD + code
-        
+
         # Add the stop character
         code += CODEXCoding.GUARD
 
@@ -87,7 +87,7 @@ class Code(Barcode):
             raise TypeError(f"Can't accept type {type(barcode)}")
 
         barcode = barcode.upper()
-        
+
         # If the barcode is only 1 character long
         # Then the check sum will be that same character
         if len(barcode) == 1:
@@ -98,7 +98,7 @@ class Code(Barcode):
 
         # Calculate the modulo 43 of the sum
         return sum(numbers) % 43
-    
+
     def _get_barcode_image(self) -> Image.Image:
         """Creates a PIL Image from the binary string of the barcode.
 
@@ -156,7 +156,7 @@ class Code(Barcode):
                 # Then paste the spacing
                 img.paste(space, (index, 0))
                 index += column_size
-        
+
         # Crop redundant whitespace after barcode
         img = img.crop((0, 0, index, img.height))
 
@@ -176,7 +176,7 @@ class Code(Barcode):
         text_width, _ = draw.textsize(self.code, font)
         x = base_center.x - text_width // 2
         y = base.height - (base.height - img.height) // 2
-        
+
         draw.text((x, y), self.code, (0, 0, 0), font=font)
         return base
 
@@ -215,7 +215,7 @@ class Code(Barcode):
 
         self.checksum = checkchar
         return self.code + str(checkchar)
-    
+
     def _trim(self, code: str) -> str:
         """Removes the start and stop characters from the barcode
 
@@ -232,7 +232,7 @@ class Code(Barcode):
         """
 
         return code[5:-6]
-    
+
     def _get_column_size(self) -> int:
         """Finds and returns what the width of each column should be
 
@@ -246,13 +246,13 @@ class Code(Barcode):
 
 class CODE39(Code):
     """The class to represent Code39 barcodes
-    
+
     Attributes
     ----------
     BARCODE_SIZE: Tuple[int, int]
         The barcode's size and not the output image's size
     BARCODE_FONT_SIZE: int
-        The size of the font under the barcode  
+        The size of the font under the barcode
     BARCODE_PADDING: Tuple[int, int]
         The padding around the actual barcode
     """
@@ -263,6 +263,3 @@ class CODE39(Code):
 
     def __init__(self, barcode: Union[str, int]):
         super().__init__(barcode)
-
-
-Code39 = CODE39

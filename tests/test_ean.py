@@ -24,7 +24,7 @@ def test_ean13():
     assert barcode.FIRST_SECTION
     assert barcode.SECOND_SECTION
     assert barcode.WEIGHTS
-    assert barcode.HAS_STRUCTURE == True
+    assert barcode.HAS_STRUCTURE
 
     assert barcode == code + "1"
     assert barcode == barcode2
@@ -69,7 +69,7 @@ def test_ean8():
     assert barcode.FIRST_SECTION
     assert barcode.SECOND_SECTION
     assert barcode.WEIGHTS
-    assert barcode.HAS_STRUCTURE == False
+    assert not barcode.HAS_STRUCTURE
 
     # Check digit for this barcode should be `5`
     assert EAN8.calculate_checksum(code) == 5
@@ -109,7 +109,7 @@ def test_ean14():
     assert barcode.FIRST_SECTION
     assert barcode.SECOND_SECTION
     assert barcode.WEIGHTS
-    assert barcode.HAS_STRUCTURE == True
+    assert barcode.HAS_STRUCTURE
 
     # Check digit for this barcode should be `0`
     assert EAN14.calculate_checksum(code) == 0
@@ -147,7 +147,7 @@ def test_jan():
     assert barcode.FIRST_SECTION
     assert barcode.SECOND_SECTION
     assert barcode.WEIGHTS
-    assert barcode.HAS_STRUCTURE == True
+    assert barcode.HAS_STRUCTURE
 
     assert barcode == code + "6"
     assert barcode == barcode2
