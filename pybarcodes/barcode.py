@@ -122,7 +122,7 @@ class Barcode:
         base = Image.new("RGB", padded_size, (255, 255, 255))
 
         # Create the image for the barcode
-        img = Image.new("RGB", (column_size*self.BARCODE_COLUMN_NUMBER, selected_size[1]), (255, 255, 255))
+        img = Image.new("RGB", (column_size * self.BARCODE_COLUMN_NUMBER, selected_size[1]), (255, 255, 255))
 
         # Get the binary string representation of the barcode digits
         binary_string = self.get_binary_string

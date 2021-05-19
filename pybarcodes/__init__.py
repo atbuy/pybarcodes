@@ -16,7 +16,7 @@ __title__ = "pybarcodes"
 __author__ = "Vitaman02"
 __license__ = "MIT"
 __copyright__ = "Copyright 2021-present Vitaman02"
-__version__ = "0.7.2"
+__version__ = "0.7.3"
 
 VersionInfo = namedtuple("VersionInfo", "major minor patch")
 

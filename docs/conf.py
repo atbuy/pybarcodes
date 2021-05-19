@@ -22,7 +22,7 @@ copyright = '2021, Vitaman02'
 author = 'Vitaman02'
 
 # The full version, including alpha/beta/rc tags
-release = '0.7.2'
+release = '0.7.3'
 
 
 # -- General configuration ---------------------------------------------------

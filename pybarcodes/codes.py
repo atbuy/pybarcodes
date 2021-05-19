@@ -12,14 +12,14 @@ Size = namedtuple("Size", "width height")
 
 class Code(Barcode):
     def __init__(self, barcode: Union[str, int]):
-        super().__init__(barcode.upper())
+        super().__init__(barcode)
 
         self.code = self._clean_code()
 
         # Calculate the variable width of the barcode
-        # 10 pixels for each character
+        # 6 pixels for each character
         if self.BARCODE_SIZE[0] == -1:
-            self.BARCODE_SIZE = (len(self.code) * 6 + len(CODEXCoding.GUARD) * 2) * 7, self.BARCODE_SIZE[1]
+            self.BARCODE_SIZE = (len(self.code) * 6 + len(CODEXCoding.GUARD) * 2) * 6, self.BARCODE_SIZE[1]
 
         column_size = 0
         for char in self.get_binary_string:
@@ -75,7 +75,7 @@ class Code(Barcode):
             Raised when the barcode is not an acceptable type
         IncorrectFormat
             Raised when the barcode is not in the format expected
-        """  
+        """
 
         if isinstance(barcode, self.__class__):
             barcode = barcode.code
@@ -155,7 +155,7 @@ class Code(Barcode):
             if not (color[0] == 255):
                 # Then paste the spacing
                 img.paste(space, (index, 0))
-                index += column_size
+                index += space.width
 
         # Crop redundant whitespace after barcode
         img = img.crop((0, 0, index, img.height))
@@ -178,6 +178,12 @@ class Code(Barcode):
         y = base.height - (base.height - img.height) // 2
 
         draw.text((x, y), self.code, (0, 0, 0), font=font)
+
+        # And now we crop spare white space around base image
+        start_index = (base_center.x - img_center.x) - padding.width // 2
+        end_index = (base_center.x - img_center.x) + padding.width // 2
+
+        base.crop((start_index, 0, end_index, base.height))
         return base
 
     def _convert_to_binary(self, string: str) -> str:
@@ -259,7 +265,7 @@ class CODE39(Code):
 
     BARCODE_SIZE = -1, 240
     BARCODE_FONT_SIZE = 30
-    BARCODE_PADDING = Size(100, 200)
+    BARCODE_PADDING = Size(50, 100)
 
     def __init__(self, barcode: Union[str, int]):
-        super().__init__(barcode)
+        super().__init__(barcode.upper())
