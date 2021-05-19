@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pybarcodes.barcode &mdash; pybarcodes 0.6.1 documentation</title>
+  <title>pybarcodes.barcode &mdash; pybarcodes 0.6.5 documentation</title>
   
 
   
@@ -192,13 +192,23 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barcode</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">barcode</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
-            <span class="k">raise</span> <span class="n">IncorrectFormat</span><span class="p">(</span><span class="s2">&quot;Barcode can&#39;t contain non-digit characters.&quot;</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">image</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Image</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves and returns the PIL.Image object with the barcode</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        PIl.Image.Image:</span>
+<span class="sd">            The barcode image</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_barcode_image</span><span class="p">()</span>
     
 <div class="viewcode-block" id="Barcode.save"><a class="viewcode-back" href="../../pybarcodes.html#pybarcodes.barcode.Barcode.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Image</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a PIL Image object and save it to the path given.</span>
-<span class="sd">        It also return that image object to the caller.</span>
+        <span class="sd">&quot;&quot;&quot;Create a PIL Image object and save it to the path given.</span>
+
+<span class="sd">        It also returns that image object to the caller.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -215,6 +225,7 @@
         <span class="k">if</span> <span class="n">size</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
         <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+    
 
 <div class="viewcode-block" id="Barcode.show"><a class="viewcode-back" href="../../pybarcodes.html#pybarcodes.barcode.Barcode.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Shows the barcode image&quot;&quot;&quot;</span>
@@ -249,8 +260,7 @@
             <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)</span></div>
     
     <span class="k">def</span> <span class="nf">_get_barcode_image</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Image</span><span class="o">.</span><span class="n">Image</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a PIL Image from the binary string of the barcode</span>
+        <span class="sd">&quot;&quot;&quot;Creates a PIL Image from the binary string of the barcode</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -307,34 +317,6 @@
         
         <span class="n">draw</span><span class="o">.</span><span class="n">text</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">font</span><span class="o">=</span><span class="n">font</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">base</span>
-    
-    <span class="k">def</span> <span class="nf">_get_column_size</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Finds and returns what the width of each column should be</span>
-<span class="sd">        EAN13 barcodes consist of 95 columns, so the column size</span>
-<span class="sd">        should be determined by the barcode size</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        Returns an integer with the width of the bar</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_SIZE</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_COLUMN_NUMBER</span>
-
-    <span class="k">def</span> <span class="nf">_clean_code</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Tries to correct the barcode given</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        A new barcode is returned that has the correct length</span>
-<span class="sd">        and the check digit is calculated if not given</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span><span class="p">:</span>
-            <span class="n">code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">BARCODE_LENGTH</span><span class="p">]</span>
-
-            <span class="c1"># Calculate the checksum digit</span>
-            <span class="n">check_digit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_checksum</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">code</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">check_digit</span><span class="p">)</span>
     
     <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>

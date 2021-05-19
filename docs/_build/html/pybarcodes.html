@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>pybarcodes package &mdash; pybarcodes 0.6.5 documentation</title>
+  <title>pybarcodes package &mdash; pybarcodes 0.7.2 documentation</title>
   
 
   
@@ -184,11 +184,25 @@
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pybarcodes.barcode.</span></span><span class="sig-name descname"><span class="pre">Barcode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barcode</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pybarcodes/barcode.html#Barcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.barcode.Barcode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A base class for all barcode types</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="pybarcodes.barcode.Barcode.image">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">image</span></span><em class="property"><span class="pre">:</span> <span class="pre">PIL.Image.Image</span></em><a class="headerlink" href="#pybarcodes.barcode.Barcode.image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves and returns the PIL.Image object with the barcode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>PIl.Image.Image:</dt><dd><p>The barcode image</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="pybarcodes.barcode.Barcode.save">
 <span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">PIL.Image.Image</span><a class="reference internal" href="_modules/pybarcodes/barcode.html#Barcode.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pybarcodes.barcode.Barcode.save" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a PIL Image object and save it to the path given.
-It also return that image object to the caller.</p>
+<dd><p>Create a PIL Image object and save it to the path given.</p>
+<p>It also returns that image object to the caller.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
