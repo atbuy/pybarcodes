@@ -62,7 +62,7 @@ class Barcode:
 
         img = self._get_barcode_image()
 
-        if size != None:
+        if size is not None:
             img = img.resize(size)
         img.save(path)
 

@@ -75,7 +75,7 @@ class Code(Barcode):
             Raised when the barcode is not an acceptable type
         IncorrectFormat
             Raised when the barcode is not in the format expected
-        """        
+        """  
 
         if isinstance(barcode, self.__class__):
             barcode = barcode.code
