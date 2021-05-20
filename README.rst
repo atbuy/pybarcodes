@@ -104,4 +104,5 @@ Links
 ------
 
 - `Documentation <https://pybarcodes.readthedocs.io/en/latest/index.html>`_
+- `PyPi <https://pypi.org/project/pybarcodes/>`_
 
