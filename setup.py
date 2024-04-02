@@ -1,24 +1,23 @@
-import os
-from setuptools import setup, find_packages
+from pathlib import Path
 
+from setuptools import find_packages, setup
 
-this_dir = os.path.abspath(os.path.dirname(__file__))
+cwd = Path(__file__).parent
+readme_path = cwd.joinpath("README.rst")
 
-
-requirements = []
-with open(os.path.join(this_dir, "requirements.txt")) as file:
-    requirements = file.read().splitlines()
-
+requirements = [
+    "Pillow>=8.0.1",
+    "numpydoc>=1.1.0",
+]
 
 readme = ""
-with open(os.path.join(this_dir, "README.rst")) as file:
+with open(readme_path) as file:
     readme = file.read()
-
 
 setup(
     name="pybarcodes",
-    author="Vitaman02",
-    url="https://github.com/Vitaman02/pybarcodes",
+    author="atbuy",
+    url="https://github.com/atbuy/pybarcodes",
     project_urls={},
     version="0.7.3",
     packages=find_packages(),
@@ -28,7 +27,7 @@ setup(
     long_description_content_type="text/x-rst",
     include_package_data=True,
     install_requires=requirements,
-    python_requires=">=3.6.0",
+    python_requires=">=3.8.0",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: MIT License",
@@ -36,13 +35,13 @@ setup(
         "Natural Language :: English",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "Topic :: Multimedia :: Graphics",
         "Topic :: Software Development :: Libraries",
         "Topic :: Software Development :: Libraries :: Python Modules",
-        "Topic :: Utilities"
-    ]
+        "Topic :: Utilities",
+    ],
 )

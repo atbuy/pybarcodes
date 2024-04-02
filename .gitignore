@@ -12,6 +12,7 @@ __pycache__
 # Ignore dist folder
 ./dist/*
 
-test.py
+.python-version
+pyrightconfig.json
 
 *.png
