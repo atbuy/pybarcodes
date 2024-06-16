@@ -29,7 +29,7 @@ setup(
     author="atbuy",
     url="https://github.com/atbuy/pybarcodes",
     project_urls={},
-    version="0.7.4",
+    version="0.7.5",
     packages=find_packages(),
     license="MIT",
     description="A Python barcode generator",
