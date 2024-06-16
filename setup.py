@@ -6,7 +6,7 @@ cwd = Path(__file__).parent
 readme_path = cwd.joinpath("README.rst")
 
 requirements = [
-    "Pillow>=8.0.1",
+    "Pillow>=8.0.1,<9",
 ]
 
 doc_requirements = [
@@ -35,6 +35,7 @@ setup(
     description="A Python barcode generator",
     long_description=readme,
     long_description_content_type="text/x-rst",
+    package_data={"": ["fonts/*.ttf"]},
     include_package_data=True,
     install_requires=requirements,
     extras_require=extras,
