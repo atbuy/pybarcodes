@@ -1,11 +1,3 @@
-import os
-import sys
-from pathlib import Path
-
-root = Path(__file__).parent.parent
-root = os.path.join(root)
-sys.path.append(root)
-
 from pybarcodes import CODE39
 from pybarcodes.exceptions import IncorrectFormat
 

@@ -1,30 +1,8 @@
-# MIT License
-
-# Copyright (c) 2021 Vitaman02
-
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-
+from collections import namedtuple
 from io import BytesIO
 from typing import Union
-from collections import namedtuple
-from PIL import Image, ImageFont, ImageDraw
+
+from PIL import Image, ImageDraw, ImageFont
 
 
 class Barcode:
@@ -113,7 +91,10 @@ class Barcode:
         selected_size, font_size = self.BARCODE_SIZE, self.BARCODE_FONT_SIZE
 
         # This is for the white space around the barcode
-        padded_size = selected_size[0] + padding.width, selected_size[1] + padding.height
+        padded_size = (
+            selected_size[0] + padding.width,
+            selected_size[1] + padding.height,
+        )
 
         # Get each column's width and height
         column_size = self._get_column_size()
@@ -122,7 +103,11 @@ class Barcode:
         base = Image.new("RGB", padded_size, (255, 255, 255))
 
         # Create the image for the barcode
-        img = Image.new("RGB", (column_size * self.BARCODE_COLUMN_NUMBER, selected_size[1]), (255, 255, 255))
+        img = Image.new(
+            "RGB",
+            (column_size * self.BARCODE_COLUMN_NUMBER, selected_size[1]),
+            (255, 255, 255),
+        )
 
         # Get the binary string representation of the barcode digits
         binary_string = self.get_binary_string

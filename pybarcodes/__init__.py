@@ -1,25 +1,16 @@
-"""
-pybarcodes
-~~~~~~~~~~
-
-A Python barcode generator
-
-:copyright: (c) 2021-present Vitaman02
-:license: MIT, see LICENSE for more details.
-"""
-
 from collections import namedtuple
-from .ean import *
+
 from .codes import *
+from .ean import *
 
 __title__ = "pybarcodes"
-__author__ = "Vitaman02"
+__author__ = "atbuy"
 __license__ = "MIT"
-__copyright__ = "Copyright 2021-present Vitaman02"
-__version__ = "0.7.3"
+__copyright__ = "Copyright 2021-present atbuy"
+__version__ = (0, 7, 4)
 
 VersionInfo = namedtuple("VersionInfo", "major minor patch")
 
-version_info = VersionInfo(*map(int, __version__.split(".")))
+version_info = VersionInfo(*__version__)
 
 SUPPORTED_BARCODES = ["EAN13", "EAN8", "EAN14", "JAN", "CODE39"]

@@ -1,12 +1,4 @@
-import os
-import sys
-from pathlib import Path
-
-root = Path(__file__).parent.parent
-root = os.path.join(root)
-sys.path.append(root)
-
-from pybarcodes import EAN13, EAN8, EAN14, JAN
+from pybarcodes import EAN8, EAN13, EAN14, JAN
 from pybarcodes.exceptions import IncorrectFormat
 
 

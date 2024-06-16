@@ -7,8 +7,18 @@ readme_path = cwd.joinpath("README.rst")
 
 requirements = [
     "Pillow>=8.0.1",
+]
+
+doc_requirements = [
     "numpydoc>=1.1.0",
 ]
+
+test_requirements = [
+    "pytest==8.2.2",
+    "pytest-cov==5.0.0",
+]
+
+extras = {"test": test_requirements, "doc": doc_requirements}
 
 readme = ""
 with open(readme_path) as file:
@@ -19,7 +29,7 @@ setup(
     author="atbuy",
     url="https://github.com/atbuy/pybarcodes",
     project_urls={},
-    version="0.7.3",
+    version="0.7.4",
     packages=find_packages(),
     license="MIT",
     description="A Python barcode generator",
@@ -27,6 +37,7 @@ setup(
     long_description_content_type="text/x-rst",
     include_package_data=True,
     install_requires=requirements,
+    extras_require=extras,
     python_requires=">=3.8.0",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -39,6 +50,7 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "Topic :: Multimedia :: Graphics",
         "Topic :: Software Development :: Libraries",
         "Topic :: Software Development :: Libraries :: Python Modules",

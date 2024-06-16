@@ -1,33 +1,9 @@
-# MIT License
-
-# Copyright (c) 2021 Vitaman02
-
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-
-from typing import Union
 from collections import namedtuple
+from typing import Union
 
 from .barcode import Barcode
-from .exceptions import IncorrectFormat
 from .codings import ean as EANCoding
-
+from .exceptions import IncorrectFormat
 
 Size = namedtuple("Size", "width height")
 Weights = namedtuple("Weights", "ODD EVEN")
@@ -137,7 +113,7 @@ class EAN(Barcode):
             raise TypeError(f"Can't accept type {type(barcode)}")
 
         if len(barcode) >= cls.BARCODE_LENGTH:
-            barcode = barcode[:cls.BARCODE_LENGTH]
+            barcode = barcode[: cls.BARCODE_LENGTH]
             # Here there is no check digit so it's calculated
             digits = list(map(int, list(barcode)))
 
@@ -146,7 +122,10 @@ class EAN(Barcode):
             weighted_even = digits[::2]
 
             # Calculate the checksum
-            checksum = sum(weighted_odd) * cls.WEIGHTS.ODD + sum(weighted_even) * cls.WEIGHTS.EVEN
+            checksum = (
+                sum(weighted_odd) * cls.WEIGHTS.ODD
+                + sum(weighted_even) * cls.WEIGHTS.EVEN
+            )
             if checksum % 10 == 0:
                 return 0
 
@@ -155,7 +134,9 @@ class EAN(Barcode):
             closest10 = ((checksum // 10) * 10) + 10
             return closest10 % checksum
 
-        raise IncorrectFormat(f"Barcode should be at least {cls.BARCODE_LENGTH} digits long.")
+        raise IncorrectFormat(
+            f"Barcode should be at least {cls.BARCODE_LENGTH} digits long."
+        )
 
     def _get_column_size(self) -> int:
         """Finds and returns what the width of each column should be
@@ -176,7 +157,7 @@ class EAN(Barcode):
         and the check digit is calculated if not given
         """
         if len(self.code) >= self.BARCODE_LENGTH:
-            code = self.code[:self.BARCODE_LENGTH]
+            code = self.code[: self.BARCODE_LENGTH]
 
             # Calculate the checksum digit
             check_digit = self.calculate_checksum(code)
@@ -296,5 +277,7 @@ class JAN(EAN13, EAN):
     def __init__(self, barcode: Union[str, int]):
         super().__init__(barcode)
 
-        if not (self.code[:2] in ("45", "49")):
-            raise IncorrectFormat("JAN type barcodes need to start with country code 45 or 49.")
+        if self.code[:2] not in ("45", "49"):
+            raise IncorrectFormat(
+                "JAN type barcodes need to start with country code 45 or 49."
+            )

@@ -1,11 +1,11 @@
-from PIL import Image, ImageDraw, ImageFont
-from typing import Union
 from collections import namedtuple
+from typing import Union
+
+from PIL import Image, ImageDraw, ImageFont
 
 from .barcode import Barcode
-from .exceptions import IncorrectFormat
 from .codings import codex as CODEXCoding
-
+from .exceptions import IncorrectFormat
 
 Size = namedtuple("Size", "width height")
 
@@ -16,10 +16,13 @@ class Code(Barcode):
 
         self.code = self._clean_code()
 
-        # Calculate the variable width of the barcode
+        # Calculate the variable width of the barcod
         # 6 pixels for each character
         if self.BARCODE_SIZE[0] == -1:
-            self.BARCODE_SIZE = (len(self.code) * 6 + len(CODEXCoding.GUARD) * 2) * 6, self.BARCODE_SIZE[1]
+            self.BARCODE_SIZE = (
+                (len(self.code) * 6 + len(CODEXCoding.GUARD) * 2) * 6,
+                self.BARCODE_SIZE[1],
+            )
 
         column_size = 0
         for char in self.get_binary_string:
@@ -114,7 +117,10 @@ class Code(Barcode):
         selected_size, font_size = self.BARCODE_SIZE, self.BARCODE_FONT_SIZE
 
         # This is for the whitespace around the barcode
-        padded_size = selected_size[0] + padding.width, selected_size[1] + padding.height
+        padded_size = (
+            selected_size[0] + padding.width,
+            selected_size[1] + padding.height,
+        )
 
         # Get each column's width and height
         column_size = self._get_column_size()
@@ -123,7 +129,11 @@ class Code(Barcode):
         base = Image.new("RGB", padded_size, (255, 255, 255))
 
         # Create the image to write the columns
-        img = Image.new("RGB", (column_size * self.BARCODE_COLUMN_NUMBER, selected_size[1]), (255, 255, 255))
+        img = Image.new(
+            "RGB",
+            (column_size * self.BARCODE_COLUMN_NUMBER, selected_size[1]),
+            (255, 255, 255),
+        )
 
         # This is the spacing we are going to add after each digit
         space = Image.new("RGB", (column_size, img.height), (255, 255, 255))
@@ -212,9 +222,12 @@ class Code(Barcode):
         A new barcode is returned that has the correct length
         and the check digit is calculated if not given
         """
+
         for char in self.code:
-            if not (char in CODEXCoding.CODES) or char == "_":
-                raise IncorrectFormat(f"Character {char} is not supported by {self.__class__.__name__}")
+            if char not in CODEXCoding.CODES or char == "_":
+                raise IncorrectFormat(
+                    f"Character {char} is not supported by {self.__class__.__name__}"
+                )
 
         reference = self.calculate_checksum(self.code)
         checkchar = CODEXCoding.REFERENCE_NUMBERS[reference]
