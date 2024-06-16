@@ -1,18 +1,9 @@
-# Ignore __pycache__ folders
-__pycache__
-./__pycache__
-*/__pycache__
-
-# Ignore egg-info folders
-*.egg-info
-
-# Ignore .vscode files
-.vscode
-
-# Ignore dist folder
-./dist/*
-
+# Python
+*.py[cod]
 .python-version
 pyrightconfig.json
-
+*.egg-info
 *.png
+
+# Tests
+.coverage
