@@ -1,0 +1,30 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: pretty-format-json
+        name: pretty format json
+        args: ["--autofix", "--indent", "2"]
+      - id: check-json
+        name: check json
+        types: [json]
+      - id: check-yaml
+        name: check yaml
+      - id: end-of-file-fixer
+        name: add new line to end of file
+      - id: trailing-whitespace
+        name: remove trailing whitespace
+      - id: name-tests-test
+        name: tests start with test_*
+        args: ["--pytest-test-first"]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.4
+    hooks:
+      - id: ruff
+        name: lint
+      - id: ruff
+        name: fix lint
+        args: ["--fix", "--exit-non-zero-on-fix", "--select", "I"]
+      - id: ruff-format
+        name: format
