@@ -37,17 +37,13 @@ PRs are welcome :)
 Installing
 -----------
 
-**Python 3.6.0 or higher is required**
+**Python 3.9 or higher is required**
 
 To install the library you can run the following command:
 
-.. code:: sh
+.. code:: bash
 
-    # Linux/MacOS
-    python3 -m pip install --upgrade pybarcodes
-
-    # Windows
-    py -3 -m pip install --upgrade pybarcodes
+    pip install pybarcodes
 
 
 Quick Example
@@ -105,4 +101,3 @@ Links
 
 - `Documentation <https://pybarcodes.readthedocs.io/en/latest/index.html>`_
 - `PyPi <https://pypi.org/project/pybarcodes/>`_
-
