@@ -1,7 +1,7 @@
 from collections import namedtuple
 
-from .codes import *
-from .ean import *
+from pybarcodes.codes import CODE39, Code  # noqa: F401
+from pybarcodes.ean import EAN, EAN8, EAN13, EAN14, JAN, Size, Weights  # noqa: F401
 
 __title__ = "pybarcodes"
 __author__ = "atbuy"
