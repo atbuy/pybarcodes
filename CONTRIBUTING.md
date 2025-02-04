@@ -22,3 +22,11 @@ pre-commit install
 ```
 
 And you are good to go.
+
+### Docs
+
+To install dependencies for docs, you need to run:
+
+```bash
+pip install -r ./docs/requirements.txt
+```
