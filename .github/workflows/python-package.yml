@@ -25,10 +25,10 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
+          sudo apt install -y libjpeg-dev zlib1g-dev
           python -m pip install --upgrade pip setuptools wheel
           python -m pip install flake8
           python -m pip install -e '.[test]'
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
