@@ -6,7 +6,7 @@ cwd = Path(__file__).parent
 readme_path = cwd.joinpath("README.rst")
 
 requirements = [
-    "Pillow>=8.0.1,<9",
+    "Pillow>=8,<12",
 ]
 
 doc_requirements = [

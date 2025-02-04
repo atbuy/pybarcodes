@@ -137,7 +137,7 @@ class Barcode:
         draw = ImageDraw.Draw(base)
         font = ImageFont.truetype(font_path, font_size)
 
-        text_width, _ = draw.textsize(self.code, font)
+        text_width = draw.textlength(self.code, font)
         x = base_center.x - text_width // 2
         y = base.height - (base.height - img.height) // 2
 
