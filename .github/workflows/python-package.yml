@@ -31,4 +31,4 @@ jobs:
           poetry run ruff check pybarcodes
       - name: Test with pytest
         run: |
-          pytest --cov=pybarcodes --cov-report=term-missing tests/
+          poetry run pytest --cov=pybarcodes --cov-report=term-missing tests/
