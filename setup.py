@@ -29,7 +29,7 @@ setup(
     author="atbuy",
     url="https://github.com/atbuy/pybarcodes",
     project_urls={},
-    version="0.7.5",
+    version="1.0.0",
     packages=find_packages(),
     license="MIT",
     description="A Python barcode generator",
@@ -39,7 +39,7 @@ setup(
     include_package_data=True,
     install_requires=requirements,
     extras_require=extras,
-    python_requires=">=3.8.0",
+    python_requires=">=3.9",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: MIT License",
