@@ -1,0 +1,62 @@
+[tool.poetry]
+name = "pybarcodes"
+version = "1.0.0"
+description = "A Python package for barcode generation"
+authors = ["atbuy <buy@atbuy.dev>"]
+license = "MIT"
+readme = "README.rst"
+homepage = "https://github.com/atbuy/pybarcodes"
+repository = "https://github.com/atbuy/pybarcodes"
+keywords = [
+  "barcode",
+  "scanner",
+  "generator",
+  "ean13",
+  "code39",
+  "jan",
+  "python",
+]
+include = ["fonts/*.ttf"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Developers",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Multimedia :: Graphics",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Utilities",
+]
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/atbuy/pybarcodes/issues"
+"Source Code" = "https://github.com/atbuy/pybarcodes"
+"CI/CD" = "https://github.com/atbuy/pybarcodes/actions"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pillow = ">8,<12"
+
+
+[tool.poetry.group.docs.dependencies]
+numpydoc = "1.8.0"
+
+
+[tool.poetry.group.tests.dependencies]
+pytest = "8.3.4"
+pytest-cov = "6.0.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "4.0.1"
+ruff = "0.9.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
