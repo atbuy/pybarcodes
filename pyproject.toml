@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pybarcodes"
-version = "1.0.0"
+version = "1.0.1"
 description = "A Python package for barcode generation"
 authors = ["atbuy <buy@atbuy.dev>"]
 license = "MIT"

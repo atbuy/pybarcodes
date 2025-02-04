@@ -7,7 +7,7 @@ __title__ = "pybarcodes"
 __author__ = "atbuy"
 __license__ = "MIT"
 __copyright__ = "Copyright 2021-present atbuy"
-__version__ = (1, 0, 0)
+__version__ = (1, 0, 1)
 
 VersionInfo = namedtuple("VersionInfo", "major minor patch")
 
