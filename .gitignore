@@ -3,7 +3,16 @@
 .python-version
 pyrightconfig.json
 *.egg-info
-*.png
+
+# Sphinx documentation
+docs/_build/
 
 # Tests
 .coverage
+
+# IDE
+.idea/
+.vscode/
+
+# Custom
+*.png
