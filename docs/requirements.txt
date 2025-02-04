@@ -1,1 +1,2 @@
 numpydoc==1.8.0
+sphinx-rtd-theme==3.0.2
