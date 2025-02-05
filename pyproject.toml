@@ -58,3 +58,10 @@ ruff = "0.9.4"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = [
+    "--cov=pybarcodes",
+    "--cov-report=term-missing"
+]

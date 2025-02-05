@@ -43,6 +43,11 @@ def test_code39(mocker, fs):
     obj_bytes = obj.read()
     assert code.upper().encode("ascii") in obj_bytes
 
+    # Test write
+    file = fs.create_file("barcode-code.png")
+    barcode.write(file.path)
+    assert file.contents == code.upper() + "/"
+
     with pytest.raises(IncorrectFormat):
         code = "^"
         barcode = CODE39(code)
