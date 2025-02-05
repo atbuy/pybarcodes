@@ -5,7 +5,7 @@ from pybarcodes import EAN8, EAN13, EAN14, JAN
 from pybarcodes.exceptions import IncorrectFormat
 
 
-def test_ean13(fs):
+def test_ean13(mocker, fs):
     code = "400638133393"
     barcode = EAN13(code)
     barcode2 = EAN13(code)
@@ -38,6 +38,16 @@ def test_ean13(fs):
     barcode.save(file.path, size=(100, 100))
     assert file.byte_contents[:8] == b"\x89PNG\r\n\x1a\n"
 
+    # Show image
+    mock_show = mocker.patch("PIL.Image.Image.show")
+    barcode.show()
+    mock_show.assert_called_once()
+
+    # Test to bytesio
+    obj = barcode.to_bytesio()
+    obj_bytes = obj.read()
+    assert code.upper().encode("ascii") in obj_bytes
+
     # Check if the checksum digit is calculated correctly
     # The check digit should be `1`
     code = "400638133393"
@@ -63,7 +73,7 @@ def test_ean13(fs):
     assert center_guard == "01010"
 
 
-def test_ean8(fs):
+def test_ean8(mocker, fs):
     code = "0123456"
     barcode = EAN8(code)
 
@@ -92,6 +102,16 @@ def test_ean8(fs):
     barcode.save(file.path, size=(100, 100))
     assert file.byte_contents[:8] == b"\x89PNG\r\n\x1a\n"
 
+    # Show image
+    mock_show = mocker.patch("PIL.Image.Image.show")
+    barcode.show()
+    mock_show.assert_called_once()
+
+    # Test to bytesio
+    obj = barcode.to_bytesio()
+    obj_bytes = obj.read()
+    assert code.upper().encode("ascii") in obj_bytes
+
     # Check digit for this barcode should be `5`
     assert EAN8.calculate_checksum(code) == 5
 
@@ -115,7 +135,7 @@ def test_ean8(fs):
     assert center_guard == "01010"
 
 
-def test_ean14(fs):
+def test_ean14(mocker, fs):
     code = "4070071967072013242346"
     barcode = EAN14(code)
 
@@ -144,6 +164,16 @@ def test_ean14(fs):
     barcode.save(file.path, size=(100, 100))
     assert file.byte_contents[:8] == b"\x89PNG\r\n\x1a\n"
 
+    # Show image
+    mock_show = mocker.patch("PIL.Image.Image.show")
+    barcode.show()
+    mock_show.assert_called_once()
+
+    # Test to bytesio
+    obj = barcode.to_bytesio()
+    obj_bytes = obj.read()
+    assert obj_bytes in code.upper().encode("ascii")
+
     # Check digit for this barcode should be `0`
     assert EAN14.calculate_checksum(code) == 0
 
@@ -164,7 +194,7 @@ def test_ean14(fs):
     assert center_guard == "01010"
 
 
-def test_jan(fs):
+def test_jan(mocker, fs):
     code = "450638133393"
     barcode = JAN(code)
     barcode2 = JAN(code)
@@ -196,6 +226,16 @@ def test_jan(fs):
     file = fs.create_file("barcode.png")
     barcode.save(file.path, size=(100, 100))
     assert file.byte_contents[:8] == b"\x89PNG\r\n\x1a\n"
+
+    # Show image
+    mock_show = mocker.patch("PIL.Image.Image.show")
+    barcode.show()
+    mock_show.assert_called_once()
+
+    # Test to bytesio
+    obj = barcode.to_bytesio()
+    obj_bytes = obj.read()
+    assert code.upper().encode("ascii") in obj_bytes
 
     # Check if the checksum digit is calculated correctly
     # The check digit should be `1`

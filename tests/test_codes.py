@@ -5,7 +5,7 @@ from pybarcodes import CODE39
 from pybarcodes.exceptions import IncorrectFormat
 
 
-def test_code39(fs):
+def test_code39(mocker, fs):
     code = "0123456789abcdefghijklmnopqrstuvwxyz.-$+/$ "
     barcode = CODE39(code)
 
@@ -32,6 +32,16 @@ def test_code39(fs):
     file = fs.create_file("barcode.png")
     barcode.save(file.path)
     assert file.byte_contents[:8] == b"\x89PNG\r\n\x1a\n"
+
+    # Show image
+    mock_show = mocker.patch("PIL.Image.Image.show")
+    barcode.show()
+    mock_show.assert_called_once()
+
+    # Test to bytesio
+    obj = barcode.to_bytesio()
+    obj_bytes = obj.read()
+    assert code.upper().encode("ascii") in obj_bytes
 
     with pytest.raises(IncorrectFormat):
         code = "^"
