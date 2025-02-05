@@ -42,14 +42,12 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.9"
 pillow = ">8,<12"
-pyfakefs = "^5.7.4"
-pytest-mock = "^3.14.0"
-
 
 [tool.poetry.group.tests.dependencies]
 pytest = "8.3.4"
 pytest-cov = "6.0.0"
-
+pyfakefs = "^5.7.4"
+pytest-mock = "^3.14.0"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "4.0.1"
