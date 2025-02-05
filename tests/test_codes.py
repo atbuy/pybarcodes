@@ -1,3 +1,6 @@
+import pytest
+from PIL import Image
+
 from pybarcodes import CODE39
 from pybarcodes.exceptions import IncorrectFormat
 
@@ -16,11 +19,18 @@ def test_code39():
     assert barcode.calculate_checksum(code) == 40
     assert barcode.calculate_checksum() == 40
 
-    try:
+    # Check image
+    image = barcode.image
+
+    assert isinstance(image, Image.Image)
+    assert image.size == tuple(
+        map(sum, zip(barcode.BARCODE_SIZE, barcode.BARCODE_PADDING))
+    )
+    assert image.mode == "RGB"
+
+    with pytest.raises(IncorrectFormat):
         code = "^"
         barcode = CODE39(code)
-    except IncorrectFormat:
-        pass
 
     binary_string = barcode.get_binary_string
     start_char = binary_string[:6]

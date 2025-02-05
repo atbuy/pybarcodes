@@ -1,3 +1,6 @@
+import pytest
+from PIL import Image
+
 from pybarcodes import EAN8, EAN13, EAN14, JAN
 from pybarcodes.exceptions import IncorrectFormat
 
@@ -21,6 +24,15 @@ def test_ean13():
     assert barcode == code + "1"
     assert barcode == barcode2
 
+    # Check image
+    image = barcode.image
+
+    assert isinstance(image, Image.Image)
+    assert image.size == tuple(
+        map(sum, zip(barcode.BARCODE_SIZE, barcode.BARCODE_PADDING))
+    )
+    assert image.mode == "RGB"
+
     # Check if the checksum digit is calculated correctly
     # The check digit should be `1`
     code = "400638133393"
@@ -32,11 +44,9 @@ def test_ean13():
     # The check digit is calculated when instansiating
     assert barcode == "4006381333931"
 
-    try:
+    with pytest.raises(IncorrectFormat):
         code = "1"
         barcode = EAN13(code)
-    except IncorrectFormat:
-        pass
 
     # Check if guards are in the correct positions
     binary_string = barcode.get_binary_string
@@ -63,20 +73,27 @@ def test_ean8():
     assert barcode.WEIGHTS
     assert not barcode.HAS_STRUCTURE
 
+    # Check image
+    image = barcode.image
+
+    assert isinstance(image, Image.Image)
+    assert image.size == tuple(
+        map(sum, zip(barcode.BARCODE_SIZE, barcode.BARCODE_PADDING))
+    )
+    assert image.mode == "RGB"
+
     # Check digit for this barcode should be `5`
     assert EAN8.calculate_checksum(code) == 5
 
     code = "012345628743652398476528347652987"
     barcode = EAN8(code)
 
-    # The check digit is calculated when instansiating
+    # The check digit is calculated when instantiating
     assert barcode == "01234565"
 
-    try:
+    with pytest.raises(IncorrectFormat):
         code = "1"
         barcode = EAN8(code)
-    except IncorrectFormat:
-        pass
 
     # Check if guards in correct positions
     binary_string = barcode.get_binary_string
@@ -103,17 +120,24 @@ def test_ean14():
     assert barcode.WEIGHTS
     assert barcode.HAS_STRUCTURE
 
+    # Check image
+    image = barcode.image
+
+    assert isinstance(image, Image.Image)
+    assert image.size == tuple(
+        map(sum, zip(barcode.BARCODE_SIZE, barcode.BARCODE_PADDING))
+    )
+    assert image.mode == "RGB"
+
     # Check digit for this barcode should be `0`
     assert EAN14.calculate_checksum(code) == 0
 
-    # The check digit is calculated when instansiating
+    # The check digit is calculated when instantiating
     assert barcode == "40700719670720"
 
-    try:
+    with pytest.raises(IncorrectFormat):
         code = "1"
         barcode = EAN14(code)
-    except IncorrectFormat:
-        pass
 
     # Check if guards in correct positions
     binary_string = barcode.get_binary_string
@@ -144,6 +168,15 @@ def test_jan():
     assert barcode == code + "6"
     assert barcode == barcode2
 
+    # Check image
+    image = barcode.image
+
+    assert isinstance(image, Image.Image)
+    assert image.size == tuple(
+        map(sum, zip(barcode.BARCODE_SIZE, barcode.BARCODE_PADDING))
+    )
+    assert image.mode == "RGB"
+
     # Check if the checksum digit is calculated correctly
     # The check digit should be `1`
     code = "450638133393"
@@ -154,11 +187,10 @@ def test_jan():
     barcode = JAN(code)
     # The check digit is calculated when instansiating
     assert barcode == "4506381333936"
-    try:
+
+    with pytest.raises(IncorrectFormat):
         code = "1"
         barcode = JAN(code)
-    except IncorrectFormat:
-        pass
 
     # Check if guards are in the correct positions
     binary_string = barcode.get_binary_string
