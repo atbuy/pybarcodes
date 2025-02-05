@@ -5,7 +5,7 @@ from pybarcodes import CODE39
 from pybarcodes.exceptions import IncorrectFormat
 
 
-def test_code39():
+def test_code39(fs):
     code = "0123456789abcdefghijklmnopqrstuvwxyz.-$+/$ "
     barcode = CODE39(code)
 
@@ -23,10 +23,15 @@ def test_code39():
     image = barcode.image
 
     assert isinstance(image, Image.Image)
+    assert image.mode == "RGB"
     assert image.size == tuple(
         map(sum, zip(barcode.BARCODE_SIZE, barcode.BARCODE_PADDING))
     )
-    assert image.mode == "RGB"
+
+    # Save image to fake file
+    file = fs.create_file("barcode.png")
+    barcode.save(file.path)
+    assert file.byte_contents[:8] == b"\x89PNG\r\n\x1a\n"
 
     with pytest.raises(IncorrectFormat):
         code = "^"

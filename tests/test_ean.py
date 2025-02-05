@@ -5,7 +5,7 @@ from pybarcodes import EAN8, EAN13, EAN14, JAN
 from pybarcodes.exceptions import IncorrectFormat
 
 
-def test_ean13():
+def test_ean13(fs):
     code = "400638133393"
     barcode = EAN13(code)
     barcode2 = EAN13(code)
@@ -28,10 +28,15 @@ def test_ean13():
     image = barcode.image
 
     assert isinstance(image, Image.Image)
+    assert image.mode == "RGB"
     assert image.size == tuple(
         map(sum, zip(barcode.BARCODE_SIZE, barcode.BARCODE_PADDING))
     )
-    assert image.mode == "RGB"
+
+    # Save image to fake file
+    file = fs.create_file("barcode.png")
+    barcode.save(file.path, size=(100, 100))
+    assert file.byte_contents[:8] == b"\x89PNG\r\n\x1a\n"
 
     # Check if the checksum digit is calculated correctly
     # The check digit should be `1`
@@ -58,7 +63,7 @@ def test_ean13():
     assert center_guard == "01010"
 
 
-def test_ean8():
+def test_ean8(fs):
     code = "0123456"
     barcode = EAN8(code)
 
@@ -77,10 +82,15 @@ def test_ean8():
     image = barcode.image
 
     assert isinstance(image, Image.Image)
+    assert image.mode == "RGB"
     assert image.size == tuple(
         map(sum, zip(barcode.BARCODE_SIZE, barcode.BARCODE_PADDING))
     )
-    assert image.mode == "RGB"
+
+    # Save image to fake file
+    file = fs.create_file("barcode.png")
+    barcode.save(file.path, size=(100, 100))
+    assert file.byte_contents[:8] == b"\x89PNG\r\n\x1a\n"
 
     # Check digit for this barcode should be `5`
     assert EAN8.calculate_checksum(code) == 5
@@ -105,7 +115,7 @@ def test_ean8():
     assert center_guard == "01010"
 
 
-def test_ean14():
+def test_ean14(fs):
     code = "4070071967072013242346"
     barcode = EAN14(code)
 
@@ -124,10 +134,15 @@ def test_ean14():
     image = barcode.image
 
     assert isinstance(image, Image.Image)
+    assert image.mode == "RGB"
     assert image.size == tuple(
         map(sum, zip(barcode.BARCODE_SIZE, barcode.BARCODE_PADDING))
     )
-    assert image.mode == "RGB"
+
+    # Save image to fake file
+    file = fs.create_file("barcode.png")
+    barcode.save(file.path, size=(100, 100))
+    assert file.byte_contents[:8] == b"\x89PNG\r\n\x1a\n"
 
     # Check digit for this barcode should be `0`
     assert EAN14.calculate_checksum(code) == 0
@@ -149,7 +164,7 @@ def test_ean14():
     assert center_guard == "01010"
 
 
-def test_jan():
+def test_jan(fs):
     code = "450638133393"
     barcode = JAN(code)
     barcode2 = JAN(code)
@@ -172,10 +187,15 @@ def test_jan():
     image = barcode.image
 
     assert isinstance(image, Image.Image)
+    assert image.mode == "RGB"
     assert image.size == tuple(
         map(sum, zip(barcode.BARCODE_SIZE, barcode.BARCODE_PADDING))
     )
-    assert image.mode == "RGB"
+
+    # Save image to fake file
+    file = fs.create_file("barcode.png")
+    barcode.save(file.path, size=(100, 100))
+    assert file.byte_contents[:8] == b"\x89PNG\r\n\x1a\n"
 
     # Check if the checksum digit is calculated correctly
     # The check digit should be `1`

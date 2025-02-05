@@ -42,6 +42,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.9"
 pillow = ">8,<12"
+pyfakefs = "^5.7.4"
 
 
 [tool.poetry.group.tests.dependencies]
