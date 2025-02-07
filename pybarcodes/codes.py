@@ -17,7 +17,7 @@ class Code(Barcode):
 
         self.code = self._clean_code()
 
-        # Calculate the variable width of the barcod
+        # Calculate the variable width of the barcode
         # 6 pixels for each character
         if self.BARCODE_SIZE[0] == -1:
             self.BARCODE_SIZE = (
@@ -61,7 +61,8 @@ class Code(Barcode):
 
         return self._convert_to_binary(code)
 
-    def calculate_checksum(self, barcode: Union[str, "CODE39"] = None) -> int:
+    @classmethod
+    def calculate_checksum(cls, barcode: Union[str, "CODE39"] = None) -> int:
         """Calculate the checksum of the barcode
 
         Parameters
@@ -81,12 +82,10 @@ class Code(Barcode):
             Raised when the barcode is not in the format expected
         """
 
-        if isinstance(barcode, self.__class__):
+        if isinstance(barcode, cls):
             barcode = barcode.code
         elif isinstance(barcode, str):
             pass
-        elif barcode is None or self.code:
-            return CODEXCoding.REFERENCE_DIGITS[self.checksum]
         else:
             raise TypeError(f"Can't accept type {type(barcode)}")
 
@@ -226,7 +225,7 @@ class Code(Barcode):
         """
 
         for char in self.code:
-            if char not in CODEXCoding.CODES or char == "_":
+            if char not in CODEXCoding.CODES:
                 raise IncorrectFormat(
                     f"Character {char} is not supported by {self.__class__.__name__}"
                 )
