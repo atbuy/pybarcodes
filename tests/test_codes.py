@@ -1,29 +1,15 @@
 from pybarcodes import CODE39
-from pybarcodes.exceptions import IncorrectFormat
+from tests.conftest import BaseBarcodeTest
 
 
-def test_code39():
-    code = "0123456789abcdefghijklmnopqrstuvwxyz.-$+/$ "
-    barcode = CODE39(code)
+class TestCODE39(BaseBarcodeTest):
+    barcode_class = CODE39
+    code = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ.-$+/$ "
+    checksum = "/"
+    invalid_code = "^"
+    has_structure = False
+    guard_positions = (None, 6), (-6, None)
+    expected_guards = ("0 0110", "0 0110")
 
-    assert barcode.BARCODE_FONT_SIZE
-    assert barcode.BARCODE_PADDING
-    assert barcode.BARCODE_SIZE
-    assert barcode.BARCODE_COLUMN_NUMBER
-
-    assert barcode == code.upper() + "/"
-
-    assert barcode.calculate_checksum(code) == 40
-    assert barcode.calculate_checksum() == 40
-
-    try:
-        code = "^"
-        barcode = CODE39(code)
-    except IncorrectFormat:
-        pass
-
-    binary_string = barcode.get_binary_string
-    start_char = binary_string[:6]
-    stop_char = binary_string[-6:]
-    assert start_char == "0 0110"
-    assert stop_char == "0 0110"
+    def test_checksum(self):
+        assert self.barcode_class.calculate_checksum(self.code) == 40

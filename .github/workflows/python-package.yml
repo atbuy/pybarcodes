@@ -13,6 +13,18 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.9", "3.10", "3.11", "3.12"]
+        pillow-version: ["8", "9", "10", "11"]
+        exclude:
+          - python-version: "3.10"
+            pillow-version: "8"
+          - python-version: "3.11"
+            pillow-version: "8"
+          - python-version: "3.11"
+            pillow-version: "9"
+          - python-version: "3.12"
+            pillow-version: "8"
+          - python-version: "3.12"
+            pillow-version: "9"
 
     steps:
       - uses: actions/checkout@v3
@@ -25,10 +37,11 @@ jobs:
           sudo apt install -y libjpeg-dev zlib1g-dev
           pip install --upgrade pip setuptools wheel
           pip install poetry
+          poetry add pillow@${{ matrix.pillow-version }}
           poetry install --all-extras
       - name: Lint with ruff
         run: |
           poetry run ruff check pybarcodes
       - name: Test with pytest
         run: |
-          poetry run pytest --cov=pybarcodes --cov-report=term-missing tests/
+          poetry run pytest
