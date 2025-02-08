@@ -1,170 +1,213 @@
+from unittest import TestCase
+
+import pytest
+
 from pybarcodes import EAN8, EAN13, EAN14, JAN
+from pybarcodes.ean import Size, Weights
 from pybarcodes.exceptions import IncorrectFormat
 
 
-def test_ean13():
-    code = "400638133393"
-    barcode = EAN13(code)
-    barcode2 = EAN13(code)
+class EAN13Test(TestCase):
+    def setUp(self) -> None:
+        self.code = "400638133393"
+        self.long_code = "40063813339398736412039867123409586345"
 
-    # Check if the required attributes exist
-    assert barcode.BARCODE_LENGTH
-    assert barcode.BARCODE_SIZE
-    assert barcode.BARCODE_FONT_SIZE
-    assert barcode.BARCODE_COLUMN_NUMBER
-    assert barcode.BARCODE_PADDING
-    assert barcode.FIRST_SECTION
-    assert barcode.SECOND_SECTION
-    assert barcode.WEIGHTS
-    assert barcode.HAS_STRUCTURE
+        self.barcode1 = EAN13(self.code)
+        self.barcode2 = EAN13(self.code)
 
-    assert barcode == code + "1"
-    assert barcode == barcode2
+        return super().setUp()
 
-    # Check if the checksum digit is calculated correctly
-    # The check digit should be `1`
-    code = "400638133393"
-    checkdigit = EAN13.calculate_checksum(code)
-    assert checkdigit == 1
+    def test_attributes(self):
+        self.assertEqual(self.barcode1.BARCODE_LENGTH, 12)
+        self.assertEqual(self.barcode1.BARCODE_SIZE, (720, 360))
+        self.assertEqual(self.barcode1.BARCODE_FONT_SIZE, 46)
+        self.assertEqual(self.barcode1.BARCODE_COLUMN_NUMBER, 110)
+        self.assertEqual(self.barcode1.BARCODE_PADDING, Size(100, 200))
+        self.assertEqual(self.barcode1.FIRST_SECTION, (0, 6))
+        self.assertEqual(self.barcode1.SECOND_SECTION, (6, 12))
+        self.assertEqual(self.barcode1.WEIGHTS, Weights(3, 1))
+        self.assertTrue(self.barcode1.HAS_STRUCTURE)
 
-    code = "40063813339398736412039867123409586345"
-    barcode = EAN13(code)
-    # The check digit is calculated when instansiating
-    assert barcode == "4006381333931"
+    def test_value(self):
+        expected_code = self.code + "1"
 
-    try:
+        self.assertEqual(self.barcode1, expected_code)
+        self.assertEqual(self.barcode1, self.barcode2)
+
+    def test_checksum(self):
+        checkdigit = EAN13.calculate_checksum(self.code)
+        barcode = EAN13(self.long_code)
+
+        self.assertEqual(checkdigit, 1)
+        self.assertEqual(barcode, "4006381333931")
+
+    def test_incorrect_format(self):
         code = "1"
-        barcode = EAN13(code)
-    except IncorrectFormat:
-        pass
 
-    # Check if guards are in the correct positions
-    binary_string = barcode.get_binary_string
-    left_guard = binary_string[:3]
-    right_guard = binary_string[-3:]
-    center_guard = binary_string[45:50]
-    assert left_guard == "101"
-    assert right_guard == "101"
-    assert center_guard == "01010"
+        with pytest.raises(IncorrectFormat):
+            EAN13(code)
+
+    def test_guards(self):
+        binary_string = self.barcode1.get_binary_string
+
+        expected_left_right_guard = "101"
+        expected_center_guard = "01010"
+
+        left_guard = binary_string[:3]
+        right_guard = binary_string[-3:]
+        center_guard = binary_string[45:50]
+
+        self.assertEqual(left_guard, expected_left_right_guard)
+        self.assertEqual(right_guard, expected_left_right_guard)
+        self.assertEqual(center_guard, expected_center_guard)
 
 
-def test_ean8():
-    code = "0123456"
-    barcode = EAN8(code)
+class EAN8Test(TestCase):
+    def setUp(self) -> None:
+        self.code = "0123456"
+        self.long_code = "012345628743652398476528347652987"
 
-    # Check if the required attributes exist
-    assert barcode.BARCODE_LENGTH
-    assert barcode.BARCODE_SIZE
-    assert barcode.BARCODE_FONT_SIZE
-    assert barcode.BARCODE_COLUMN_NUMBER
-    assert barcode.BARCODE_PADDING
-    assert barcode.FIRST_SECTION
-    assert barcode.SECOND_SECTION
-    assert barcode.WEIGHTS
-    assert not barcode.HAS_STRUCTURE
+        self.barcode = EAN8(self.code)
 
-    # Check digit for this barcode should be `5`
-    assert EAN8.calculate_checksum(code) == 5
+        return super().setUp()
 
-    code = "012345628743652398476528347652987"
-    barcode = EAN8(code)
+    def test_attributes(self):
+        self.assertEqual(self.barcode.BARCODE_LENGTH, 7)
+        self.assertEqual(self.barcode.BARCODE_SIZE, (480, 240))
+        self.assertEqual(self.barcode.BARCODE_FONT_SIZE, 40)
+        self.assertEqual(self.barcode.BARCODE_COLUMN_NUMBER, 75)
+        self.assertEqual(self.barcode.BARCODE_PADDING, Size(0, 200))
+        self.assertEqual(self.barcode.FIRST_SECTION, (0, 4))
+        self.assertEqual(self.barcode.SECOND_SECTION, (4, 8))
+        self.assertEqual(self.barcode.WEIGHTS, Weights(1, 3))
+        self.assertEqual(self.barcode.HAS_STRUCTURE, False)
 
-    # The check digit is calculated when instansiating
-    assert barcode == "01234565"
+    def test_checksum(self):
+        long_barcode = EAN8(self.long_code)
+        check_digit = EAN8.calculate_checksum(self.code)
 
-    try:
+        self.assertEqual(long_barcode, "01234565")
+        self.assertEqual(check_digit, 5)
+
+    def test_incorrect_format(self):
         code = "1"
-        barcode = EAN8(code)
-    except IncorrectFormat:
-        pass
 
-    # Check if guards in correct positions
-    binary_string = barcode.get_binary_string
-    left_guard = binary_string[:3]
-    right_guard = binary_string[-3:]
-    center_guard = binary_string[33:38]
-    assert left_guard == "101"
-    assert right_guard == "101"
-    assert center_guard == "01010"
+        with pytest.raises(IncorrectFormat):
+            EAN8(code)
+
+    def test_guards(self):
+        binary_string = self.barcode.get_binary_string
+
+        expected_left_right_guard = "101"
+        expected_center_guard = "01010"
+
+        left_guard = binary_string[:3]
+        right_guard = binary_string[-3:]
+        center_guard = binary_string[33:38]
+
+        self.assertEqual(left_guard, expected_left_right_guard)
+        self.assertEqual(right_guard, expected_left_right_guard)
+        self.assertEqual(center_guard, expected_center_guard)
 
 
-def test_ean14():
-    code = "4070071967072013242346"
-    barcode = EAN14(code)
+class EAN14Test(TestCase):
+    def setUp(self) -> None:
+        self.code = "4070071967072013242346"
+        self.barcode = EAN14(self.code)
 
-    # Check if the required attributes exist
-    assert barcode.BARCODE_LENGTH
-    assert barcode.BARCODE_SIZE
-    assert barcode.BARCODE_FONT_SIZE
-    assert barcode.BARCODE_COLUMN_NUMBER
-    assert barcode.BARCODE_PADDING
-    assert barcode.FIRST_SECTION
-    assert barcode.SECOND_SECTION
-    assert barcode.WEIGHTS
-    assert barcode.HAS_STRUCTURE
+        return super().setUp()
 
-    # Check digit for this barcode should be `0`
-    assert EAN14.calculate_checksum(code) == 0
+    def test_attributes(self):
+        self.assertEqual(self.barcode.BARCODE_LENGTH, 13)
+        self.assertEqual(self.barcode.BARCODE_SIZE, (720, 360))
+        self.assertEqual(self.barcode.BARCODE_FONT_SIZE, 46)
+        self.assertEqual(self.barcode.BARCODE_COLUMN_NUMBER, 108)
+        self.assertEqual(self.barcode.BARCODE_PADDING, Size(100, 200))
+        self.assertEqual(self.barcode.FIRST_SECTION, (0, 6))
+        self.assertEqual(self.barcode.SECOND_SECTION, (6, 13))
+        self.assertEqual(self.barcode.WEIGHTS, Weights(1, 3))
+        self.assertTrue(self.barcode.HAS_STRUCTURE)
 
-    # The check digit is calculated when instansiating
-    assert barcode == "40700719670720"
+    def test_checksum(self):
+        barcode = "40700719670720"
+        check_digit = EAN14.calculate_checksum(self.code)
 
-    try:
+        self.assertEqual(check_digit, 0)
+        self.assertEqual(self.barcode, barcode)
+
+    def test_incorrect_format(self):
         code = "1"
-        barcode = EAN14(code)
-    except IncorrectFormat:
-        pass
 
-    # Check if guards in correct positions
-    binary_string = barcode.get_binary_string
-    left_guard = binary_string[:3]
-    right_guard = binary_string[-3:]
-    center_guard = binary_string[45:50]
-    assert left_guard == "101"
-    assert right_guard == "101"
-    assert center_guard == "01010"
+        with pytest.raises(IncorrectFormat):
+            EAN14(code)
+
+    def test_guards(self):
+        binary_string = self.barcode.get_binary_string
+
+        expected_left_right_guard = "101"
+        expected_center_guard = "01010"
+
+        left_guard = binary_string[:3]
+        right_guard = binary_string[-3:]
+        center_guard = binary_string[45:50]
+
+        self.assertEqual(left_guard, expected_left_right_guard)
+        self.assertEqual(right_guard, expected_left_right_guard)
+        self.assertEqual(center_guard, expected_center_guard)
 
 
-def test_jan():
-    code = "450638133393"
-    barcode = JAN(code)
-    barcode2 = JAN(code)
+class JANTest(TestCase):
+    def setUp(self) -> None:
+        self.code = "450638133393"
+        self.long_code = "45063813339398736412039867123409586345"
 
-    # Check if the required attributes exist
-    assert barcode.BARCODE_LENGTH
-    assert barcode.BARCODE_SIZE
-    assert barcode.BARCODE_FONT_SIZE
-    assert barcode.BARCODE_COLUMN_NUMBER
-    assert barcode.BARCODE_PADDING
-    assert barcode.FIRST_SECTION
-    assert barcode.SECOND_SECTION
-    assert barcode.WEIGHTS
-    assert barcode.HAS_STRUCTURE
+        self.barcode1 = JAN(self.code)
+        self.barcode2 = JAN(self.code)
 
-    assert barcode == code + "6"
-    assert barcode == barcode2
+        return super().setUp()
 
-    # Check if the checksum digit is calculated correctly
-    # The check digit should be `1`
-    code = "450638133393"
-    checkdigit = JAN.calculate_checksum(code)
-    assert checkdigit == 6
+    def test_attributes(self):
+        self.assertEqual(self.barcode1.BARCODE_LENGTH, 12)
+        self.assertEqual(self.barcode1.BARCODE_SIZE, (720, 360))
+        self.assertEqual(self.barcode1.BARCODE_FONT_SIZE, 46)
+        self.assertEqual(self.barcode1.BARCODE_COLUMN_NUMBER, 110)
+        self.assertEqual(self.barcode1.BARCODE_PADDING, Size(100, 200))
+        self.assertEqual(self.barcode1.FIRST_SECTION, (0, 6))
+        self.assertEqual(self.barcode1.SECOND_SECTION, (6, 12))
+        self.assertEqual(self.barcode1.WEIGHTS, Weights(3, 1))
+        self.assertTrue(self.barcode1.HAS_STRUCTURE)
 
-    code = "45063813339398736412039867123409586345"
-    barcode = JAN(code)
-    # The check digit is calculated when instansiating
-    assert barcode == "4506381333936"
-    try:
+    def test_value(self):
+        expected_code = self.code + "6"
+
+        self.assertEqual(self.barcode1, expected_code)
+        self.assertEqual(self.barcode1, self.barcode2)
+
+    def test_checksum(self):
+        check_digit = JAN.calculate_checksum(self.code)
+        expected_barcode = "4506381333936"
+        long_barcode = JAN(self.long_code)
+
+        self.assertEqual(check_digit, 6)
+        self.assertEqual(self.barcode1, expected_barcode)
+        self.assertEqual(long_barcode, expected_barcode)
+
+    def test_incorrect_format(self):
         code = "1"
-        barcode = JAN(code)
-    except IncorrectFormat:
-        pass
 
-    # Check if guards are in the correct positions
-    binary_string = barcode.get_binary_string
-    left_guard = binary_string[:3]
-    right_guard = binary_string[-3:]
-    center_guard = binary_string[45:50]
-    assert left_guard == "101"
-    assert right_guard == "101"
-    assert center_guard == "01010"
+        with pytest.raises(IncorrectFormat):
+            JAN(code)
+
+    def test_guards(self):
+        binary_string = self.barcode1.get_binary_string
+
+        expected_left_right_guard = "101"
+        expected_center_guard = "01010"
+
+        left_guard = binary_string[:3]
+        right_guard = binary_string[-3:]
+        center_guard = binary_string[45:50]
+
+        self.assertEqual(left_guard, expected_left_right_guard)
+        self.assertEqual(right_guard, expected_left_right_guard)
+        self.assertEqual(center_guard, expected_center_guard)
