@@ -1,12 +1,11 @@
-[tool.poetry]
+[project]
 name = "pybarcodes"
-version = "1.0.1"
+version = "1.0.2"
 description = "A Python package for barcode generation"
-authors = ["atbuy <buy@atbuy.dev>"]
+authors = [{ name = "atbuy", email = "buy@atbuy.dev" }]
 license = "MIT"
 readme = "README.rst"
-homepage = "https://github.com/atbuy/pybarcodes"
-repository = "https://github.com/atbuy/pybarcodes"
+requires-python = ">=3.10"
 keywords = [
   "barcode",
   "scanner",
@@ -24,35 +23,35 @@ classifiers = [
   "Natural Language :: English",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Topic :: Multimedia :: Graphics",
   "Topic :: Software Development :: Libraries",
   "Topic :: Software Development :: Libraries :: Python Modules",
   "Topic :: Utilities",
 ]
+dependencies = ["pillow>8,<13"]
 
-[tool.poetry.urls]
+[project.urls]
+Homepage = "https://github.com/atbuy/pybarcodes"
+Repository = "https://github.com/atbuy/pybarcodes"
 "Bug Tracker" = "https://github.com/atbuy/pybarcodes/issues"
 "Source Code" = "https://github.com/atbuy/pybarcodes"
 "CI/CD" = "https://github.com/atbuy/pybarcodes/actions"
 
-[tool.poetry.dependencies]
-python = "^3.9"
-pillow = ">8,<12"
-
 
 [tool.poetry.group.tests.dependencies]
-pytest = "8.3.4"
-pytest-cov = "6.0.0"
+pytest = "9.0.2"
+pytest-cov = "7.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "4.0.1"
-ruff = "0.9.4"
+pre-commit = "4.5.1"
+ruff = "0.15.1"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=2"]
 build-backend = "poetry.core.masonry.api"
