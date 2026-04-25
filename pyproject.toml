@@ -1,6 +1,6 @@
 [project]
 name = "pybarcodes"
-version = "1.0.2"
+version = "1.0.3"
 description = "A Python package for barcode generation"
 authors = [{ name = "atbuy", email = "buy@atbuy.dev" }]
 license = "MIT"
@@ -35,6 +35,10 @@ classifiers = [
 ]
 dependencies = ["pillow>8,<13"]
 
+[dependency-groups]
+dev = ["pre-commit==4.5.1", "ruff==0.15.1"]
+tests = ["pytest==9.0.2", "pytest-cov==7.0.0"]
+
 [project.urls]
 Homepage = "https://github.com/atbuy/pybarcodes"
 Repository = "https://github.com/atbuy/pybarcodes"
@@ -42,16 +46,9 @@ Repository = "https://github.com/atbuy/pybarcodes"
 "Source Code" = "https://github.com/atbuy/pybarcodes"
 "CI/CD" = "https://github.com/atbuy/pybarcodes/actions"
 
-
-[tool.poetry.group.tests.dependencies]
-pytest = "9.0.2"
-pytest-cov = "7.0.0"
-
-
-[tool.poetry.group.dev.dependencies]
-pre-commit = "4.5.1"
-ruff = "0.15.1"
+[tool.setuptools]
+packages = ["pybarcodes"]
 
 [build-system]
-requires = ["poetry-core>=2"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
