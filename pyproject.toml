@@ -1,6 +1,6 @@
 [project]
 name = "pybarcodes"
-version = "1.0.3"
+version = "1.0.4"
 description = "A Python package for barcode generation"
 authors = [{ name = "atbuy", email = "buy@atbuy.dev" }]
 license = "MIT"
