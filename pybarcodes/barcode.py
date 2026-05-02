@@ -1,22 +1,33 @@
 from collections import namedtuple
 from io import BytesIO
-from typing import Union
+from os import PathLike
+from typing import Any, Optional, Union
 
 from PIL import Image, ImageDraw, ImageFont
+
+BarcodeInput = Union[str, int]
+PathInput = Union[str, PathLike[str]]
+RenderSize = tuple[int, int]
+RenderOptions = tuple[int, int, int, int, int]
 
 
 class Barcode:
     """A base class for all barcode types"""
 
-    def __init__(self, barcode: Union[str, int]):
+    BARCODE_SIZE: RenderSize
+    BARCODE_FONT_SIZE: int
+    BARCODE_COLUMN_NUMBER: int
+    BARCODE_PADDING: Any
+
+    def __init__(self, barcode: BarcodeInput):
         self.code = self.normalize(barcode)
 
     @classmethod
-    def validate(cls, barcode: Union[str, int]) -> None:
+    def validate(cls, barcode: BarcodeInput) -> None:
         """Validate barcode input."""
 
     @classmethod
-    def normalize(cls, barcode: Union[str, int]) -> str:
+    def normalize(cls, barcode: BarcodeInput) -> str:
         """Return the normalized barcode value used by the instance."""
 
         cls.validate(barcode)
@@ -36,11 +47,11 @@ class Barcode:
 
     def render(
         self,
-        size: tuple = None,
-        module_width: int = None,
-        bar_height: int = None,
-        quiet_zone: int = None,
-        font_size: int = None,
+        size: Optional[RenderSize] = None,
+        module_width: Optional[int] = None,
+        bar_height: Optional[int] = None,
+        quiet_zone: Optional[int] = None,
+        font_size: Optional[int] = None,
         draw_text: bool = True,
     ) -> Image.Image:
         """Create a PIL Image object for the barcode."""
@@ -59,14 +70,14 @@ class Barcode:
 
     def save(
         self,
-        path: str,
-        size: tuple = None,
-        module_width: int = None,
-        bar_height: int = None,
-        quiet_zone: int = None,
-        font_size: int = None,
+        path: PathInput,
+        size: Optional[RenderSize] = None,
+        module_width: Optional[int] = None,
+        bar_height: Optional[int] = None,
+        quiet_zone: Optional[int] = None,
+        font_size: Optional[int] = None,
         draw_text: bool = True,
-        **save_kwargs,
+        **save_kwargs: Any,
     ) -> Image.Image:
         """Create a PIL Image object and save it to the path given.
 
@@ -124,13 +135,13 @@ class Barcode:
     def to_image_bytesio(
         self,
         format: str = "PNG",
-        size: tuple = None,
-        module_width: int = None,
-        bar_height: int = None,
-        quiet_zone: int = None,
-        font_size: int = None,
+        size: Optional[RenderSize] = None,
+        module_width: Optional[int] = None,
+        bar_height: Optional[int] = None,
+        quiet_zone: Optional[int] = None,
+        font_size: Optional[int] = None,
         draw_text: bool = True,
-        **save_kwargs,
+        **save_kwargs: Any,
     ) -> BytesIO:
         """Return the rendered barcode image in a BytesIO object."""
 
@@ -149,13 +160,13 @@ class Barcode:
     def to_image_bytes(
         self,
         format: str = "PNG",
-        size: tuple = None,
-        module_width: int = None,
-        bar_height: int = None,
-        quiet_zone: int = None,
-        font_size: int = None,
+        size: Optional[RenderSize] = None,
+        module_width: Optional[int] = None,
+        bar_height: Optional[int] = None,
+        quiet_zone: Optional[int] = None,
+        font_size: Optional[int] = None,
         draw_text: bool = True,
-        **save_kwargs,
+        **save_kwargs: Any,
     ) -> bytes:
         """Return the rendered barcode image as bytes."""
 
@@ -170,7 +181,7 @@ class Barcode:
             **save_kwargs,
         ).getvalue()
 
-    def write(self, path: str, encoding: str = "ascii") -> None:
+    def write(self, path: PathInput, encoding: str = "ascii") -> None:
         """
         Tries to save the barcode to a text file
 
@@ -191,12 +202,12 @@ class Barcode:
 
     def _get_render_options(
         self,
-        module_width: int = None,
-        bar_height: int = None,
-        quiet_zone: int = None,
-        font_size: int = None,
+        module_width: Optional[int] = None,
+        bar_height: Optional[int] = None,
+        quiet_zone: Optional[int] = None,
+        font_size: Optional[int] = None,
         draw_text: bool = True,
-    ):
+    ) -> RenderOptions:
         padding = self.BARCODE_PADDING
         selected_size, default_font_size = self.BARCODE_SIZE, self.BARCODE_FONT_SIZE
 
@@ -232,10 +243,10 @@ class Barcode:
 
     def _get_barcode_image(
         self,
-        module_width: int = None,
-        bar_height: int = None,
-        quiet_zone: int = None,
-        font_size: int = None,
+        module_width: Optional[int] = None,
+        bar_height: Optional[int] = None,
+        quiet_zone: Optional[int] = None,
+        font_size: Optional[int] = None,
         draw_text: bool = True,
     ) -> Image.Image:
         """Creates a PIL Image from the binary string of the barcode
@@ -296,7 +307,7 @@ class Barcode:
         draw.text((x, y), self.code, (0, 0, 0), font=font)
         return base
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if isinstance(other, self.__class__):
             return self.code == other.code
         elif isinstance(other, str):
@@ -307,5 +318,5 @@ class Barcode:
     def __str__(self) -> str:
         return f"<{self.__class__.__name__}(code={self.code})>"
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.__str__()

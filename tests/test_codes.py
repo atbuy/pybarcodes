@@ -18,6 +18,7 @@ def test_code39():
     assert barcode.calculate_checksum(code) == 40
     assert barcode.calculate_checksum() == 40
     assert CODE39.normalize("abc123") == CODE39("abc123").code
+    assert CODE39(123).code == CODE39.normalize(123)
     assert CODE39.validate("abc123") is None
 
     with pytest.raises(IncorrectFormat):

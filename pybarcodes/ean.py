@@ -1,7 +1,7 @@
 from collections import namedtuple
 from typing import Union
 
-from .barcode import Barcode
+from .barcode import Barcode, BarcodeInput
 from .codings import ean as EANCoding
 from .exceptions import IncorrectFormat
 
@@ -15,11 +15,11 @@ class EAN(Barcode):
     Shouldn't be used directly and it's subclasses are preferred
     """
 
-    def __init__(self, barcode: Union[str, int]):
+    def __init__(self, barcode: BarcodeInput):
         super().__init__(barcode)
 
     @classmethod
-    def validate(cls, barcode: Union[str, int]) -> None:
+    def validate(cls, barcode: BarcodeInput) -> None:
         code = str(barcode)
 
         if not code.isdigit():
@@ -34,7 +34,7 @@ class EAN(Barcode):
             raise IncorrectFormat(error)
 
     @classmethod
-    def normalize(cls, barcode: Union[str, int]) -> str:
+    def normalize(cls, barcode: BarcodeInput) -> str:
         cls.validate(barcode)
         code = str(barcode)[: cls.BARCODE_LENGTH]
         check_digit = cls.calculate_checksum(code)
@@ -187,7 +187,7 @@ class EAN14(EAN):
     WEIGHTS = Weights(1, 3)
     HAS_STRUCTURE = True
 
-    def __init__(self, barcode: Union[str, int]):
+    def __init__(self, barcode: BarcodeInput):
         super().__init__(barcode)
 
 
@@ -218,7 +218,7 @@ class EAN13(EAN):
     WEIGHTS = Weights(3, 1)
     HAS_STRUCTURE = True
 
-    def __init__(self, barcode: Union[str, int]):
+    def __init__(self, barcode: BarcodeInput):
         super().__init__(barcode)
 
 
@@ -249,7 +249,7 @@ class EAN8(EAN):
     WEIGHTS = Weights(1, 3)
     HAS_STRUCTURE = False
 
-    def __init__(self, barcode: Union[str, int]):
+    def __init__(self, barcode: BarcodeInput):
         super().__init__(barcode)
 
 
@@ -271,7 +271,7 @@ class JAN(EAN13, EAN):
     """
 
     @classmethod
-    def validate(cls, barcode: Union[str, int]) -> None:
+    def validate(cls, barcode: BarcodeInput) -> None:
         super().validate(barcode)
 
         code = str(barcode)
@@ -280,7 +280,7 @@ class JAN(EAN13, EAN):
                 "JAN type barcodes need to start with country code 45 or 49."
             )
 
-    def __init__(self, barcode: Union[str, int]):
+    def __init__(self, barcode: BarcodeInput):
         super().__init__(barcode)
 
         if self.code[:2] not in ("45", "49"):

@@ -1,9 +1,9 @@
 from collections import namedtuple
-from typing import Union
+from typing import Optional, Union
 
 from PIL import Image, ImageDraw
 
-from .barcode import Barcode
+from .barcode import Barcode, BarcodeInput
 from .codings import codex as CODEXCoding
 from .exceptions import IncorrectFormat
 
@@ -11,7 +11,7 @@ Size = namedtuple("Size", "width height")
 
 
 class Code(Barcode):
-    def __init__(self, barcode: Union[str, int]):
+    def __init__(self, barcode: BarcodeInput):
         super().__init__(barcode)
 
         self.checksum = self.code[-1]
@@ -36,7 +36,7 @@ class Code(Barcode):
         self.BARCODE_COLUMN_NUMBER = column_size
 
     @classmethod
-    def validate(cls, barcode: Union[str, int]) -> None:
+    def validate(cls, barcode: BarcodeInput) -> None:
         code = str(barcode).upper()
 
         for char in code:
@@ -46,7 +46,7 @@ class Code(Barcode):
                 )
 
     @classmethod
-    def normalize(cls, barcode: Union[str, int]) -> str:
+    def normalize(cls, barcode: BarcodeInput) -> str:
         cls.validate(barcode)
         code = str(barcode).upper()
         reference = cls._calculate_checksum(code)
@@ -93,7 +93,7 @@ class Code(Barcode):
 
         return self._convert_to_binary(code)
 
-    def calculate_checksum(self, barcode: Union[str, "CODE39"] = None) -> int:
+    def calculate_checksum(self, barcode: Optional[Union[str, "CODE39"]] = None) -> int:
         """Calculate the checksum of the barcode
 
         Parameters
@@ -126,10 +126,10 @@ class Code(Barcode):
 
     def _get_barcode_image(
         self,
-        module_width: int = None,
-        bar_height: int = None,
-        quiet_zone: int = None,
-        font_size: int = None,
+        module_width: Optional[int] = None,
+        bar_height: Optional[int] = None,
+        quiet_zone: Optional[int] = None,
+        font_size: Optional[int] = None,
         draw_text: bool = True,
     ) -> Image.Image:
         """Creates a PIL Image from the binary string of the barcode.
@@ -291,5 +291,5 @@ class CODE39(Code):
     BARCODE_FONT_SIZE = 30
     BARCODE_PADDING = Size(50, 100)
 
-    def __init__(self, barcode: Union[str, int]):
-        super().__init__(barcode.upper())
+    def __init__(self, barcode: BarcodeInput):
+        super().__init__(barcode)

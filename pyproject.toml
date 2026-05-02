@@ -1,6 +1,6 @@
 [project]
 name = "pybarcodes"
-version = "1.2.1"
+version = "1.2.2"
 description = "A Python package for barcode generation"
 authors = [{ name = "atbuy", email = "buy@atbuy.dev" }]
 license = "MIT"
@@ -50,6 +50,9 @@ addopts = "--cov-fail-under=90"
 
 [tool.setuptools.packages.find]
 include = ["pybarcodes*"]
+
+[tool.setuptools.package-data]
+pybarcodes = ["py.typed"]
 
 [build-system]
 requires = ["setuptools"]
