@@ -47,9 +47,6 @@ Repository = "https://github.com/atbuy/pybarcodes"
 [tool.setuptools.packages.find]
 include = ["pybarcodes*"]
 
-[tool.setuptools.package-data]
-pybarcodes = ["fonts/*.ttf"]
-
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"

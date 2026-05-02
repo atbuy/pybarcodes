@@ -1,6 +1,5 @@
 from collections import namedtuple
 from io import BytesIO
-from pathlib import Path
 from typing import Union
 
 from PIL import Image, ImageDraw, ImageFont
@@ -131,12 +130,11 @@ class Barcode:
 
         base.paste(img, (base_center.x - img_center.x, base_center.y - img_center.y))
 
-        # Write the digits at the bottom
-        cwd = Path(__file__).parent
-        font_path = str(cwd.joinpath(cwd, "fonts", "arial.ttf"))
-
         draw = ImageDraw.Draw(base)
-        font = ImageFont.truetype(font_path, font_size)
+        try:
+            font = ImageFont.load_default(size=font_size)
+        except TypeError:
+            font = ImageFont.load_default()
 
         text_width = draw.textlength(self.code, font)
         x = base_center.x - text_width // 2
