@@ -12,23 +12,23 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
       - name: Install dependencies
         run: |
           sudo apt install -y libjpeg-dev zlib1g-dev
-          pip install --upgrade pip setuptools wheel
-          pip install poetry
-          poetry install --all-extras
+          uv sync --locked --all-extras --group dev --group tests
       - name: Lint with ruff
-        run: |
-          poetry run ruff check pybarcodes
+        run: uv run ruff check pybarcodes
       - name: Test with pytest
-        run: |
-          poetry run pytest --cov=pybarcodes --cov-report=term-missing tests/
+        run: uv run pytest --cov=pybarcodes --cov-report=term-missing tests/

@@ -15,10 +15,8 @@ keywords = [
   "jan",
   "python",
 ]
-include = ["fonts/*.ttf"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
-  "License :: OSI Approved :: MIT License",
   "Intended Audience :: Developers",
   "Natural Language :: English",
   "Operating System :: OS Independent",
@@ -46,8 +44,11 @@ Repository = "https://github.com/atbuy/pybarcodes"
 "Source Code" = "https://github.com/atbuy/pybarcodes"
 "CI/CD" = "https://github.com/atbuy/pybarcodes/actions"
 
-[tool.setuptools]
-packages = ["pybarcodes"]
+[tool.setuptools.packages.find]
+include = ["pybarcodes*"]
+
+[tool.setuptools.package-data]
+pybarcodes = ["fonts/*.ttf"]
 
 [build-system]
 requires = ["setuptools"]
