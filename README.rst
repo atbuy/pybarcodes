@@ -16,7 +16,7 @@ pybarcodes
     :alt: PyPI supported Python versions
 
 
-This is a python package to create and read barcodes
+This is a Python package to create barcodes.
 You can create file-like objects, text files and images from just a barcode number.
 Image generation is fast so it can be used to create images in bulk.
 

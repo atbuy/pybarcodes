@@ -189,11 +189,6 @@ class Code(Barcode):
 
         draw.text((x, y), self.code, (0, 0, 0), font=font)
 
-        # And now we crop spare white space around base image
-        start_index = (base_center.x - img_center.x) - padding.width // 2
-        end_index = (base_center.x - img_center.x) + padding.width // 2
-
-        base.crop((start_index, 0, end_index, base.height))
         return base
 
     def _convert_to_binary(self, string: str) -> str:

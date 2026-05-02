@@ -45,6 +45,9 @@ Repository = "https://github.com/atbuy/pybarcodes"
 "Source Code" = "https://github.com/atbuy/pybarcodes"
 "CI/CD" = "https://github.com/atbuy/pybarcodes/actions"
 
+[tool.pytest.ini_options]
+addopts = "--cov-fail-under=90"
+
 [tool.setuptools.packages.find]
 include = ["pybarcodes*"]
 
