@@ -35,6 +35,7 @@ dependencies = ["pillow>8,<13"]
 
 [dependency-groups]
 dev = ["pre-commit==4.6.0", "ruff==0.15.12"]
+docs = ["numpydoc==1.8.0", "sphinx-rtd-theme==3.0.2"]
 tests = ["pytest==9.0.3", "pytest-cov==7.1.0"]
 
 [project.urls]

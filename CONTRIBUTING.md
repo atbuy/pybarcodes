@@ -21,5 +21,6 @@ And you are good to go.
 To install dependencies for docs, you need to run:
 
 ```bash
-uv pip install -r ./docs/requirements.txt
+uv sync --group docs
+uv run sphinx-build -W -b html docs docs/_build/html
 ```
