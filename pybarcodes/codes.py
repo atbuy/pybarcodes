@@ -1,7 +1,7 @@
 from collections import namedtuple
 from typing import Union
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
 
 from .barcode import Barcode
 from .codings import codex as CODEXCoding
@@ -124,7 +124,14 @@ class Code(Barcode):
 
         return self._calculate_checksum(barcode)
 
-    def _get_barcode_image(self) -> Image.Image:
+    def _get_barcode_image(
+        self,
+        module_width: int = None,
+        bar_height: int = None,
+        quiet_zone: int = None,
+        font_size: int = None,
+        draw_text: bool = True,
+    ) -> Image.Image:
         """Creates a PIL Image from the binary string of the barcode.
 
         Returns
@@ -132,33 +139,25 @@ class Code(Barcode):
         A PIL Image with the barcode is returned to the caller.
         """
 
-        # Get the padding around the barcode
-        padding = self.BARCODE_PADDING
-
-        # Get the image's width and height
-        selected_size, font_size = self.BARCODE_SIZE, self.BARCODE_FONT_SIZE
-
-        # This is for the whitespace around the barcode
-        padded_size = (
-            selected_size[0] + padding.width,
-            selected_size[1] + padding.height,
+        module_width, bar_height, quiet_zone, font_size, text_padding = (
+            self._get_render_options(
+                module_width=module_width,
+                bar_height=bar_height,
+                quiet_zone=quiet_zone,
+                font_size=font_size,
+                draw_text=draw_text,
+            )
         )
-
-        # Get each column's width and height
-        column_size = self._get_column_size()
-
-        # Create a white base image to paste the barcode on
-        base = Image.new("RGB", padded_size, (255, 255, 255))
 
         # Create the image to write the columns
         img = Image.new(
             "RGB",
-            (column_size * self.BARCODE_COLUMN_NUMBER, selected_size[1]),
+            (module_width * self.BARCODE_COLUMN_NUMBER, bar_height),
             (255, 255, 255),
         )
 
         # This is the spacing we are going to add after each digit
-        space = Image.new("RGB", (column_size, img.height), (255, 255, 255))
+        space = Image.new("RGB", (module_width, img.height), (255, 255, 255))
 
         # Create a binary string representation of the barcode digits
         binary_string = self.get_binary_string
@@ -172,12 +171,12 @@ class Code(Barcode):
             # If the character is a ` ` (space) then we write 3 times the size on the spacing
             # We also need to add a single width column of spacing after each digit
             if digit == "1":
-                column_width = round(column_size * 3)
+                column_width = module_width * 3
             elif digit == " ":
-                column_width = round(column_size * 3)
+                column_width = module_width * 3
                 color = (255, 255, 255)
             else:
-                column_width = column_size
+                column_width = module_width
 
             # First paste the column
             column = Image.new("RGB", (column_width, img.height), color)
@@ -192,22 +191,27 @@ class Code(Barcode):
         # Crop redundant whitespace after barcode
         img = img.crop((0, 0, index, img.height))
 
+        base = Image.new(
+            "RGB",
+            (img.width + quiet_zone * 2, bar_height + text_padding),
+            (255, 255, 255),
+        )
+
         # Paste the barcode on the center of the padded base
         Point = namedtuple("Point", "x y")
         base_center = Point(base.width // 2, base.height // 2)
-        img_center = Point(img.width // 2, img.height // 2)
 
-        base.paste(img, (base_center.x - img_center.x, base_center.y - img_center.y))
+        base.paste(img, (quiet_zone, text_padding // 2))
+
+        if not draw_text:
+            return base
 
         draw = ImageDraw.Draw(base)
-        try:
-            font = ImageFont.load_default(size=font_size)
-        except TypeError:
-            font = ImageFont.load_default()
+        font = self._get_default_font(font_size)
 
         text_width = draw.textlength(self.code, font)
         x = base_center.x - text_width // 2
-        y = base.height - (base.height - img.height) // 2
+        y = text_padding // 2 + img.height
 
         draw.text((x, y), self.code, (0, 0, 0), font=font)
 

@@ -34,15 +34,40 @@ class Barcode:
 
         return self.render()
 
-    def render(self, size: tuple = None) -> Image.Image:
+    def render(
+        self,
+        size: tuple = None,
+        module_width: int = None,
+        bar_height: int = None,
+        quiet_zone: int = None,
+        font_size: int = None,
+        draw_text: bool = True,
+    ) -> Image.Image:
         """Create a PIL Image object for the barcode."""
 
-        img = self._get_barcode_image()
+        img = self._get_barcode_image(
+            module_width=module_width,
+            bar_height=bar_height,
+            quiet_zone=quiet_zone,
+            font_size=font_size,
+            draw_text=draw_text,
+        )
         if size is not None:
-            img = img.resize(size)
+            resampling = getattr(Image, "Resampling", Image)
+            img = img.resize(size, resampling.NEAREST)
         return img
 
-    def save(self, path: str, size: tuple = None, **save_kwargs) -> Image.Image:
+    def save(
+        self,
+        path: str,
+        size: tuple = None,
+        module_width: int = None,
+        bar_height: int = None,
+        quiet_zone: int = None,
+        font_size: int = None,
+        draw_text: bool = True,
+        **save_kwargs,
+    ) -> Image.Image:
         """Create a PIL Image object and save it to the path given.
 
         It also returns that image object to the caller.
@@ -57,7 +82,14 @@ class Barcode:
         Returns a PIL Image object to the caller
         """
 
-        img = self.render(size=size)
+        img = self.render(
+            size=size,
+            module_width=module_width,
+            bar_height=bar_height,
+            quiet_zone=quiet_zone,
+            font_size=font_size,
+            draw_text=draw_text,
+        )
         img.save(path, **save_kwargs)
         return img
 
@@ -90,21 +122,53 @@ class Barcode:
         return self.to_text_bytesio(encoding=encoding)
 
     def to_image_bytesio(
-        self, format: str = "PNG", size: tuple = None, **save_kwargs
+        self,
+        format: str = "PNG",
+        size: tuple = None,
+        module_width: int = None,
+        bar_height: int = None,
+        quiet_zone: int = None,
+        font_size: int = None,
+        draw_text: bool = True,
+        **save_kwargs,
     ) -> BytesIO:
         """Return the rendered barcode image in a BytesIO object."""
 
         obj = BytesIO()
-        self.render(size=size).save(obj, format=format, **save_kwargs)
+        self.render(
+            size=size,
+            module_width=module_width,
+            bar_height=bar_height,
+            quiet_zone=quiet_zone,
+            font_size=font_size,
+            draw_text=draw_text,
+        ).save(obj, format=format, **save_kwargs)
         obj.seek(0)
         return obj
 
     def to_image_bytes(
-        self, format: str = "PNG", size: tuple = None, **save_kwargs
+        self,
+        format: str = "PNG",
+        size: tuple = None,
+        module_width: int = None,
+        bar_height: int = None,
+        quiet_zone: int = None,
+        font_size: int = None,
+        draw_text: bool = True,
+        **save_kwargs,
     ) -> bytes:
         """Return the rendered barcode image as bytes."""
 
-        return self.to_image_bytesio(format=format, size=size, **save_kwargs).getvalue()
+        return self.to_image_bytesio(
+            format=format,
+            size=size,
+            module_width=module_width,
+            bar_height=bar_height,
+            quiet_zone=quiet_zone,
+            font_size=font_size,
+            draw_text=draw_text,
+            **save_kwargs,
+        ).getvalue()
 
     def write(self, path: str, encoding: str = "ascii") -> None:
         """
@@ -118,7 +182,62 @@ class Barcode:
         with open(path, "w", encoding=encoding) as file:
             file.write(self.code)
 
-    def _get_barcode_image(self) -> Image.Image:
+    @staticmethod
+    def _positive_int(value: int, name: str) -> int:
+        value = int(value)
+        if value <= 0:
+            raise ValueError(f"{name} must be greater than 0.")
+        return value
+
+    def _get_render_options(
+        self,
+        module_width: int = None,
+        bar_height: int = None,
+        quiet_zone: int = None,
+        font_size: int = None,
+        draw_text: bool = True,
+    ):
+        padding = self.BARCODE_PADDING
+        selected_size, default_font_size = self.BARCODE_SIZE, self.BARCODE_FONT_SIZE
+
+        module_width = (
+            self._get_column_size()
+            if module_width is None
+            else self._positive_int(module_width, "module_width")
+        )
+        bar_height = (
+            selected_size[1]
+            if bar_height is None
+            else self._positive_int(bar_height, "bar_height")
+        )
+        quiet_zone = (
+            padding.width // 2
+            if quiet_zone is None
+            else self._positive_int(quiet_zone, "quiet_zone")
+        )
+        font_size = (
+            default_font_size
+            if font_size is None
+            else self._positive_int(font_size, "font_size")
+        )
+        text_padding = padding.height if draw_text else 0
+
+        return module_width, bar_height, quiet_zone, font_size, text_padding
+
+    def _get_default_font(self, font_size: int) -> ImageFont.ImageFont:
+        try:
+            return ImageFont.load_default(size=font_size)
+        except TypeError:
+            return ImageFont.load_default()
+
+    def _get_barcode_image(
+        self,
+        module_width: int = None,
+        bar_height: int = None,
+        quiet_zone: int = None,
+        font_size: int = None,
+        draw_text: bool = True,
+    ) -> Image.Image:
         """Creates a PIL Image from the binary string of the barcode
 
         Returns
@@ -126,60 +245,53 @@ class Barcode:
         A PIL Image with the barcode is returned to the caller.
         """
 
-        # Get the padding around the barcode
-        padding = self.BARCODE_PADDING
-
-        # Get the final image's width and height
-        selected_size, font_size = self.BARCODE_SIZE, self.BARCODE_FONT_SIZE
-
-        # This is for the white space around the barcode
-        padded_size = (
-            selected_size[0] + padding.width,
-            selected_size[1] + padding.height,
+        module_width, bar_height, quiet_zone, font_size, text_padding = (
+            self._get_render_options(
+                module_width=module_width,
+                bar_height=bar_height,
+                quiet_zone=quiet_zone,
+                font_size=font_size,
+                draw_text=draw_text,
+            )
         )
 
-        # Get each column's width and height
-        column_size = self._get_column_size()
-
-        # Create a white base image to write columns
-        base = Image.new("RGB", padded_size, (255, 255, 255))
+        binary_string = self.get_binary_string
 
         # Create the image for the barcode
         img = Image.new(
             "RGB",
-            (column_size * self.BARCODE_COLUMN_NUMBER, selected_size[1]),
+            (module_width * len(binary_string), bar_height),
             (255, 255, 255),
         )
-
-        # Get the binary string representation of the barcode digits
-        binary_string = self.get_binary_string
 
         index = 0
         for digit in binary_string:
             color = (0, 0, 0) if digit == "1" else (255, 255, 255)
-            column = Image.new("RGB", (column_size, img.height), color)
+            column = Image.new("RGB", (module_width, img.height), color)
             img.paste(column, (index, 0))
-            index += column_size
+            index += module_width
 
-        # Crop redundant whitespace after barcode
-        img = img.crop((0, 0, index, img.height))
+        base = Image.new(
+            "RGB",
+            (img.width + quiet_zone * 2, bar_height + text_padding),
+            (255, 255, 255),
+        )
 
         # Paste the barcode on the center of the padded base
         Point = namedtuple("Point", "x y")
         base_center = Point(base.width // 2, base.height // 2)
-        img_center = Point(img.width // 2, img.height // 2)
 
-        base.paste(img, (base_center.x - img_center.x, base_center.y - img_center.y))
+        base.paste(img, (quiet_zone, text_padding // 2))
+
+        if not draw_text:
+            return base
 
         draw = ImageDraw.Draw(base)
-        try:
-            font = ImageFont.load_default(size=font_size)
-        except TypeError:
-            font = ImageFont.load_default()
+        font = self._get_default_font(font_size)
 
         text_width = draw.textlength(self.code, font)
         x = base_center.x - text_width // 2
-        y = base.height - (base.height - img.height) // 2
+        y = text_padding // 2 + img.height
 
         draw.text((x, y), self.code, (0, 0, 0), font=font)
         return base
