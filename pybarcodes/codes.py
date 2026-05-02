@@ -90,6 +90,11 @@ class Code(Barcode):
             raise TypeError(f"Can't accept type {type(barcode)}")
 
         barcode = barcode.upper()
+        for char in barcode:
+            if char not in CODEXCoding.REFERENCE_DIGITS:
+                raise IncorrectFormat(
+                    f"Character {char} is not supported by {self.__class__.__name__}"
+                )
 
         # If the barcode is only 1 character long
         # Then the check sum will be that same character

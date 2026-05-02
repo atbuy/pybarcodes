@@ -114,6 +114,9 @@ class EAN(Barcode):
 
         if len(barcode) >= cls.BARCODE_LENGTH:
             barcode = barcode[: cls.BARCODE_LENGTH]
+            if not barcode.isdigit():
+                raise IncorrectFormat("Barcode can't contain non-digit characters.")
+
             # Here there is no check digit so it's calculated
             digits = list(map(int, list(barcode)))
 
@@ -126,13 +129,7 @@ class EAN(Barcode):
                 sum(weighted_odd) * cls.WEIGHTS.ODD
                 + sum(weighted_even) * cls.WEIGHTS.EVEN
             )
-            if checksum % 10 == 0:
-                return 0
-
-            # Find the closest multiple of 10, that is equal to
-            # or higher than the checksum and return the difference
-            closest10 = ((checksum // 10) * 10) + 10
-            return closest10 % checksum
+            return (10 - checksum % 10) % 10
 
         raise IncorrectFormat(
             f"Barcode should be at least {cls.BARCODE_LENGTH} digits long."

@@ -47,6 +47,11 @@ def test_ean13():
     assert center_guard == "01010"
 
 
+def test_ean13_checksum_edge_cases():
+    assert EAN13.calculate_checksum("000000000001") == 7
+    assert EAN13("000000000001") == "0000000000017"
+
+
 def test_ean8():
     code = "0123456"
     barcode = EAN8(code)
@@ -84,6 +89,11 @@ def test_ean8():
     assert center_guard == "01010"
 
 
+def test_ean8_checksum_edge_cases():
+    assert EAN8.calculate_checksum("0000001") == 7
+    assert EAN8("0000001") == "00000017"
+
+
 def test_ean14():
     code = "4070071967072013242346"
     barcode = EAN14(code)
@@ -116,6 +126,11 @@ def test_ean14():
     assert left_guard == "101"
     assert right_guard == "101"
     assert center_guard == "01010"
+
+
+def test_ean14_checksum_edge_cases():
+    assert EAN14.calculate_checksum("0000000000001") == 7
+    assert EAN14("0000000000001") == "00000000000017"
 
 
 def test_jan():
@@ -158,3 +173,9 @@ def test_jan():
     assert left_guard == "101"
     assert right_guard == "101"
     assert center_guard == "01010"
+
+
+@pytest.mark.parametrize("barcode_type", [EAN8, EAN13, EAN14])
+def test_ean_calculate_checksum_rejects_non_digits(barcode_type):
+    with pytest.raises(IncorrectFormat):
+        barcode_type.calculate_checksum("x" * barcode_type.BARCODE_LENGTH)

@@ -21,6 +21,9 @@ def test_code39():
     with pytest.raises(IncorrectFormat):
         CODE39("^")
 
+    with pytest.raises(IncorrectFormat):
+        barcode.calculate_checksum("^")
+
     binary_string = barcode.get_binary_string
     start_char = binary_string[:6]
     stop_char = binary_string[-6:]
