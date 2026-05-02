@@ -18,17 +18,27 @@ class EAN(Barcode):
     def __init__(self, barcode: Union[str, int]):
         super().__init__(barcode)
 
-        if not self.code.isdigit():
+    @classmethod
+    def validate(cls, barcode: Union[str, int]) -> None:
+        code = str(barcode)
+
+        if not code.isdigit():
             raise IncorrectFormat("Barcode can't contain non-digit characters.")
 
-        # Do some error checking
-        if isinstance(self.code, str):
-            if len(self.code) < self.BARCODE_LENGTH:
-                classname = self.__class__.__name__
-                error = f"{classname} should be at least {self.BARCODE_LENGTH} digits long, not {len(self.code)}."
-                raise IncorrectFormat(error)
-            else:
-                self.code = self._clean_code()
+        if len(code) < cls.BARCODE_LENGTH:
+            classname = cls.__name__
+            error = (
+                f"{classname} should be at least {cls.BARCODE_LENGTH} digits long, "
+                f"not {len(code)}."
+            )
+            raise IncorrectFormat(error)
+
+    @classmethod
+    def normalize(cls, barcode: Union[str, int]) -> str:
+        cls.validate(barcode)
+        code = str(barcode)[: cls.BARCODE_LENGTH]
+        check_digit = cls.calculate_checksum(code)
+        return code + str(check_digit)
 
     @property
     def get_binary_string(self) -> str:
@@ -112,28 +122,21 @@ class EAN(Barcode):
         else:
             raise TypeError(f"Can't accept type {type(barcode)}")
 
-        if len(barcode) >= cls.BARCODE_LENGTH:
-            barcode = barcode[: cls.BARCODE_LENGTH]
-            if not barcode.isdigit():
-                raise IncorrectFormat("Barcode can't contain non-digit characters.")
+        cls.validate(barcode)
+        barcode = barcode[: cls.BARCODE_LENGTH]
 
-            # Here there is no check digit so it's calculated
-            digits = list(map(int, list(barcode)))
+        # Here there is no check digit so it's calculated
+        digits = list(map(int, list(barcode)))
 
-            # Get even and odd indeces of the digits
-            weighted_odd = digits[1::2]
-            weighted_even = digits[::2]
+        # Get even and odd indeces of the digits
+        weighted_odd = digits[1::2]
+        weighted_even = digits[::2]
 
-            # Calculate the checksum
-            checksum = (
-                sum(weighted_odd) * cls.WEIGHTS.ODD
-                + sum(weighted_even) * cls.WEIGHTS.EVEN
-            )
-            return (10 - checksum % 10) % 10
-
-        raise IncorrectFormat(
-            f"Barcode should be at least {cls.BARCODE_LENGTH} digits long."
+        # Calculate the checksum
+        checksum = (
+            sum(weighted_odd) * cls.WEIGHTS.ODD + sum(weighted_even) * cls.WEIGHTS.EVEN
         )
+        return (10 - checksum % 10) % 10
 
     def _get_column_size(self) -> int:
         """Finds and returns what the width of each column should be
@@ -154,11 +157,7 @@ class EAN(Barcode):
         and the check digit is calculated if not given
         """
         if len(self.code) >= self.BARCODE_LENGTH:
-            code = self.code[: self.BARCODE_LENGTH]
-
-            # Calculate the checksum digit
-            check_digit = self.calculate_checksum(code)
-            return code + str(check_digit)
+            return self.normalize(self.code)
 
 
 class EAN14(EAN):
@@ -270,6 +269,16 @@ class JAN(EAN13, EAN):
     BARCODE_PADDING: Tuple[int, int]
         The padding around the actual barcode
     """
+
+    @classmethod
+    def validate(cls, barcode: Union[str, int]) -> None:
+        super().validate(barcode)
+
+        code = str(barcode)
+        if code[:2] not in ("45", "49"):
+            raise IncorrectFormat(
+                "JAN type barcodes need to start with country code 45 or 49."
+            )
 
     def __init__(self, barcode: Union[str, int]):
         super().__init__(barcode)

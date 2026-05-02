@@ -14,7 +14,7 @@ class Code(Barcode):
     def __init__(self, barcode: Union[str, int]):
         super().__init__(barcode)
 
-        self.code = self._clean_code()
+        self.checksum = self.code[-1]
 
         # Calculate the variable width of the barcod
         # 6 pixels for each character
@@ -34,6 +34,39 @@ class Code(Barcode):
 
         # Calculate how many character will have to be written
         self.BARCODE_COLUMN_NUMBER = column_size
+
+    @classmethod
+    def validate(cls, barcode: Union[str, int]) -> None:
+        code = str(barcode).upper()
+
+        for char in code:
+            if char not in CODEXCoding.CODES or char == "_":
+                raise IncorrectFormat(
+                    f"Character {char} is not supported by {cls.__name__}"
+                )
+
+    @classmethod
+    def normalize(cls, barcode: Union[str, int]) -> str:
+        cls.validate(barcode)
+        code = str(barcode).upper()
+        reference = cls._calculate_checksum(code)
+        checkchar = CODEXCoding.REFERENCE_NUMBERS[reference]
+        return code + checkchar
+
+    @classmethod
+    def _calculate_checksum(cls, barcode: str) -> int:
+        code = barcode.upper()
+        for char in code:
+            if char not in CODEXCoding.REFERENCE_DIGITS:
+                raise IncorrectFormat(
+                    f"Character {char} is not supported by {cls.__name__}"
+                )
+
+        if len(code) == 1:
+            return CODEXCoding.REFERENCE_DIGITS[code]
+
+        numbers = [CODEXCoding.REFERENCE_DIGITS[char] for char in list(code)]
+        return sum(numbers) % 43
 
     @property
     def get_binary_string(self) -> str:
@@ -89,23 +122,7 @@ class Code(Barcode):
         else:
             raise TypeError(f"Can't accept type {type(barcode)}")
 
-        barcode = barcode.upper()
-        for char in barcode:
-            if char not in CODEXCoding.REFERENCE_DIGITS:
-                raise IncorrectFormat(
-                    f"Character {char} is not supported by {self.__class__.__name__}"
-                )
-
-        # If the barcode is only 1 character long
-        # Then the check sum will be that same character
-        if len(barcode) == 1:
-            return CODEXCoding.REFERENCE_DIGITS[barcode]
-
-        # Find the number value of each digit
-        numbers = [CODEXCoding.REFERENCE_DIGITS[char] for char in list(barcode)]
-
-        # Calculate the modulo 43 of the sum
-        return sum(numbers) % 43
+        return self._calculate_checksum(barcode)
 
     def _get_barcode_image(self) -> Image.Image:
         """Creates a PIL Image from the binary string of the barcode.
@@ -223,17 +240,7 @@ class Code(Barcode):
         and the check digit is calculated if not given
         """
 
-        for char in self.code:
-            if char not in CODEXCoding.CODES or char == "_":
-                raise IncorrectFormat(
-                    f"Character {char} is not supported by {self.__class__.__name__}"
-                )
-
-        reference = self.calculate_checksum(self.code)
-        checkchar = CODEXCoding.REFERENCE_NUMBERS[reference]
-
-        self.checksum = checkchar
-        return self.code + str(checkchar)
+        return self.normalize(self.code)
 
     def _trim(self, code: str) -> str:
         """Removes the start and stop characters from the barcode

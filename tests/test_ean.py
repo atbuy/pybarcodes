@@ -22,6 +22,8 @@ def test_ean13():
 
     assert barcode == code + "1"
     assert barcode == barcode2
+    assert EAN13.normalize(code) == code + "1"
+    assert EAN13.validate(code) is None
 
     # Check if the checksum digit is calculated correctly
     # The check digit should be `1`
@@ -151,6 +153,8 @@ def test_jan():
 
     assert barcode == code + "6"
     assert barcode == barcode2
+    assert JAN.normalize(code) == code + "6"
+    assert JAN.validate(code) is None
 
     # Check if the checksum digit is calculated correctly
     # The check digit should be `1`
@@ -173,6 +177,9 @@ def test_jan():
     assert left_guard == "101"
     assert right_guard == "101"
     assert center_guard == "01010"
+
+    with pytest.raises(IncorrectFormat):
+        JAN.validate("120638133393")
 
 
 @pytest.mark.parametrize("barcode_type", [EAN8, EAN13, EAN14])

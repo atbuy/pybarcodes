@@ -9,7 +9,18 @@ class Barcode:
     """A base class for all barcode types"""
 
     def __init__(self, barcode: Union[str, int]):
-        self.code = str(barcode)
+        self.code = self.normalize(barcode)
+
+    @classmethod
+    def validate(cls, barcode: Union[str, int]) -> None:
+        """Validate barcode input."""
+
+    @classmethod
+    def normalize(cls, barcode: Union[str, int]) -> str:
+        """Return the normalized barcode value used by the instance."""
+
+        cls.validate(barcode)
+        return str(barcode)
 
     @property
     def image(self) -> Image.Image:
@@ -21,9 +32,17 @@ class Barcode:
             The barcode image
         """
 
-        return self._get_barcode_image()
+        return self.render()
 
-    def save(self, path: str, size: tuple = None) -> Image.Image:
+    def render(self, size: tuple = None) -> Image.Image:
+        """Create a PIL Image object for the barcode."""
+
+        img = self._get_barcode_image()
+        if size is not None:
+            img = img.resize(size)
+        return img
+
+    def save(self, path: str, size: tuple = None, **save_kwargs) -> Image.Image:
         """Create a PIL Image object and save it to the path given.
 
         It also returns that image object to the caller.
@@ -38,20 +57,21 @@ class Barcode:
         Returns a PIL Image object to the caller
         """
 
-        img = self._get_barcode_image()
-
-        if size is not None:
-            img = img.resize(size)
-        img.save(path)
+        img = self.render(size=size)
+        img.save(path, **save_kwargs)
         return img
 
     def show(self) -> None:
         """Shows the barcode image"""
 
-        img = self._get_barcode_image()
-        img.show()
+        self.render().show()
 
-    def to_bytesio(self) -> BytesIO:
+    def to_text_bytes(self, encoding: str = "ascii") -> bytes:
+        """Return the normalized barcode text as bytes."""
+
+        return self.code.encode(encoding)
+
+    def to_text_bytesio(self, encoding: str = "ascii") -> BytesIO:
         """
         Write the barcode to a BytesIO object
 
@@ -60,12 +80,33 @@ class Barcode:
         Returns the BytesIO object created
         """
 
-        obj = BytesIO()
-        obj.write(self.code.encode("ascii"))
+        obj = BytesIO(self.to_text_bytes(encoding=encoding))
         obj.seek(0)
         return obj
 
-    def write(self, path: str) -> None:
+    def to_bytesio(self, encoding: str = "ascii") -> BytesIO:
+        """Return the normalized barcode text in a BytesIO object."""
+
+        return self.to_text_bytesio(encoding=encoding)
+
+    def to_image_bytesio(
+        self, format: str = "PNG", size: tuple = None, **save_kwargs
+    ) -> BytesIO:
+        """Return the rendered barcode image in a BytesIO object."""
+
+        obj = BytesIO()
+        self.render(size=size).save(obj, format=format, **save_kwargs)
+        obj.seek(0)
+        return obj
+
+    def to_image_bytes(
+        self, format: str = "PNG", size: tuple = None, **save_kwargs
+    ) -> bytes:
+        """Return the rendered barcode image as bytes."""
+
+        return self.to_image_bytesio(format=format, size=size, **save_kwargs).getvalue()
+
+    def write(self, path: str, encoding: str = "ascii") -> None:
         """
         Tries to save the barcode to a text file
 
@@ -74,7 +115,7 @@ class Barcode:
         path: str
             The path of the file
         """
-        with open(path, "w") as file:
+        with open(path, "w", encoding=encoding) as file:
             file.write(self.code)
 
     def _get_barcode_image(self) -> Image.Image:

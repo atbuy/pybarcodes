@@ -16,8 +16,9 @@ def assert_barcode_image(image: Image.Image) -> None:
 def test_ean_image_generation_and_save(tmp_path: Path):
     barcode = EAN13("400638133393")
 
-    image = barcode.image
+    image = barcode.render()
     assert_barcode_image(image)
+    assert_barcode_image(barcode.image)
 
     output_path = tmp_path / "ean13.png"
     saved_image = barcode.save(str(output_path), size=(120, 80))
@@ -44,7 +45,23 @@ def test_text_outputs(tmp_path: Path):
     barcode.write(str(output_path))
 
     assert output_path.read_text() == "4006381333931"
+    assert barcode.to_text_bytes() == b"4006381333931"
+    assert isinstance(barcode.to_text_bytesio(), BytesIO)
+    assert barcode.to_text_bytesio().read() == b"4006381333931"
     assert isinstance(barcode.to_bytesio(), BytesIO)
     assert barcode.to_bytesio().read() == b"4006381333931"
     assert str(barcode) == "<EAN13(code=4006381333931)>"
     assert repr(barcode) == "<EAN13(code=4006381333931)>"
+
+
+def test_image_bytes_outputs():
+    barcode = EAN13("400638133393")
+
+    image_bytes = barcode.to_image_bytes(size=(120, 80))
+    assert image_bytes.startswith(b"\x89PNG")
+
+    image_buffer = barcode.to_image_bytesio(size=(120, 80))
+    assert isinstance(image_buffer, BytesIO)
+    with Image.open(image_buffer) as image_file:
+        assert image_file.size == (120, 80)
+        assert image_file.mode == "RGB"
