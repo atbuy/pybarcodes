@@ -44,6 +44,7 @@ class Barcode:
         if size is not None:
             img = img.resize(size)
         img.save(path)
+        return img
 
     def show(self) -> None:
         """Shows the barcode image"""

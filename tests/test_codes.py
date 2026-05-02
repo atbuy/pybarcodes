@@ -1,3 +1,5 @@
+import pytest
+
 from pybarcodes import CODE39
 from pybarcodes.exceptions import IncorrectFormat
 
@@ -16,11 +18,8 @@ def test_code39():
     assert barcode.calculate_checksum(code) == 40
     assert barcode.calculate_checksum() == 40
 
-    try:
-        code = "^"
-        barcode = CODE39(code)
-    except IncorrectFormat:
-        pass
+    with pytest.raises(IncorrectFormat):
+        CODE39("^")
 
     binary_string = barcode.get_binary_string
     start_char = binary_string[:6]

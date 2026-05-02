@@ -85,7 +85,7 @@ class Code(Barcode):
             barcode = barcode.code
         elif isinstance(barcode, str):
             pass
-        elif barcode is None or self.code:
+        elif barcode is None:
             return CODEXCoding.REFERENCE_DIGITS[self.checksum]
         else:
             raise TypeError(f"Can't accept type {type(barcode)}")

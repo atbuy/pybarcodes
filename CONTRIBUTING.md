@@ -2,23 +2,16 @@
 
 ## Setup
 
-To contribute to the project and start making changes to the library, you need to install poetry:
+To contribute to the project and start making changes to the library, install dependencies with uv:
 
 ```bash
-# In your virtual environment
-pip install poetry
+uv sync --all-extras --group dev --group tests
 ```
 
-Then you need to install all dependencies + the necessary development dependencies:
+After that, install the `pre-commit` hooks:
 
 ```bash
-poetry install --all-extras
-```
-
-After that, you need to install the `pre-commit` hooks:
-
-```bash
-pre-commit install
+uv run pre-commit install
 ```
 
 And you are good to go.
@@ -28,5 +21,5 @@ And you are good to go.
 To install dependencies for docs, you need to run:
 
 ```bash
-pip install -r ./docs/requirements.txt
+uv pip install -r ./docs/requirements.txt
 ```

@@ -1,3 +1,5 @@
+import pytest
+
 from pybarcodes import EAN8, EAN13, EAN14, JAN
 from pybarcodes.exceptions import IncorrectFormat
 
@@ -32,11 +34,8 @@ def test_ean13():
     # The check digit is calculated when instansiating
     assert barcode == "4006381333931"
 
-    try:
-        code = "1"
-        barcode = EAN13(code)
-    except IncorrectFormat:
-        pass
+    with pytest.raises(IncorrectFormat):
+        EAN13("1")
 
     # Check if guards are in the correct positions
     binary_string = barcode.get_binary_string
@@ -72,11 +71,8 @@ def test_ean8():
     # The check digit is calculated when instansiating
     assert barcode == "01234565"
 
-    try:
-        code = "1"
-        barcode = EAN8(code)
-    except IncorrectFormat:
-        pass
+    with pytest.raises(IncorrectFormat):
+        EAN8("1")
 
     # Check if guards in correct positions
     binary_string = barcode.get_binary_string
@@ -109,11 +105,8 @@ def test_ean14():
     # The check digit is calculated when instansiating
     assert barcode == "40700719670720"
 
-    try:
-        code = "1"
-        barcode = EAN14(code)
-    except IncorrectFormat:
-        pass
+    with pytest.raises(IncorrectFormat):
+        EAN14("1")
 
     # Check if guards in correct positions
     binary_string = barcode.get_binary_string
@@ -154,11 +147,8 @@ def test_jan():
     barcode = JAN(code)
     # The check digit is calculated when instansiating
     assert barcode == "4506381333936"
-    try:
-        code = "1"
-        barcode = JAN(code)
-    except IncorrectFormat:
-        pass
+    with pytest.raises(IncorrectFormat):
+        JAN("1")
 
     # Check if guards are in the correct positions
     binary_string = barcode.get_binary_string
