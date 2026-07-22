@@ -11,7 +11,7 @@ uv sync --all-extras --group dev --group tests
 After that, install the `pre-commit` hooks:
 
 ```bash
-uv run pre-commit install
+uv run prek install --overwrite
 ```
 
 And you are good to go.
